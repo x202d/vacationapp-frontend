@@ -4,4 +4,4 @@ dist-ssr
 *.local
 .DS_Store
 .idea
-
+.env.local
