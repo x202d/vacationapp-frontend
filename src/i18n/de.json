@@ -1,0 +1,13 @@
+{
+  "common": {
+    "save": "Speichern",
+    "abort": "Abbrechen",
+    "delete": "Löschen"
+  },
+  "welcome": "Willkommen du Sack",
+  "hello": "Hallo {{name}}",
+  "navigation": {
+    "home": "Startseite",
+    "settings": "Einstellungen"
+  }
+}

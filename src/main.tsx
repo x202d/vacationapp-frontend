@@ -1,4 +1,5 @@
 import React from 'react'
+import './i18n/i18n';
 import ReactDOM from 'react-dom/client'
 import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'

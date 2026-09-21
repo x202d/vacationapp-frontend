@@ -1,11 +1,13 @@
 import { Container } from '@mui/material'
 import InputListCard from '../components/InputListCard'
+import { useTranslation } from 'react-i18next';
 
 function PageOne() {
+    const { t } = useTranslation();
   return (
     <Container maxWidth="sm" sx={{ py: 4 }}>
       <InputListCard
-        title="Aufgabenliste"
+        title={t("common.save")}
         description="Trage eine neue Aufgabe ein und hake erledigte Punkte ab."
         inputLabel="Neue Aufgabe"
         buttonLabel="Aufgabe hinzufügen"
