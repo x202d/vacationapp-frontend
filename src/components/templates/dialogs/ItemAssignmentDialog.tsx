@@ -134,7 +134,7 @@ export default function ItemAssignmentDialog({
     return (
         <Dialog open={open} onClose={isSaving ? undefined : onClose} fullWidth maxWidth="md">
             <DialogTitle>
-                {t('tourTypes.categories.title')}
+                {t('categories.items.title')}
 
                 {templateCategory && (
                     <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
@@ -165,14 +165,14 @@ export default function ItemAssignmentDialog({
                     >
                         <Box sx={{ flex: 1 }}>
                             <Typography variant="subtitle1" fontWeight={600} sx={{ mb: 1 }}>
-                                {t('tourTypes.categories.available')}
+                                {t('categories.items.available')}
                             </Typography>
 
                             <Paper variant="outlined">
                                 {availableCategories.length === 0 ? (
                                     <Box sx={{ p: 2 }}>
                                         <Typography variant="body2" color="text.secondary">
-                                            {t('tourTypes.categories.noAvailable')}
+                                            {t('categories.items.noAvailable')}
                                         </Typography>
                                     </Box>
                                 ) : (
@@ -205,14 +205,14 @@ export default function ItemAssignmentDialog({
 
                         <Box sx={{ flex: 1 }}>
                             <Typography variant="subtitle1" fontWeight={600} sx={{ mb: 1 }}>
-                                {t('tourTypes.categories.assigned')}
+                                {t('categories.items.assigned')}
                             </Typography>
 
                             <Paper variant="outlined">
                                 {selectedCategories.length === 0 ? (
                                     <Box sx={{ p: 2 }}>
                                         <Typography variant="body2" color="text.secondary">
-                                            {t('tourTypes.categories.noAssigned')}
+                                            {t('categories.items.noAssigned')}
                                         </Typography>
                                     </Box>
                                 ) : (
@@ -255,7 +255,7 @@ export default function ItemAssignmentDialog({
                                                     <ListItemText
                                                         primary={category.title}
                                                         secondary={`${t(
-                                                            'tourTypes.categories.position',
+                                                            'categories.items.position',
                                                         )}: ${index + 1}`}
                                                     />
                                                 </ListItem>

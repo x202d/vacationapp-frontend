@@ -19,17 +19,17 @@
 
     "navigation": {
         "dashboard": "Dashboard",
-        "tourTypes": "Tourtypen",
+        "tourTypes": "Ausflüge",
         "categories": "Kategorien",
         "settings": "Einstellungen",
         "items": "ToDo's"
     },
 
     "tourTypes": {
-        "title": "Tourtypen",
-        "description": "Verwalte die verfügbaren Tourtypen und deren grundlegende Einstellungen.",
+        "title": "Ausflüge",
+        "description": "Verwalte die verfügbaren Ausflüge und deren grundlegende Einstellungen.",
         "actions": {
-            "create": "Tourtyp erstellen"
+            "create": "Ausflug erstellen"
         },
         "table": {
             "name": "Name",
@@ -37,10 +37,10 @@
             "status": "Status"
         },
         "dialog": {
-            "createTitle": "Tourtyp erstellen",
-            "editTitle": "Tourtyp bearbeiten",
-            "deleteTitle": "Tourtyp löschen",
-            "deleteMessage": "Möchtest du den Tourtyp „{{name}}“ wirklich löschen?"
+            "createTitle": "Ausflug erstellen",
+            "editTitle": "Ausflug bearbeiten",
+            "deleteTitle": "Ausflug löschen",
+            "deleteMessage": "Möchtest du den Ausflug „{{name}}“ wirklich löschen?"
         },
         "form": {
             "name": "Name",
@@ -48,11 +48,11 @@
             "active": "Aktiv"
         },
         "messages": {
-            "created": "Tourtyp wurde erfolgreich erstellt.",
-            "updated": "Tourtyp wurde erfolgreich aktualisiert.",
-            "deleted": "Tourtyp wurde erfolgreich gelöscht.",
-            "saveError": "Der Tourtyp konnte nicht gespeichert werden.",
-            "deleteError": "Der Tourtyp konnte nicht gelöscht werden."
+            "created": "Ausflug wurde erfolgreich erstellt.",
+            "updated": "Ausflug wurde erfolgreich aktualisiert.",
+            "deleted": "Ausflug wurde erfolgreich gelöscht.",
+            "saveError": "Der Ausflug konnte nicht gespeichert werden.",
+            "deleteError": "Der Ausflug konnte nicht gelöscht werden."
         },
         "categories": {
             "title": "Kategorien verwalten",
@@ -60,7 +60,7 @@
             "available": "Verfügbare Kategorien",
             "assigned": "Zugeordnete Kategorien",
             "noAvailable": "Keine weiteren Kategorien verfügbar.",
-            "noAssigned": "Diesem Tourtyp sind noch keine Kategorien zugeordnet.",
+            "noAssigned": "Diesem Ausflug sind noch keine Kategorien zugeordnet.",
             "position": "Position"
         }
     },
@@ -92,6 +92,14 @@
             "deleted": "Kategorie wurde erfolgreich gelöscht.",
             "saveError": "Die Kategorie konnte nicht gespeichert werden.",
             "deleteError": "Die Kategorie konnte nicht gelöscht werden."
+        },
+        "items": {
+            "available": "Verfügbare ToDo's",
+            "noAvailable": "Keine weiteren ToDo's verfügbar.",
+            "title": "ToDo's verknüpfen",
+            "assigned": "Zugeordnete ToDo's",
+            "noAssigned": "Dieser Kategorie sind noch keine ToDo's zugeordnet.",
+            "position": "Position"
         }
     },
     "items": {
