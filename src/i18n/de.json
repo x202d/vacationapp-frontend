@@ -1,66 +1,58 @@
 {
   "common": {
-    "actions": {
-      "create": "Neu",
-      "edit": "Bearbeiten",
-      "delete": "Löschen",
-      "save": "Speichern",
-      "cancel": "Abbrechen",
-      "close": "Schließen"
-    },
+    "language": "Sprache",
+    "toggleTheme": "Darstellung wechseln",
+    "save": "Speichern",
+    "saving": "Speichern...",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
     "active": "Aktiv",
     "inactive": "Inaktiv",
-    "yes": "Ja",
-    "no": "Nein",
-    "loading": "Laden...",
-    "noData": "Keine Daten vorhanden",
-    "toggleTheme": "Darstellung wechseln",
-    "language": "Sprache",
-    "confirmDelete": "Löschen bestätigen"
+    "notAvailable": "Keine Angabe",
+    "noEntries": "Keine Einträge vorhanden",
+    "actions": {
+      "title": "Aktionen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen"
+    }
   },
 
   "navigation": {
     "dashboard": "Dashboard",
-    "templates": "Vorlagen",
     "tourTypes": "Tourtypen",
     "categories": "Kategorien",
     "settings": "Einstellungen"
   },
 
-  "dashboard": {
-    "title": "Dashboard",
-    "welcome": "Willkommen im Holiday Planner"
-  },
-
   "tourTypes": {
     "title": "Tourtypen",
-    "description": "Verwalte die verfügbaren Tourtypen.",
-    "create": "Tourtyp erstellen",
-    "edit": "Tourtyp bearbeiten",
-
-    "fields": {
-      "name": "Name",
-      "description": "Beschreibung",
-      "isActive": "Aktiv",
-      "categories": "Kategorien",
-      "createdAt": "Erstellt am",
-      "updatedAt": "Geändert am"
+    "description": "Verwalte die verfügbaren Tourtypen und deren grundlegende Einstellungen.",
+    "actions": {
+      "create": "Tourtyp erstellen"
     },
-
-    "delete": {
-      "title": "Tourtyp löschen",
-      "message": "Möchtest du den Tourtyp wirklich löschen?"
-    }
-  },
-
-  "categories": {
-    "title": "Kategorien",
-    "description": "Verwalte die Kategorien.",
-
-    "fields": {
+    "table": {
       "name": "Name",
       "description": "Beschreibung",
-      "sortOrder": "Sortierung"
+      "status": "Status"
+    },
+    "dialog": {
+      "createTitle": "Tourtyp erstellen",
+      "editTitle": "Tourtyp bearbeiten",
+      "deleteTitle": "Tourtyp löschen",
+      "deleteMessage": "Möchtest du den Tourtyp „{{name}}“ wirklich löschen?"
+    },
+    "form": {
+      "name": "Name",
+      "description": "Beschreibung",
+      "active": "Aktiv"
+    },
+    "messages": {
+      "created": "Tourtyp wurde erfolgreich erstellt.",
+      "updated": "Tourtyp wurde erfolgreich aktualisiert.",
+      "deleted": "Tourtyp wurde erfolgreich gelöscht.",
+      "saveError": "Der Tourtyp konnte nicht gespeichert werden.",
+      "deleteError": "Der Tourtyp konnte nicht gelöscht werden."
     }
   }
+
 }

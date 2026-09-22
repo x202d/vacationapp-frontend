@@ -1,22 +1,21 @@
+import { useEffect, useState } from 'react'
 import {
     FormControlLabel,
+    Stack,
     Switch,
     TextField,
 } from '@mui/material'
-
-import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import type {
     CreateTourTypeRequest,
     TourType,
-} from '../../types/templates/TourTypeTypes.ts'
+} from '../../types/templates/TourTypeTypes'
 
 interface TourTypeFormProps {
     item?: TourType | null
     formId: string
-    onSubmit: (
-        data: CreateTourTypeRequest,
-    ) => void
+    onSubmit: (data: CreateTourTypeRequest) => void
 }
 
 export default function TourTypeForm({
@@ -24,55 +23,55 @@ export default function TourTypeForm({
                                          formId,
                                          onSubmit,
                                      }: TourTypeFormProps) {
-    const [name, setName] = useState('')
-    const [description, setDescription] = useState('')
-    const [isActive, setIsActive] = useState(true)
+    const { t } = useTranslation()
 
-    useEffect(() => {
-        setName(item?.name ?? '')
-        setDescription(item?.description ?? '')
-        setIsActive(item?.isActive ?? true)
-    }, [item])
 
-    const handleSubmit = (
-        event: React.FormEvent<HTMLFormElement>,
-    ) => {
-        event.preventDefault()
+const [name, setName] = useState('')
+const [description, setDescription] = useState('')
+const [isActive, setIsActive] = useState(true)
 
-        onSubmit({
-            name: name.trim(),
-            description: description.trim() || null,
-            isActive,
-        })
+useEffect(() => {
+    if (item) {
+        setName(item.name)
+        setDescription(item.description ?? '')
+        setIsActive(item.isActive)
+        return
     }
 
-    return (
-        <form
-            id={formId}
-            onSubmit={handleSubmit}
-        >
+    setName('')
+    setDescription('')
+    setIsActive(true)
+}, [item])
+
+const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
+    onSubmit({
+        name: name.trim(),
+        description: description.trim() || null,
+        isActive,
+    })
+}
+
+return (
+    <form id={formId} onSubmit={handleSubmit}>
+        <Stack spacing={2.5}>
             <TextField
                 fullWidth
                 required
-                label="Name"
-                value={name}
-                onChange={(event) =>
-                    setName(event.target.value)
-                }
-                margin="normal"
                 autoFocus
+                label={t('tourTypes.form.name')}
+                value={name}
+                onChange={(event) => setName(event.target.value)}
             />
 
             <TextField
                 fullWidth
                 multiline
-                minRows={3}
-                label="Beschreibung"
+                minRows={4}
+                label={t('tourTypes.form.description')}
                 value={description}
-                onChange={(event) =>
-                    setDescription(event.target.value)
-                }
-                margin="normal"
+                onChange={(event) => setDescription(event.target.value)}
             />
 
             <FormControlLabel
@@ -80,14 +79,14 @@ export default function TourTypeForm({
                     <Switch
                         checked={isActive}
                         onChange={(event) =>
-                            setIsActive(
-                                event.target.checked,
-                            )
+                            setIsActive(event.target.checked)
                         }
                     />
                 }
-                label="Aktiv"
+                label={t('tourTypes.form.active')}
             />
-        </form>
-    )
+        </Stack>
+    </form>
+)
+
 }
