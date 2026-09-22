@@ -12,9 +12,9 @@ import {
     Tooltip,
     Typography,
 } from '@mui/material'
-import {Delete, Edit} from '@mui/icons-material'
-import type {ReactNode} from 'react'
-import {useTranslation} from 'react-i18next'
+import { Delete, Edit } from '@mui/icons-material'
+import type { ReactNode } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export interface DataTableColumn<T> {
     key: keyof T
@@ -38,14 +38,14 @@ interface DataTableProps<T extends { id: string }> {
 }
 
 export default function DataTable<T extends { id: string }>({
-                                                                data,
-                                                                columns,
-                                                                loading = false,
-                                                                onEdit,
-                                                                onDelete,
-                                                                actions = [],
-                                                            }: DataTableProps<T>) {
-    const {t} = useTranslation()
+    data,
+    columns,
+    loading = false,
+    onEdit,
+    onDelete,
+    actions = [],
+}: DataTableProps<T>) {
+    const { t } = useTranslation()
     const hasActions = Boolean(onEdit || onDelete || actions.length)
     if (loading) {
         return (
@@ -58,7 +58,7 @@ export default function DataTable<T extends { id: string }>({
                         justifyContent: 'center',
                     }}
                 >
-                    <CircularProgress/>
+                    <CircularProgress />
                 </Box>
             </Paper>
         )
@@ -76,9 +76,7 @@ export default function DataTable<T extends { id: string }>({
                         px: 3,
                     }}
                 >
-                    <Typography color="text.secondary">
-                        {t('common.noEntries')}
-                    </Typography>
+                    <Typography color="text.secondary">{t('common.noEntries')}</Typography>
                 </Box>
             </Paper>
         )
@@ -90,15 +88,11 @@ export default function DataTable<T extends { id: string }>({
                 <TableHead>
                     <TableRow>
                         {columns.map((column) => (
-                            <TableCell key={String(column.key)}>
-                                {column.label}
-                            </TableCell>
+                            <TableCell key={String(column.key)}>{column.label}</TableCell>
                         ))}
 
                         {hasActions && (
-                            <TableCell align="right">
-                                {t('common.actions.title')}
-                            </TableCell>
+                            <TableCell align="right">{t('common.actions.title')}</TableCell>
                         )}
                     </TableRow>
                 </TableHead>
@@ -107,34 +101,40 @@ export default function DataTable<T extends { id: string }>({
                     {data.map((item) => (
                         <TableRow key={item.id} hover>
                             {columns.map((column) => (
-                                <TableCell
-                                    key={String(column.key)}
-                                >
+                                <TableCell key={String(column.key)}>
                                     {column.render
                                         ? column.render(item)
-                                        : String(
-                                            item[column.key] ?? '',
-                                        )}
+                                        : String(item[column.key] ?? '')}
                                 </TableCell>
                             ))}
 
                             {hasActions && (
                                 <TableCell align="right">
                                     {actions.map((action) => (
-                                        <Tooltip
-                                            key={action.label}
-                                            title={action.label}>
-                                            <IconButton size="small"
-                                                        onClick={() => action.onClick(item)}> {action.icon} </IconButton>
-                                        </Tooltip>))}
+                                        <Tooltip key={action.label} title={action.label}>
+                                            <IconButton
+                                                size="small"
+                                                onClick={() => action.onClick(item)}
+                                            >
+                                                {action.icon}
+                                            </IconButton>
+                                        </Tooltip>
+                                    ))}
                                     {onEdit && (
-                                        <Tooltip title={t('common.actions.edit')}> <IconButton size="small"
-                                                                                               onClick={() => onEdit(item)}>
-                                            <Edit/> </IconButton> </Tooltip>)}
+                                        <Tooltip title={t('common.actions.edit')}>
+                                            <IconButton size="small" onClick={() => onEdit(item)}>
+                                                <Edit />
+                                            </IconButton>
+                                        </Tooltip>
+                                    )}
                                     {onDelete && (
-                                        <Tooltip title={t('common.actions.delete')}> <IconButton size="small"
-                                                                                                 onClick={() => onDelete(item)}>
-                                            <Delete/> </IconButton> </Tooltip>)} </TableCell>
+                                        <Tooltip title={t('common.actions.delete')}>
+                                            <IconButton size="small" onClick={() => onDelete(item)}>
+                                                <Delete />
+                                            </IconButton>
+                                        </Tooltip>
+                                    )}{' '}
+                                </TableCell>
                             )}
                         </TableRow>
                     ))}

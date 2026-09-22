@@ -17,8 +17,7 @@ export const store = configureStore({
         getDefaultMiddleware()
             .concat(itemsApi.middleware)
             .concat(tourTypeApi.middleware)
-            .concat(categoryApi.middleware)
-        ,
+            .concat(categoryApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>

@@ -7,17 +7,17 @@ export const createAppTheme = (mode: 'light' | 'dark') =>
 
             ...(mode === 'light'
                 ? {
-                    background: {
-                        default: '#f5f6f8',
-                        paper: '#ffffff',
-                    },
-                }
+                      background: {
+                          default: '#f5f6f8',
+                          paper: '#ffffff',
+                      },
+                  }
                 : {
-                    background: {
-                        default: '#121212',
-                        paper: '#1e1e1e',
-                    },
-                }),
+                      background: {
+                          default: '#121212',
+                          paper: '#1e1e1e',
+                      },
+                  }),
         },
 
         shape: {
@@ -25,12 +25,7 @@ export const createAppTheme = (mode: 'light' | 'dark') =>
         },
 
         typography: {
-            fontFamily: [
-                'Inter',
-                'Roboto',
-                'Arial',
-                'sans-serif',
-            ].join(','),
+            fontFamily: ['Inter', 'Roboto', 'Arial', 'sans-serif'].join(','),
         },
 
         components: {

@@ -1,8 +1,4 @@
-import {
-    Box,
-    Button,
-    Typography,
-} from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 
 import { Add } from '@mui/icons-material'
 import type { ReactNode } from 'react'
@@ -17,11 +13,7 @@ interface PageHeaderProps {
     }
 }
 
-export default function PageHeader({
-                                       title,
-                                       description,
-                                       action,
-                                   }: PageHeaderProps) {
+export default function PageHeader({ title, description, action }: PageHeaderProps) {
     return (
         <Box
             sx={{
@@ -51,11 +43,7 @@ export default function PageHeader({
                 </Typography>
 
                 {description && (
-                    <Typography
-                        variant="body2"
-                        color="text.secondary"
-                        sx={{ mt: 0.5 }}
-                    >
+                    <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
                         {description}
                     </Typography>
                 )}

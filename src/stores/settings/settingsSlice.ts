@@ -48,10 +48,6 @@ const settingsSlice = createSlice({
     },
 })
 
-export const {
-    setTheme,
-    toggleTheme,
-    setLanguage,
-} = settingsSlice.actions
+export const { setTheme, toggleTheme, setLanguage } = settingsSlice.actions
 
 export default settingsSlice.reducer

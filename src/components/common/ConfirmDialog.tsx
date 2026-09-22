@@ -19,46 +19,29 @@ interface ConfirmDialogProps {
 }
 
 export default function ConfirmDialog({
-                                          open,
-                                          title,
-                                          message,
-                                          loading = false,
-                                          onConfirm,
-                                          onCancel,
-                                      }: ConfirmDialogProps) {
+    open,
+    title,
+    message,
+    loading = false,
+    onConfirm,
+    onCancel,
+}: ConfirmDialogProps) {
     const { t } = useTranslation()
 
     return (
-        <Dialog
-            open={open}
-            onClose={loading ? undefined : onCancel}
-            maxWidth="xs"
-            fullWidth
-        >
-            <DialogTitle>
-                {title}
-            </DialogTitle>
+        <Dialog open={open} onClose={loading ? undefined : onCancel} maxWidth="xs" fullWidth>
+            <DialogTitle>{title}</DialogTitle>
 
             <DialogContent>
-                <DialogContentText>
-                    {message}
-                </DialogContentText>
+                <DialogContentText>{message}</DialogContentText>
             </DialogContent>
 
             <DialogActions>
-                <Button
-                    onClick={onCancel}
-                    disabled={loading}
-                >
+                <Button onClick={onCancel} disabled={loading}>
                     {t('common.actions.cancel')}
                 </Button>
 
-                <Button
-                    color="error"
-                    variant="contained"
-                    onClick={onConfirm}
-                    disabled={loading}
-                >
+                <Button color="error" variant="contained" onClick={onConfirm} disabled={loading}>
                     {t('common.actions.delete')}
                 </Button>
             </DialogActions>

@@ -10,12 +10,7 @@ import {
     Typography,
 } from '@mui/material'
 
-import {
-    Dashboard,
-    Category,
-    Map,
-    Settings,
-} from '@mui/icons-material'
+import { Dashboard, Category, Map, Settings } from '@mui/icons-material'
 
 import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -28,11 +23,11 @@ interface SidebarProps {
 }
 
 export default function Sidebar({
-                                    drawerWidth,
-                                    mobileOpen,
-                                    onMobileClose,
-                                    isMobile,
-                                }: SidebarProps) {
+    drawerWidth,
+    mobileOpen,
+    onMobileClose,
+    isMobile,
+}: SidebarProps) {
     const { t } = useTranslation()
     const navigate = useNavigate()
     const location = useLocation()
@@ -70,43 +65,29 @@ export default function Sidebar({
                         <Dashboard />
                     </ListItemIcon>
 
-                    <ListItemText
-                        primary={t('navigation.dashboard')}
-                    />
+                    <ListItemText primary={t('navigation.dashboard')} />
                 </ListItemButton>
 
                 <ListItemButton
-                    selected={location.pathname.startsWith(
-                        '/templates/tour-types',
-                    )}
-                    onClick={() =>
-                        navigateTo('/templates/tour-types')
-                    }
+                    selected={location.pathname.startsWith('/templates/tour-types')}
+                    onClick={() => navigateTo('/templates/tour-types')}
                 >
                     <ListItemIcon>
                         <Map />
                     </ListItemIcon>
 
-                    <ListItemText
-                        primary={t('navigation.tourTypes')}
-                    />
+                    <ListItemText primary={t('navigation.tourTypes')} />
                 </ListItemButton>
 
                 <ListItemButton
-                    selected={location.pathname.startsWith(
-                        '/templates/categories',
-                    )}
-                    onClick={() =>
-                        navigateTo('/templates/categories')
-                    }
+                    selected={location.pathname.startsWith('/templates/categories')}
+                    onClick={() => navigateTo('/templates/categories')}
                 >
                     <ListItemIcon>
                         <Category />
                     </ListItemIcon>
 
-                    <ListItemText
-                        primary={t('navigation.categories')}
-                    />
+                    <ListItemText primary={t('navigation.categories')} />
                 </ListItemButton>
             </List>
 
@@ -120,9 +101,7 @@ export default function Sidebar({
                         <Settings />
                     </ListItemIcon>
 
-                    <ListItemText
-                        primary={t('navigation.settings')}
-                    />
+                    <ListItemText primary={t('navigation.settings')} />
                 </ListItemButton>
             </List>
         </>

@@ -13,7 +13,7 @@ import {
     Typography,
 } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
-import {TourType} from "../types/templates/TourTypeTypes.ts";
+import { TourType } from '../types/templates/TourTypeTypes.ts'
 
 interface InputListCardProps {
     title: string
@@ -26,14 +26,14 @@ interface InputListCardProps {
 }
 
 function InputListCard({
-                           title,
-                           description,
-                           inputLabel,
-                           buttonLabel = 'Hinzufügen',
-                           items,
-                           onAdd,
-                           onToggle,
-                       }: InputListCardProps) {
+    title,
+    description,
+    inputLabel,
+    buttonLabel = 'Hinzufügen',
+    items,
+    onAdd,
+    onToggle,
+}: InputListCardProps) {
     const [inputValue, setInputValue] = useState('')
 
     const handleAddItem = () => {
@@ -47,9 +47,7 @@ function InputListCard({
         setInputValue('')
     }
 
-    const handleKeyDown = (
-        event: React.KeyboardEvent<HTMLInputElement>,
-    ) => {
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             handleAddItem()
         }
@@ -62,20 +60,12 @@ function InputListCard({
             </Typography>
 
             {description && (
-                <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{ mb: 2 }}
-                >
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
                     {description}
                 </Typography>
             )}
 
-            <Stack
-                direction={{ xs: 'column', sm: 'row' }}
-                spacing={2}
-                sx={{ mb: 3 }}
-            >
+            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ mb: 3 }}>
                 <TextField
                     fullWidth
                     size="small"
@@ -116,14 +106,10 @@ function InputListCard({
 
                             <ListItemText
                                 primary={item.name}
-                                secondary={item.description + "-" + item.templateCategories.length}
+                                secondary={item.description + '-' + item.templateCategories.length}
                                 sx={{
-                                    textDecoration: !item.isActive
-                                        ? 'line-through'
-                                        : 'none',
-                                    color: !item.isActive
-                                        ? 'text.secondary'
-                                        : 'text.primary',
+                                    textDecoration: !item.isActive ? 'line-through' : 'none',
+                                    color: !item.isActive ? 'text.secondary' : 'text.primary',
                                 }}
                             />
                         </ListItem>

@@ -10,23 +10,13 @@ import {
     Typography,
 } from '@mui/material'
 
-import {
-    DarkMode,
-    LightMode,
-    Menu,
-} from '@mui/icons-material'
+import { DarkMode, LightMode, Menu } from '@mui/icons-material'
 
 import { useTranslation } from 'react-i18next'
 
-import {
-    useAppDispatch,
-    useAppSelector,
-} from '../../stores/hooks.ts'
+import { useAppDispatch, useAppSelector } from '../../stores/hooks.ts'
 
-import {
-    setLanguage,
-    toggleTheme,
-} from '../../stores/settings/settingsSlice.ts'
+import { setLanguage, toggleTheme } from '../../stores/settings/settingsSlice.ts'
 
 interface HeaderProps {
     drawerWidth: number
@@ -34,26 +24,16 @@ interface HeaderProps {
     showMenuButton: boolean
 }
 
-export default function Header({
-                                   drawerWidth,
-                                   onMenuClick,
-                                   showMenuButton,
-                               }: HeaderProps) {
+export default function Header({ drawerWidth, onMenuClick, showMenuButton }: HeaderProps) {
     const { t, i18n } = useTranslation()
 
     const dispatch = useAppDispatch()
 
-    const theme = useAppSelector(
-        (state) => state.settings.theme,
-    )
+    const theme = useAppSelector((state) => state.settings.theme)
 
-    const language = useAppSelector(
-        (state) => state.settings.language,
-    )
+    const language = useAppSelector((state) => state.settings.language)
 
-    const handleLanguageChange = (
-        event: SelectChangeEvent,
-    ) => {
+    const handleLanguageChange = (event: SelectChangeEvent) => {
         const value = event.target.value as 'de' | 'en'
 
         dispatch(setLanguage(value))
@@ -79,11 +59,7 @@ export default function Header({
         >
             <Toolbar>
                 {showMenuButton && (
-                    <IconButton
-                        edge="start"
-                        onClick={onMenuClick}
-                        sx={{ mr: 2 }}
-                    >
+                    <IconButton edge="start" onClick={onMenuClick} sx={{ mr: 2 }}>
                         <Menu />
                     </IconButton>
                 )}
@@ -115,26 +91,14 @@ export default function Header({
                         }}
                         aria-label={t('common.language')}
                     >
-                        <MenuItem value="de">
-                            DE
-                        </MenuItem>
+                        <MenuItem value="de">DE</MenuItem>
 
-                        <MenuItem value="en">
-                            EN
-                        </MenuItem>
+                        <MenuItem value="en">EN</MenuItem>
                     </Select>
 
                     <Tooltip title={t('common.toggleTheme')}>
-                        <IconButton
-                            onClick={() =>
-                                dispatch(toggleTheme())
-                            }
-                        >
-                            {theme === 'dark' ? (
-                                <LightMode />
-                            ) : (
-                                <DarkMode />
-                            )}
+                        <IconButton onClick={() => dispatch(toggleTheme())}>
+                            {theme === 'dark' ? <LightMode /> : <DarkMode />}
                         </IconButton>
                     </Tooltip>
                 </Box>

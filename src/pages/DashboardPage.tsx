@@ -1,8 +1,4 @@
-import {
-    Card,
-    CardContent,
-    Typography,
-} from '@mui/material'
+import { Card, CardContent, Typography } from '@mui/material'
 
 import { useTranslation } from 'react-i18next'
 
@@ -23,11 +19,7 @@ export default function DashboardPage() {
 
             <Card>
                 <CardContent>
-                    <Typography>
-                        {t(
-                            'dashboard.welcome',
-                        )}
-                    </Typography>
+                    <Typography>{t('dashboard.welcome')}</Typography>
                 </CardContent>
             </Card>
         </>

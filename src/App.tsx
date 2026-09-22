@@ -1,9 +1,4 @@
-import {
-    BrowserRouter,
-    Navigate,
-    Route,
-    Routes,
-} from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 
 import AdminLayout from './components/layout/AdminLayout'
 
@@ -16,34 +11,13 @@ function App() {
         <BrowserRouter>
             <Routes>
                 <Route element={<AdminLayout />}>
-                    <Route
-                        path="/"
-                        element={<DashboardPage />}
-                    />
+                    <Route path="/" element={<DashboardPage />} />
 
-                    <Route
-                        path="/templates/tour-types"
-                        element={
-                            <TourTypesPage />
-                        }
-                    />
+                    <Route path="/templates/tour-types" element={<TourTypesPage />} />
 
-                    <Route
-                        path="/templates/categories"
-                        element={
-                            <CategoriesPage />
-                        }
-                    />
+                    <Route path="/templates/categories" element={<CategoriesPage />} />
 
-                    <Route
-                        path="*"
-                        element={
-                            <Navigate
-                                to="/"
-                                replace
-                            />
-                        }
-                    />
+                    <Route path="*" element={<Navigate to="/" replace />} />
                 </Route>
             </Routes>
         </BrowserRouter>

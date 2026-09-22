@@ -1,14 +1,12 @@
-import {
-    createApi,
-    fetchBaseQuery,
-} from '@reduxjs/toolkit/query/react'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 import { API_URL } from '../../config/api'
 
 import {
     TourType,
     CreateTourTypeRequest,
-    UpdateTourTypeRequest, UpdateTourTypeCategoriesRequest,
+    UpdateTourTypeRequest,
+    UpdateTourTypeCategoriesRequest,
 } from '../../types/templates/TourTypeTypes'
 
 const tagTypes = ['TourType'] as const
@@ -29,48 +27,48 @@ export const tourTypeApi = createApi({
             providesTags: (result) =>
                 result
                     ? [
-                        ...result.map(({ id }) => ({
-                            type: 'TourType' as const,
-                            id,
-                        })),
-                        {
-                            type: 'TourType' as const,
-                            id: 'LIST',
-                        },
-                    ]
+                          ...result.map(({ id }) => ({
+                              type: 'TourType' as const,
+                              id,
+                          })),
+                          {
+                              type: 'TourType' as const,
+                              id: 'LIST',
+                          },
+                      ]
                     : [
-                        {
-                            type: 'TourType' as const,
-                            id: 'LIST',
-                        },
-                    ],
+                          {
+                              type: 'TourType' as const,
+                              id: 'LIST',
+                          },
+                      ],
         }),
         updateCategories: builder.mutation<
             TourType,
             {
                 id: string
                 data: UpdateTourTypeCategoriesRequest
-            }> ({
-             query: ({ id, data }) => ({
-     url: `/tour-types/${id}/categories`,
- method: 'PUT',
- body: data,
- }),
+            }
+        >({
+            query: ({ id, data }) => ({
+                url: `/tour-types/${id}/categories`,
+                method: 'PUT',
+                body: data,
+            }),
 
-invalidatesTags: (_, __, { id }) => [
-    {
-        type: 'TourType',
-        id,
-    },
-    {
-        type: 'TourType',
-        id: 'LIST',
-    },
-],
+            invalidatesTags: (_, __, { id }) => [
+                {
+                    type: 'TourType',
+                    id,
+                },
+                {
+                    type: 'TourType',
+                    id: 'LIST',
+                },
+            ],
+        }),
 
-}),
-
-getItem: builder.query<TourType, string>({
+        getItem: builder.query<TourType, string>({
             query: (id) => `/tour-types/${id}`,
 
             providesTags: (_, __, id) => [
@@ -81,10 +79,7 @@ getItem: builder.query<TourType, string>({
             ],
         }),
 
-        createItem: builder.mutation<
-            TourType,
-            CreateTourTypeRequest
-        >({
+        createItem: builder.mutation<TourType, CreateTourTypeRequest>({
             query: (item) => ({
                 url: '/tour-types',
                 method: 'POST',

@@ -13,109 +13,105 @@ const tagTypes = ['Category'] as const
 export const categoryApi = createApi({
     reducerPath: 'categoryApi',
 
-baseQuery: fetchBaseQuery({
-    baseUrl: API_URL,
-}),
-
-tagTypes,
-
-endpoints: (builder) => ({
-    getItems: builder.query<Category[], void>({
-        query: () => '/categories',
-
-        providesTags: (result) =>
-            result
-                ? [
-                      ...result.map(({ id }) => ({
-                          type: 'Category' as const,
-                          id,
-                      })),
-                      {
-                          type: 'Category' as const,
-                          id: 'LIST',
-                      },
-                  ]
-                : [
-                      {
-                          type: 'Category' as const,
-                          id: 'LIST',
-                      },
-                  ],
+    baseQuery: fetchBaseQuery({
+        baseUrl: API_URL,
     }),
 
-    getItem: builder.query<Category, string>({
-        query: (id) => `/categories/${id}`,
+    tagTypes,
 
-        providesTags: (_, __, id) => [
-            {
-                type: 'Category',
-                id,
-            },
-        ],
-    }),
+    endpoints: (builder) => ({
+        getItems: builder.query<Category[], void>({
+            query: () => '/categories',
 
-    createItem: builder.mutation<
-        Category,
-        CreateCategoryRequest
-    >({
-        query: (item) => ({
-            url: '/categories',
-            method: 'POST',
-            body: item,
+            providesTags: (result) =>
+                result
+                    ? [
+                          ...result.map(({ id }) => ({
+                              type: 'Category' as const,
+                              id,
+                          })),
+                          {
+                              type: 'Category' as const,
+                              id: 'LIST',
+                          },
+                      ]
+                    : [
+                          {
+                              type: 'Category' as const,
+                              id: 'LIST',
+                          },
+                      ],
         }),
 
-        invalidatesTags: [
-            {
-                type: 'Category',
-                id: 'LIST',
-            },
-        ],
-    }),
+        getItem: builder.query<Category, string>({
+            query: (id) => `/categories/${id}`,
 
-    updateItem: builder.mutation<
-        Category,
-        {
-            id: string
-            data: UpdateCategoryRequest
-        }
-    >({
-        query: ({ id, data }) => ({
-            url: `/categories/${id}`,
-            method: 'PUT',
-            body: data,
+            providesTags: (_, __, id) => [
+                {
+                    type: 'Category',
+                    id,
+                },
+            ],
         }),
 
-        invalidatesTags: (_, __, { id }) => [
-            {
-                type: 'Category',
-                id,
-            },
-            {
-                type: 'Category',
-                id: 'LIST',
-            },
-        ],
-    }),
+        createItem: builder.mutation<Category, CreateCategoryRequest>({
+            query: (item) => ({
+                url: '/categories',
+                method: 'POST',
+                body: item,
+            }),
 
-    deleteItem: builder.mutation<void, string>({
-        query: (id) => ({
-            url: `/categories/${id}`,
-            method: 'DELETE',
+            invalidatesTags: [
+                {
+                    type: 'Category',
+                    id: 'LIST',
+                },
+            ],
         }),
 
-        invalidatesTags: (_, __, id) => [
+        updateItem: builder.mutation<
+            Category,
             {
-                type: 'Category',
-                id,
-            },
-            {
-                type: 'Category',
-                id: 'LIST',
-            },
-        ],
-    }),
-}),
+                id: string
+                data: UpdateCategoryRequest
+            }
+        >({
+            query: ({ id, data }) => ({
+                url: `/categories/${id}`,
+                method: 'PUT',
+                body: data,
+            }),
 
+            invalidatesTags: (_, __, { id }) => [
+                {
+                    type: 'Category',
+                    id,
+                },
+                {
+                    type: 'Category',
+                    id: 'LIST',
+                },
+            ],
+        }),
+
+        deleteItem: builder.mutation<void, string>({
+            query: (id) => ({
+                url: `/categories/${id}`,
+                method: 'DELETE',
+            }),
+
+            invalidatesTags: (_, __, id) => [
+                {
+                    type: 'Category',
+                    id,
+                },
+                {
+                    type: 'Category',
+                    id: 'LIST',
+                },
+            ],
+        }),
+    }),
 })
 
 export const {

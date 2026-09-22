@@ -12,18 +12,11 @@ import { createAppTheme } from './theme/theme'
 import i18n from './i18n/i18n'
 
 function AppProviders() {
-    const themeMode = useAppSelector(
-        (state) => state.settings.theme,
-    )
+    const themeMode = useAppSelector((state) => state.settings.theme)
 
-    const language = useAppSelector(
-        (state) => state.settings.language,
-    )
+    const language = useAppSelector((state) => state.settings.language)
 
-    const theme = useMemo(
-        () => createAppTheme(themeMode),
-        [themeMode],
-    )
+    const theme = useMemo(() => createAppTheme(themeMode), [themeMode])
 
     useEffect(() => {
         i18n.changeLanguage(language)
@@ -37,9 +30,7 @@ function AppProviders() {
     )
 }
 
-ReactDOM.createRoot(
-    document.getElementById('root')!,
-).render(
+ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <Provider store={store}>
             <AppProviders />
