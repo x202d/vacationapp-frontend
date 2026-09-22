@@ -19,10 +19,13 @@
 
     "navigation": {
         "dashboard": "Dashboard",
+        "templates": "Vorlagen",
         "tourTypes": "Ausflüge",
         "categories": "Kategorien",
-        "settings": "Einstellungen",
-        "items": "ToDo's"
+        "items": "Items",
+        "plannedTrips": "Geplante Ausflüge",
+        "trips": "Ausflüge",
+        "settings": "Einstellungen"
     },
 
     "tourTypes": {

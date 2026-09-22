@@ -1,5 +1,6 @@
 import {
     Box,
+    Collapse,
     Divider,
     Drawer,
     List,
@@ -10,8 +11,18 @@ import {
     Typography,
 } from '@mui/material'
 
-import { Category, Check, Dashboard, Map, Settings } from '@mui/icons-material'
+import {
+    Category,
+    Check,
+    Dashboard,
+    Event,
+    ExpandLess,
+    ExpandMore,
+    Map,
+    Settings,
+} from '@mui/icons-material'
 
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate } from 'react-router-dom'
 
@@ -31,6 +42,10 @@ export default function Sidebar({
     const { t } = useTranslation()
     const navigate = useNavigate()
     const location = useLocation()
+
+    const [templatesOpen, setTemplatesOpen] = useState(location.pathname.startsWith('/templates'))
+
+    const [tripsOpen, setTripsOpen] = useState(location.pathname.startsWith('/trips'))
 
     const navigateTo = (path: string) => {
         navigate(path)
@@ -57,6 +72,7 @@ export default function Sidebar({
             <Divider />
 
             <List sx={{ px: 1, py: 1 }}>
+                {/* Dashboard */}
                 <ListItemButton
                     selected={location.pathname === '/'}
                     onClick={() => navigateTo('/')}
@@ -68,38 +84,83 @@ export default function Sidebar({
                     <ListItemText primary={t('navigation.dashboard')} />
                 </ListItemButton>
 
-                <ListItemButton
-                    selected={location.pathname.startsWith('/templates/tour-types')}
-                    onClick={() => navigateTo('/templates/tour-types')}
-                >
+                {/* Vorlagen */}
+                <ListItemButton onClick={() => setTemplatesOpen((open) => !open)}>
                     <ListItemIcon>
                         <Map />
                     </ListItemIcon>
 
-                    <ListItemText primary={t('navigation.tourTypes')} />
+                    <ListItemText primary={t('navigation.templates')} />
+
+                    {templatesOpen ? <ExpandLess /> : <ExpandMore />}
                 </ListItemButton>
 
-                <ListItemButton
-                    selected={location.pathname.startsWith('/templates/categories')}
-                    onClick={() => navigateTo('/templates/categories')}
-                >
+                <Collapse in={templatesOpen} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                        <ListItemButton
+                            sx={{ pl: 4 }}
+                            selected={location.pathname.startsWith('/templates/tour-types')}
+                            onClick={() => navigateTo('/templates/tour-types')}
+                        >
+                            <ListItemIcon>
+                                <Map />
+                            </ListItemIcon>
+
+                            <ListItemText primary={t('navigation.tourTypes')} />
+                        </ListItemButton>
+
+                        <ListItemButton
+                            sx={{ pl: 4 }}
+                            selected={location.pathname.startsWith('/templates/categories')}
+                            onClick={() => navigateTo('/templates/categories')}
+                        >
+                            <ListItemIcon>
+                                <Category />
+                            </ListItemIcon>
+
+                            <ListItemText primary={t('navigation.categories')} />
+                        </ListItemButton>
+
+                        <ListItemButton
+                            sx={{ pl: 4 }}
+                            selected={location.pathname.startsWith('/templates/items')}
+                            onClick={() => navigateTo('/templates/items')}
+                        >
+                            <ListItemIcon>
+                                <Check />
+                            </ListItemIcon>
+
+                            <ListItemText primary={t('navigation.items')} />
+                        </ListItemButton>
+                    </List>
+                </Collapse>
+
+                {/* Geplante Ausflüge */}
+                <ListItemButton onClick={() => setTripsOpen((open) => !open)}>
                     <ListItemIcon>
-                        <Category />
+                        <Event />
                     </ListItemIcon>
 
-                    <ListItemText primary={t('navigation.categories')} />
+                    <ListItemText primary={t('navigation.plannedTrips')} />
+
+                    {tripsOpen ? <ExpandLess /> : <ExpandMore />}
                 </ListItemButton>
 
-                <ListItemButton
-                    selected={location.pathname.startsWith('/templates/items')}
-                    onClick={() => navigateTo('/templates/items')}
-                >
-                    <ListItemIcon>
-                        <Check />
-                    </ListItemIcon>
+                <Collapse in={tripsOpen} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                        <ListItemButton
+                            sx={{ pl: 4 }}
+                            selected={location.pathname.startsWith('/trips')}
+                            onClick={() => navigateTo('/trips')}
+                        >
+                            <ListItemIcon>
+                                <Event />
+                            </ListItemIcon>
 
-                    <ListItemText primary={t('navigation.items')} />
-                </ListItemButton>
+                            <ListItemText primary={t('navigation.trips')} />
+                        </ListItemButton>
+                    </List>
+                </Collapse>
             </List>
 
             <Box sx={{ flexGrow: 1 }} />
