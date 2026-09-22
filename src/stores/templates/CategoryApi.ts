@@ -21,7 +21,7 @@ export const categoryApi = createApi({
 
     endpoints: (builder) => ({
         getItems: builder.query<Category[], void>({
-            query: () => '/categories',
+            query: () => '/template-categories',
 
             providesTags: (result) =>
                 result
@@ -44,7 +44,7 @@ export const categoryApi = createApi({
         }),
 
         getItem: builder.query<Category, string>({
-            query: (id) => `/categories/${id}`,
+            query: (id) => `/template-categories/${id}`,
 
             providesTags: (_, __, id) => [
                 {
@@ -56,7 +56,7 @@ export const categoryApi = createApi({
 
         createItem: builder.mutation<Category, CreateCategoryRequest>({
             query: (item) => ({
-                url: '/categories',
+                url: '/template-categories',
                 method: 'POST',
                 body: item,
             }),
@@ -77,7 +77,7 @@ export const categoryApi = createApi({
             }
         >({
             query: ({ id, data }) => ({
-                url: `/categories/${id}`,
+                url: `/template-categories/${id}`,
                 method: 'PUT',
                 body: data,
             }),
@@ -96,7 +96,7 @@ export const categoryApi = createApi({
 
         deleteItem: builder.mutation<void, string>({
             query: (id) => ({
-                url: `/categories/${id}`,
+                url: `/template-categories/${id}`,
                 method: 'DELETE',
             }),
 

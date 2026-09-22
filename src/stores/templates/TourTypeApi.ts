@@ -3,10 +3,10 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { API_URL } from '../../config/api'
 
 import {
-    TourType,
     CreateTourTypeRequest,
-    UpdateTourTypeRequest,
+    TourType,
     UpdateTourTypeCategoriesRequest,
+    UpdateTourTypeRequest,
 } from '../../types/templates/TourTypeTypes'
 
 const tagTypes = ['TourType'] as const
@@ -22,7 +22,7 @@ export const tourTypeApi = createApi({
 
     endpoints: (builder) => ({
         getItems: builder.query<TourType[], void>({
-            query: () => '/tour-types',
+            query: () => '/template-tours',
 
             providesTags: (result) =>
                 result
@@ -51,7 +51,7 @@ export const tourTypeApi = createApi({
             }
         >({
             query: ({ id, data }) => ({
-                url: `/tour-types/${id}/categories`,
+                url: `/template-tours/${id}/categories`,
                 method: 'PUT',
                 body: data,
             }),
@@ -69,7 +69,7 @@ export const tourTypeApi = createApi({
         }),
 
         getItem: builder.query<TourType, string>({
-            query: (id) => `/tour-types/${id}`,
+            query: (id) => `/template-tours/${id}`,
 
             providesTags: (_, __, id) => [
                 {
@@ -81,7 +81,7 @@ export const tourTypeApi = createApi({
 
         createItem: builder.mutation<TourType, CreateTourTypeRequest>({
             query: (item) => ({
-                url: '/tour-types',
+                url: '/template-tours',
                 method: 'POST',
                 body: item,
             }),
@@ -102,7 +102,7 @@ export const tourTypeApi = createApi({
             }
         >({
             query: ({ id, data }) => ({
-                url: `/tour-types/${id}`,
+                url: `/template-tours/${id}`,
                 method: 'PUT',
                 body: data,
             }),
@@ -121,7 +121,7 @@ export const tourTypeApi = createApi({
 
         deleteItem: builder.mutation<void, string>({
             query: (id) => ({
-                url: `/tour-types/${id}`,
+                url: `/template-tours/${id}`,
                 method: 'DELETE',
             }),
 
