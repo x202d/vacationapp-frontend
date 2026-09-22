@@ -21,7 +21,8 @@
         "dashboard": "Dashboard",
         "tourTypes": "Tourtypen",
         "categories": "Kategorien",
-        "settings": "Einstellungen"
+        "settings": "Einstellungen",
+        "items": "ToDo's"
     },
 
     "tourTypes": {
@@ -91,6 +92,36 @@
             "deleted": "Kategorie wurde erfolgreich gelöscht.",
             "saveError": "Die Kategorie konnte nicht gespeichert werden.",
             "deleteError": "Die Kategorie konnte nicht gelöscht werden."
+        }
+    },
+    "items": {
+        "title": "ToDo's",
+        "description": "Verwalte die verfügbaren ToDo's.",
+        "actions": {
+            "create": "ToDo erstellen"
+        },
+        "table": {
+            "name": "Name",
+            "description": "Beschreibung",
+            "sortOrder": "Reihenfolge"
+        },
+        "dialog": {
+            "createTitle": "ToDo erstellen",
+            "editTitle": "ToDo bearbeiten",
+            "deleteTitle": "ToDo löschen",
+            "deleteMessage": "Möchtest du die ToDo „{{name}}“ wirklich löschen?"
+        },
+        "form": {
+            "name": "Name",
+            "description": "Beschreibung",
+            "sortOrder": "Reihenfolge"
+        },
+        "messages": {
+            "created": "ToDo wurde erfolgreich erstellt.",
+            "updated": "ToDo wurde erfolgreich aktualisiert.",
+            "deleted": "ToDo wurde erfolgreich gelöscht.",
+            "saveError": "Die ToDo konnte nicht gespeichert werden.",
+            "deleteError": "Die ToDo konnte nicht gelöscht werden."
         }
     }
 }

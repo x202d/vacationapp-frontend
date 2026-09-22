@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { itemsApi } from '../stores/items/itemsApi'
+import { templateItemApi } from '../stores/templates/ItemsApi.ts'
 import { tourTypeApi } from '../stores/templates/TourTypeApi'
 import { categoryApi } from '../stores/templates/CategoryApi'
 import settingsReducer from '../stores/settings/settingsSlice'
 
 export const store = configureStore({
     reducer: {
-        [itemsApi.reducerPath]: itemsApi.reducer,
+        [templateItemApi.reducerPath]: templateItemApi.reducer,
         [tourTypeApi.reducerPath]: tourTypeApi.reducer,
         [categoryApi.reducerPath]: categoryApi.reducer,
 
@@ -15,7 +15,7 @@ export const store = configureStore({
 
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware()
-            .concat(itemsApi.middleware)
+            .concat(templateItemApi.middleware)
             .concat(tourTypeApi.middleware)
             .concat(categoryApi.middleware),
 })

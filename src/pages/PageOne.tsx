@@ -1,7 +1,7 @@
 import { Container, Typography } from '@mui/material'
 import InputListCard from '../components/InputListCard'
 import { useTranslation } from 'react-i18next'
-import { useCreateItemMutation, useGetItemsQuery } from '../stores/items/itemsApi'
+import { useCreateItemMutation, useGetItemsQuery } from '../stores/templates/ItemsApi.ts'
 
 function PageOne() {
     const { t } = useTranslation()

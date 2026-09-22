@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { FormControlLabel, Stack, Switch, TextField } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
-import type { CreateTourTypeRequest, TourType } from '../../types/templates/TourTypeTypes'
+import type { CreateTourTypeRequest, TourType } from '../../types/templates/TourTypeTypes.ts'
 
 interface TourTypeFormProps {
     item?: TourType | null

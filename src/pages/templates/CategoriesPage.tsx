@@ -11,24 +11,21 @@ import {
 import { Add } from '@mui/icons-material'
 import { useTranslation } from 'react-i18next'
 
-import PageHeader from '../components/common/PageHeader'
-import DataTable, { type DataTableColumn } from '../components/common/DataTable'
-import ConfirmDialog from '../components/common/ConfirmDialog'
-import TourTypeForm from '../pages/templates/TourTypeForm'
-import { Category } from '@mui/icons-material'
+import PageHeader from '../../components/common/PageHeader.tsx'
+import DataTable, { type DataTableColumn } from '../../components/common/DataTable.tsx'
+import ConfirmDialog from '../../components/common/ConfirmDialog.tsx'
+import CategoryForm from '../../components/templates/CategoryForm.tsx'
 
-import CategoryAssignmentDialog from '../components/templates/CategoryAssignmentDialog'
-
-import type { CreateTourTypeRequest, TourType } from '../types/templates/TourTypeTypes'
+import type { Category, CreateCategoryRequest } from '../../types/templates/CategoryTypes.ts'
 
 import {
     useCreateItemMutation,
     useDeleteItemMutation,
     useGetItemsQuery,
     useUpdateItemMutation,
-} from '../stores/templates/TourTypeApi'
+} from '../../stores/templates/CategoryApi.ts'
 
-export default function TourTypesPage() {
+export default function CategoriesPage() {
     const { t } = useTranslation()
 
     const { data: items = [], isLoading, isFetching } = useGetItemsQuery()
@@ -38,27 +35,17 @@ export default function TourTypesPage() {
     const [updateItem, { isLoading: isUpdating }] = useUpdateItemMutation()
 
     const [deleteItem, { isLoading: isDeleting }] = useDeleteItemMutation()
-    const [categoryDialogOpen, setCategoryDialogOpen] = useState(false)
 
-    const [categoryTourType, setCategoryTourType] = useState<TourType | null>(null)
-
-    const handleManageCategories = (item: TourType) => {
-        setCategoryTourType(item)
-        setCategoryDialogOpen(true)
-    }
-
-    const handleCloseCategoryDialog = () => {
-        setCategoryDialogOpen(false)
-        setCategoryTourType(null)
-    }
     const [formOpen, setFormOpen] = useState(false)
     const [deleteOpen, setDeleteOpen] = useState(false)
-    const [selectedItem, setSelectedItem] = useState<TourType | null>(null)
+
+    const [selectedItem, setSelectedItem] = useState<Category | null>(null)
 
     const [error, setError] = useState<string | null>(null)
     const [success, setSuccess] = useState<string | null>(null)
 
-    const formId = 'tour-type-form'
+    const formId = 'category-form'
+
     const isSaving = isCreating || isUpdating
 
     const handleCreate = () => {
@@ -66,12 +53,12 @@ export default function TourTypesPage() {
         setFormOpen(true)
     }
 
-    const handleEdit = (item: TourType) => {
+    const handleEdit = (item: Category) => {
         setSelectedItem(item)
         setFormOpen(true)
     }
 
-    const handleDelete = (item: TourType) => {
+    const handleDelete = (item: Category) => {
         setSelectedItem(item)
         setDeleteOpen(true)
     }
@@ -85,7 +72,7 @@ export default function TourTypesPage() {
         setSelectedItem(null)
     }
 
-    const handleSave = async (data: CreateTourTypeRequest) => {
+    const handleSave = async (data: CreateCategoryRequest) => {
         try {
             if (selectedItem) {
                 await updateItem({
@@ -93,17 +80,17 @@ export default function TourTypesPage() {
                     data,
                 }).unwrap()
 
-                setSuccess(t('tourTypes.messages.updated'))
+                setSuccess(t('categories.messages.updated'))
             } else {
                 await createItem(data).unwrap()
 
-                setSuccess(t('tourTypes.messages.created'))
+                setSuccess(t('categories.messages.created'))
             }
 
             setFormOpen(false)
             setSelectedItem(null)
         } catch {
-            setError(t('tourTypes.messages.saveError'))
+            setError(t('categories.messages.saveError'))
         }
     }
 
@@ -117,39 +104,38 @@ export default function TourTypesPage() {
 
             setDeleteOpen(false)
             setSelectedItem(null)
-            setSuccess(t('tourTypes.messages.deleted'))
+            setSuccess(t('categories.messages.deleted'))
         } catch {
-            setError(t('tourTypes.messages.deleteError'))
+            setError(t('categories.messages.deleteError'))
         }
     }
 
-    const columns: DataTableColumn<TourType>[] = [
+    const columns: DataTableColumn<Category>[] = [
         {
             key: 'name',
-            label: t('tourTypes.table.name'),
+            label: t('categories.table.name'),
         },
         {
             key: 'description',
-            label: t('tourTypes.table.description'),
+            label: t('categories.table.description'),
             render: (item) =>
                 item.description || (
                     <span style={{ opacity: 0.5 }}>{t('common.notAvailable')}</span>
                 ),
         },
         {
-            key: 'isActive',
-            label: t('tourTypes.table.status'),
-            render: (item) => (item.isActive ? t('common.active') : t('common.inactive')),
+            key: 'sortOrder',
+            label: t('categories.table.sortOrder'),
         },
     ]
 
     return (
         <>
             <PageHeader
-                title={t('tourTypes.title')}
-                description={t('tourTypes.description')}
+                title={t('categories.title')}
+                description={t('categories.description')}
                 action={{
-                    label: t('tourTypes.actions.create'),
+                    label: t('categories.actions.create'),
                     icon: <Add />,
                     onClick: handleCreate,
                 }}
@@ -161,24 +147,17 @@ export default function TourTypesPage() {
                 loading={isLoading || isFetching}
                 onEdit={handleEdit}
                 onDelete={handleDelete}
-                actions={[
-                    {
-                        label: t('tourTypes.categories.manage'),
-                        icon: <Category />,
-                        onClick: handleManageCategories,
-                    },
-                ]}
             />
 
             <Dialog open={formOpen} onClose={handleCloseForm} fullWidth maxWidth="sm">
                 <DialogTitle>
                     {selectedItem
-                        ? t('tourTypes.dialog.editTitle')
-                        : t('tourTypes.dialog.createTitle')}
+                        ? t('categories.dialog.editTitle')
+                        : t('categories.dialog.createTitle')}
                 </DialogTitle>
 
                 <DialogContent dividers>
-                    <TourTypeForm item={selectedItem} formId={formId} onSubmit={handleSave} />
+                    <CategoryForm item={selectedItem} formId={formId} onSubmit={handleSave} />
                 </DialogContent>
 
                 <DialogActions>
@@ -194,8 +173,8 @@ export default function TourTypesPage() {
 
             <ConfirmDialog
                 open={deleteOpen}
-                title={t('tourTypes.dialog.deleteTitle')}
-                message={t('tourTypes.dialog.deleteMessage', {
+                title={t('categories.dialog.deleteTitle')}
+                message={t('categories.dialog.deleteMessage', {
                     name: selectedItem?.name ?? '',
                 })}
                 loading={isDeleting}
@@ -218,24 +197,11 @@ export default function TourTypesPage() {
                 </Alert>
             </Snackbar>
 
-            <Snackbar
-                open={Boolean(error)}
-                autoHideDuration={5000}
-                onClose={() => setError(null)}
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'right',
-                }}
-            >
+            <Snackbar open={Boolean(error)} autoHideDuration={5000} onClose={() => setError(null)}>
                 <Alert severity="error" variant="filled" onClose={() => setError(null)}>
                     {error}
                 </Alert>
             </Snackbar>
-            <CategoryAssignmentDialog
-                open={categoryDialogOpen}
-                tourType={categoryTourType}
-                onClose={handleCloseCategoryDialog}
-            />
         </>
     )
 }

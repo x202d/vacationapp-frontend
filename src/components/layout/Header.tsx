@@ -71,7 +71,7 @@ export default function Header({ drawerWidth, onMenuClick, showMenuButton }: Hea
                         fontWeight: 600,
                     }}
                 >
-                    Holiday Planner
+                    Jean-Claude Van Darm
                 </Typography>
 
                 <Box

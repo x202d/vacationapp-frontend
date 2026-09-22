@@ -10,7 +10,7 @@ import {
     Typography,
 } from '@mui/material'
 
-import { Dashboard, Category, Map, Settings } from '@mui/icons-material'
+import { Category, Check, Dashboard, Map, Settings } from '@mui/icons-material'
 
 import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -50,7 +50,7 @@ export default function Sidebar({
                         fontWeight: 700,
                     }}
                 >
-                    Holiday Planner
+                    Jeane d'Arrrgh
                 </Typography>
             </Toolbar>
 
@@ -88,6 +88,17 @@ export default function Sidebar({
                     </ListItemIcon>
 
                     <ListItemText primary={t('navigation.categories')} />
+                </ListItemButton>
+
+                <ListItemButton
+                    selected={location.pathname.startsWith('/templates/items')}
+                    onClick={() => navigateTo('/templates/items')}
+                >
+                    <ListItemIcon>
+                        <Check />
+                    </ListItemIcon>
+
+                    <ListItemText primary={t('navigation.items')} />
                 </ListItemButton>
             </List>
 

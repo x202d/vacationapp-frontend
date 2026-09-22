@@ -1,4 +1,9 @@
 import { useState } from 'react'
+import { Add } from '@mui/icons-material'
+import { useTranslation } from 'react-i18next'
+import PageHeader from '../../components/common/PageHeader.tsx'
+import ConfirmDialog from '../../components/common/ConfirmDialog.tsx'
+import DataTable, { type DataTableColumn } from '../../components/common/DataTable.tsx'
 import {
     Alert,
     Button,
@@ -8,24 +13,17 @@ import {
     DialogTitle,
     Snackbar,
 } from '@mui/material'
-import { Add } from '@mui/icons-material'
-import { useTranslation } from 'react-i18next'
 
-import PageHeader from '../components/common/PageHeader'
-import DataTable, { type DataTableColumn } from '../components/common/DataTable'
-import ConfirmDialog from '../components/common/ConfirmDialog'
-import CategoryForm from '../components/templates/CategoryForm'
-
-import type { Category, CreateCategoryRequest } from '../types/templates/CategoryTypes'
-
+import ItemForm from '../../components/templates/ItemForm.tsx'
+import { CreateTemplateItemRequest, TemplateItem } from '../../types/templates/ItemTypes.ts'
 import {
     useCreateItemMutation,
     useDeleteItemMutation,
     useGetItemsQuery,
     useUpdateItemMutation,
-} from '../stores/templates/CategoryApi'
+} from '../../stores/templates/ItemsApi'
 
-export default function CategoriesPage() {
+export default function ItemsPage() {
     const { t } = useTranslation()
 
     const { data: items = [], isLoading, isFetching } = useGetItemsQuery()
@@ -39,12 +37,12 @@ export default function CategoriesPage() {
     const [formOpen, setFormOpen] = useState(false)
     const [deleteOpen, setDeleteOpen] = useState(false)
 
-    const [selectedItem, setSelectedItem] = useState<Category | null>(null)
+    const [selectedItem, setSelectedItem] = useState<TemplateItem | null>(null)
 
     const [error, setError] = useState<string | null>(null)
     const [success, setSuccess] = useState<string | null>(null)
 
-    const formId = 'category-form'
+    const formId = 'item-form'
 
     const isSaving = isCreating || isUpdating
 
@@ -53,12 +51,12 @@ export default function CategoriesPage() {
         setFormOpen(true)
     }
 
-    const handleEdit = (item: Category) => {
+    const handleEdit = (item: TemplateItem) => {
         setSelectedItem(item)
         setFormOpen(true)
     }
 
-    const handleDelete = (item: Category) => {
+    const handleDelete = (item: TemplateItem) => {
         setSelectedItem(item)
         setDeleteOpen(true)
     }
@@ -72,7 +70,7 @@ export default function CategoriesPage() {
         setSelectedItem(null)
     }
 
-    const handleSave = async (data: CreateCategoryRequest) => {
+    const handleSave = async (data: CreateTemplateItemRequest) => {
         try {
             if (selectedItem) {
                 await updateItem({
@@ -80,17 +78,17 @@ export default function CategoriesPage() {
                     data,
                 }).unwrap()
 
-                setSuccess(t('categories.messages.updated'))
+                setSuccess(t('items.messages.updated'))
             } else {
                 await createItem(data).unwrap()
 
-                setSuccess(t('categories.messages.created'))
+                setSuccess(t('items.messages.created'))
             }
 
             setFormOpen(false)
             setSelectedItem(null)
         } catch {
-            setError(t('categories.messages.saveError'))
+            setError(t('items.messages.saveError'))
         }
     }
 
@@ -104,38 +102,36 @@ export default function CategoriesPage() {
 
             setDeleteOpen(false)
             setSelectedItem(null)
-            setSuccess(t('categories.messages.deleted'))
+            setSuccess(t('items.messages.deleted'))
         } catch {
-            setError(t('categories.messages.deleteError'))
+            setError(t('items.messages.deleteError'))
         }
     }
 
-    const columns: DataTableColumn<Category>[] = [
+    const columns: DataTableColumn<TemplateItem>[] = [
         {
-            key: 'name',
-            label: t('categories.table.name'),
+            key: 'title',
+            label: t('items.table.name'),
         },
         {
-            key: 'description',
-            label: t('categories.table.description'),
+            key: 'details',
+            label: t('items.table.description'),
             render: (item) =>
-                item.description || (
-                    <span style={{ opacity: 0.5 }}>{t('common.notAvailable')}</span>
-                ),
+                item.details || <span style={{ opacity: 0.5 }}>{t('common.notAvailable')}</span>,
         },
         {
             key: 'sortOrder',
-            label: t('categories.table.sortOrder'),
+            label: t('items.table.sortOrder'),
         },
     ]
 
     return (
         <>
             <PageHeader
-                title={t('categories.title')}
-                description={t('categories.description')}
+                title={t('items.title')}
+                description={t('items.description')}
                 action={{
-                    label: t('categories.actions.create'),
+                    label: t('items.actions.create'),
                     icon: <Add />,
                     onClick: handleCreate,
                 }}
@@ -151,13 +147,11 @@ export default function CategoriesPage() {
 
             <Dialog open={formOpen} onClose={handleCloseForm} fullWidth maxWidth="sm">
                 <DialogTitle>
-                    {selectedItem
-                        ? t('categories.dialog.editTitle')
-                        : t('categories.dialog.createTitle')}
+                    {selectedItem ? t('items.dialog.editTitle') : t('items.dialog.createTitle')}
                 </DialogTitle>
 
                 <DialogContent dividers>
-                    <CategoryForm item={selectedItem} formId={formId} onSubmit={handleSave} />
+                    <ItemForm item={selectedItem} formId={formId} onSubmit={handleSave} />
                 </DialogContent>
 
                 <DialogActions>
@@ -173,9 +167,9 @@ export default function CategoriesPage() {
 
             <ConfirmDialog
                 open={deleteOpen}
-                title={t('categories.dialog.deleteTitle')}
-                message={t('categories.dialog.deleteMessage', {
-                    name: selectedItem?.name ?? '',
+                title={t('items.dialog.deleteTitle')}
+                message={t('items.dialog.deleteMessage', {
+                    name: selectedItem?.title ?? '',
                 })}
                 loading={isDeleting}
                 onCancel={() => {
