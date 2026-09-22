@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import {
     useCreateItemMutation,
     useGetItemsQuery,
-} from '../features/items/itemsApi'
+} from '../stores/items/itemsApi'
 
 function PageOne() {
     const { t } = useTranslation()

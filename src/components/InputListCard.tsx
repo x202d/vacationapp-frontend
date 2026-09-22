@@ -13,16 +13,16 @@ import {
     Typography,
 } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
-import type { Item } from '../features/items/itemsApi'
+import {TourType} from "../types/templates/TourTypeTypes.ts";
 
 interface InputListCardProps {
     title: string
     description?: string
     inputLabel: string
     buttonLabel?: string
-    items: Item[]
+    items: TourType[]
     onAdd?: (name: string) => void
-    onToggle?: (id: number) => void
+    onToggle?: (id: string) => void
 }
 
 function InputListCard({
@@ -109,19 +109,19 @@ function InputListCard({
                             <ListItemIcon sx={{ minWidth: 40, pl: 1 }}>
                                 <Checkbox
                                     edge="start"
-                                    checked={item.checked}
+                                    checked={!item.isActive}
                                     onChange={() => onToggle?.(item.id)}
                                 />
                             </ListItemIcon>
 
                             <ListItemText
                                 primary={item.name}
-                                secondary={item.description}
+                                secondary={item.description + "-" + item.templateCategories.length}
                                 sx={{
-                                    textDecoration: item.checked
+                                    textDecoration: !item.isActive
                                         ? 'line-through'
                                         : 'none',
-                                    color: item.checked
+                                    color: !item.isActive
                                         ? 'text.secondary'
                                         : 'text.primary',
                                 }}

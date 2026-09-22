@@ -7,7 +7,6 @@ import {
   useLocation,
 } from 'react-router-dom'
 import PageOne from './pages/PageOne'
-import PageTwo from './pages/PageTwo'
 
 function Navigation() {
   const location = useLocation()
@@ -24,12 +23,6 @@ function Navigation() {
           indicatorColor="secondary"
         >
           <Tab label="Seite 1" value="/" component={Link} to="/" />
-          <Tab
-            label="Seite 2"
-            value="/seite-2"
-            component={Link}
-            to="/seite-2"
-          />
         </Tabs>
       </Toolbar>
     </AppBar>
@@ -43,7 +36,6 @@ function App() {
         <Navigation />
         <Routes>
           <Route path="/" element={<PageOne />} />
-          <Route path="/seite-2" element={<PageTwo />} />
         </Routes>
       </Box>
     </BrowserRouter>

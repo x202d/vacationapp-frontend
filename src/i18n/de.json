@@ -1,8 +1,12 @@
 {
   "common": {
     "save": "Speichern",
+    "add": "Hinzufügen",
     "abort": "Abbrechen",
     "delete": "Löschen"
+  },
+  "tourtype": {
+    "heading": "Ausflugsvorlagen"
   },
   "welcome": "Willkommen du Sack",
   "hello": "Hallo {{name}}",
