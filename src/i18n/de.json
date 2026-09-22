@@ -52,7 +52,45 @@
       "deleted": "Tourtyp wurde erfolgreich gelöscht.",
       "saveError": "Der Tourtyp konnte nicht gespeichert werden.",
       "deleteError": "Der Tourtyp konnte nicht gelöscht werden."
+    },
+    "categories": {
+      "title": "Kategorien verwalten",
+      "manage": "Kategorien verwalten",
+      "available": "Verfügbare Kategorien",
+      "assigned": "Zugeordnete Kategorien",
+      "noAvailable": "Keine weiteren Kategorien verfügbar.",
+      "noAssigned": "Diesem Tourtyp sind noch keine Kategorien zugeordnet.",
+      "position": "Position"
+    }
+  },
+  "categories": {
+    "title": "Kategorien",
+    "description": "Verwalte die verfügbaren Kategorien.",
+    "actions": {
+      "create": "Kategorie erstellen"
+    },
+    "table": {
+      "name": "Name",
+      "description": "Beschreibung",
+      "sortOrder": "Reihenfolge"
+    },
+    "dialog": {
+      "createTitle": "Kategorie erstellen",
+      "editTitle": "Kategorie bearbeiten",
+      "deleteTitle": "Kategorie löschen",
+      "deleteMessage": "Möchtest du die Kategorie „{{name}}“ wirklich löschen?"
+    },
+    "form": {
+      "name": "Name",
+      "description": "Beschreibung",
+      "sortOrder": "Reihenfolge"
+    },
+    "messages": {
+      "created": "Kategorie wurde erfolgreich erstellt.",
+      "updated": "Kategorie wurde erfolgreich aktualisiert.",
+      "deleted": "Kategorie wurde erfolgreich gelöscht.",
+      "saveError": "Die Kategorie konnte nicht gespeichert werden.",
+      "deleteError": "Die Kategorie konnte nicht gelöscht werden."
     }
   }
-
 }

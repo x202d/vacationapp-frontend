@@ -28,3 +28,14 @@ export interface TemplateCategory {
     createdAt: string
     updatedAt: string | null
 }
+
+export interface TourTypeCategory {
+    id: string
+    name: string
+    description: string | null
+    sortOrder: number
+}
+
+export interface UpdateTourTypeCategoriesRequest {
+    categoryIds: string[]
+}

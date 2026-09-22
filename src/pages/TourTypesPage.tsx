@@ -17,6 +17,9 @@ import DataTable, {
 } from '../components/common/DataTable'
 import ConfirmDialog from '../components/common/ConfirmDialog'
 import TourTypeForm from '../pages/templates/TourTypeForm'
+import { Category } from '@mui/icons-material'
+
+import CategoryAssignmentDialog from '../components/templates/CategoryAssignmentDialog'
 
 import type {
     CreateTourTypeRequest,
@@ -47,7 +50,21 @@ const [updateItem, { isLoading: isUpdating }] =
 
 const [deleteItem, { isLoading: isDeleting }] =
     useDeleteItemMutation()
+    const [categoryDialogOpen, setCategoryDialogOpen] =
+        useState(false)
 
+    const [categoryTourType, setCategoryTourType] =
+        useState<TourType | null>(null)
+
+    const handleManageCategories = (item: TourType) => {
+        setCategoryTourType(item)
+        setCategoryDialogOpen(true)
+    }
+
+    const handleCloseCategoryDialog = () => {
+        setCategoryDialogOpen(false)
+        setCategoryTourType(null)
+    }
 const [formOpen, setFormOpen] = useState(false)
 const [deleteOpen, setDeleteOpen] = useState(false)
 const [selectedItem, setSelectedItem] =
@@ -164,6 +181,7 @@ return (
             loading={isLoading || isFetching}
             onEdit={handleEdit}
             onDelete={handleDelete}
+            actions={[ { label: t('tourTypes.categories.manage'), icon: <Category />, onClick: handleManageCategories, }, ]}
         />
 
         <Dialog
@@ -254,6 +272,7 @@ return (
                 {error}
             </Alert>
         </Snackbar>
+        <CategoryAssignmentDialog open={categoryDialogOpen} tourType={categoryTourType} onClose={handleCloseCategoryDialog} />
     </>
 )
 

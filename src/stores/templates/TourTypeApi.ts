@@ -8,7 +8,7 @@ import { API_URL } from '../../config/api'
 import {
     TourType,
     CreateTourTypeRequest,
-    UpdateTourTypeRequest,
+    UpdateTourTypeRequest, UpdateTourTypeCategoriesRequest,
 } from '../../types/templates/TourTypeTypes'
 
 const tagTypes = ['TourType'] as const
@@ -45,8 +45,32 @@ export const tourTypeApi = createApi({
                         },
                     ],
         }),
+        updateCategories: builder.mutation<
+            TourType,
+            {
+                id: string
+                data: UpdateTourTypeCategoriesRequest
+            }> ({
+             query: ({ id, data }) => ({
+     url: `/tour-types/${id}/categories`,
+ method: 'PUT',
+ body: data,
+ }),
 
-        getItem: builder.query<TourType, string>({
+invalidatesTags: (_, __, { id }) => [
+    {
+        type: 'TourType',
+        id,
+    },
+    {
+        type: 'TourType',
+        id: 'LIST',
+    },
+],
+
+}),
+
+getItem: builder.query<TourType, string>({
             query: (id) => `/tour-types/${id}`,
 
             providesTags: (_, __, id) => [
@@ -126,4 +150,5 @@ export const {
     useCreateItemMutation,
     useUpdateItemMutation,
     useDeleteItemMutation,
+    useUpdateCategoriesMutation,
 } = tourTypeApi

@@ -8,7 +8,7 @@ import {
 import AdminLayout from './components/layout/AdminLayout'
 
 import DashboardPage from './pages/DashboardPage'
-import CategoriesPage from './pages/TourTypesPage'
+import CategoriesPage from './pages/CategoriesPage'
 import TourTypesPage from './pages/TourTypesPage'
 
 function App() {
