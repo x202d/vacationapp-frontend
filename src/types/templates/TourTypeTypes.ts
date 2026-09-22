@@ -14,11 +14,17 @@ export interface CreateTourTypeRequest {
     isActive: boolean
 }
 
+export interface UpdateTourTypeRequest {
+    name: string
+    description: string | null
+    isActive: boolean
+}
+
 export interface TemplateCategory {
-    id: string;
-    name: string;
-    description: string;
-    sortOrder: number;
-    createdAt: string;
-    updatedAt: string | null;
+    id: string
+    name: string
+    description: string
+    sortOrder: number
+    createdAt: string
+    updatedAt: string | null
 }

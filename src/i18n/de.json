@@ -1,17 +1,66 @@
 {
   "common": {
-    "save": "Speichern",
-    "add": "Hinzufügen",
-    "abort": "Abbrechen",
-    "delete": "Löschen"
+    "actions": {
+      "create": "Neu",
+      "edit": "Bearbeiten",
+      "delete": "Löschen",
+      "save": "Speichern",
+      "cancel": "Abbrechen",
+      "close": "Schließen"
+    },
+    "active": "Aktiv",
+    "inactive": "Inaktiv",
+    "yes": "Ja",
+    "no": "Nein",
+    "loading": "Laden...",
+    "noData": "Keine Daten vorhanden",
+    "toggleTheme": "Darstellung wechseln",
+    "language": "Sprache",
+    "confirmDelete": "Löschen bestätigen"
   },
-  "tourtype": {
-    "heading": "Ausflugsvorlagen"
-  },
-  "welcome": "Willkommen du Sack",
-  "hello": "Hallo {{name}}",
+
   "navigation": {
-    "home": "Startseite",
+    "dashboard": "Dashboard",
+    "templates": "Vorlagen",
+    "tourTypes": "Tourtypen",
+    "categories": "Kategorien",
     "settings": "Einstellungen"
+  },
+
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Willkommen im Holiday Planner"
+  },
+
+  "tourTypes": {
+    "title": "Tourtypen",
+    "description": "Verwalte die verfügbaren Tourtypen.",
+    "create": "Tourtyp erstellen",
+    "edit": "Tourtyp bearbeiten",
+
+    "fields": {
+      "name": "Name",
+      "description": "Beschreibung",
+      "isActive": "Aktiv",
+      "categories": "Kategorien",
+      "createdAt": "Erstellt am",
+      "updatedAt": "Geändert am"
+    },
+
+    "delete": {
+      "title": "Tourtyp löschen",
+      "message": "Möchtest du den Tourtyp wirklich löschen?"
+    }
+  },
+
+  "categories": {
+    "title": "Kategorien",
+    "description": "Verwalte die Kategorien.",
+
+    "fields": {
+      "name": "Name",
+      "description": "Beschreibung",
+      "sortOrder": "Sortierung"
+    }
   }
 }
