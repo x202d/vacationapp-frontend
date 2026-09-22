@@ -13,27 +13,27 @@ import {
     Typography,
 } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
-import type { Item } from '../features/items/itemsApi'
+import { TourType } from '../types/templates/TourTypeTypes.ts'
 
 interface InputListCardProps {
     title: string
     description?: string
     inputLabel: string
     buttonLabel?: string
-    items: Item[]
+    items: TourType[]
     onAdd?: (name: string) => void
-    onToggle?: (id: number) => void
+    onToggle?: (id: string) => void
 }
 
 function InputListCard({
-                           title,
-                           description,
-                           inputLabel,
-                           buttonLabel = 'Hinzufügen',
-                           items,
-                           onAdd,
-                           onToggle,
-                       }: InputListCardProps) {
+    title,
+    description,
+    inputLabel,
+    buttonLabel = 'Hinzufügen',
+    items,
+    onAdd,
+    onToggle,
+}: InputListCardProps) {
     const [inputValue, setInputValue] = useState('')
 
     const handleAddItem = () => {
@@ -47,9 +47,7 @@ function InputListCard({
         setInputValue('')
     }
 
-    const handleKeyDown = (
-        event: React.KeyboardEvent<HTMLInputElement>,
-    ) => {
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             handleAddItem()
         }
@@ -62,20 +60,12 @@ function InputListCard({
             </Typography>
 
             {description && (
-                <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{ mb: 2 }}
-                >
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
                     {description}
                 </Typography>
             )}
 
-            <Stack
-                direction={{ xs: 'column', sm: 'row' }}
-                spacing={2}
-                sx={{ mb: 3 }}
-            >
+            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ mb: 3 }}>
                 <TextField
                     fullWidth
                     size="small"
@@ -109,21 +99,17 @@ function InputListCard({
                             <ListItemIcon sx={{ minWidth: 40, pl: 1 }}>
                                 <Checkbox
                                     edge="start"
-                                    checked={item.checked}
+                                    checked={!item.isActive}
                                     onChange={() => onToggle?.(item.id)}
                                 />
                             </ListItemIcon>
 
                             <ListItemText
                                 primary={item.name}
-                                secondary={item.description}
+                                secondary={item.description + '-' + item.templateCategories.length}
                                 sx={{
-                                    textDecoration: item.checked
-                                        ? 'line-through'
-                                        : 'none',
-                                    color: item.checked
-                                        ? 'text.secondary'
-                                        : 'text.primary',
+                                    textDecoration: !item.isActive ? 'line-through' : 'none',
+                                    color: !item.isActive ? 'text.secondary' : 'text.primary',
                                 }}
                             />
                         </ListItem>

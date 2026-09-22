@@ -1,13 +1,96 @@
 {
-  "common": {
-    "save": "Speichern",
-    "abort": "Abbrechen",
-    "delete": "Löschen"
-  },
-  "welcome": "Willkommen du Sack",
-  "hello": "Hallo {{name}}",
-  "navigation": {
-    "home": "Startseite",
-    "settings": "Einstellungen"
-  }
+    "common": {
+        "language": "Sprache",
+        "toggleTheme": "Darstellung wechseln",
+        "save": "Speichern",
+        "saving": "Speichern...",
+        "cancel": "Abbrechen",
+        "delete": "Löschen",
+        "active": "Aktiv",
+        "inactive": "Inaktiv",
+        "notAvailable": "Keine Angabe",
+        "noEntries": "Keine Einträge vorhanden",
+        "actions": {
+            "title": "Aktionen",
+            "edit": "Bearbeiten",
+            "delete": "Löschen"
+        }
+    },
+
+    "navigation": {
+        "dashboard": "Dashboard",
+        "tourTypes": "Tourtypen",
+        "categories": "Kategorien",
+        "settings": "Einstellungen"
+    },
+
+    "tourTypes": {
+        "title": "Tourtypen",
+        "description": "Verwalte die verfügbaren Tourtypen und deren grundlegende Einstellungen.",
+        "actions": {
+            "create": "Tourtyp erstellen"
+        },
+        "table": {
+            "name": "Name",
+            "description": "Beschreibung",
+            "status": "Status"
+        },
+        "dialog": {
+            "createTitle": "Tourtyp erstellen",
+            "editTitle": "Tourtyp bearbeiten",
+            "deleteTitle": "Tourtyp löschen",
+            "deleteMessage": "Möchtest du den Tourtyp „{{name}}“ wirklich löschen?"
+        },
+        "form": {
+            "name": "Name",
+            "description": "Beschreibung",
+            "active": "Aktiv"
+        },
+        "messages": {
+            "created": "Tourtyp wurde erfolgreich erstellt.",
+            "updated": "Tourtyp wurde erfolgreich aktualisiert.",
+            "deleted": "Tourtyp wurde erfolgreich gelöscht.",
+            "saveError": "Der Tourtyp konnte nicht gespeichert werden.",
+            "deleteError": "Der Tourtyp konnte nicht gelöscht werden."
+        },
+        "categories": {
+            "title": "Kategorien verwalten",
+            "manage": "Kategorien verwalten",
+            "available": "Verfügbare Kategorien",
+            "assigned": "Zugeordnete Kategorien",
+            "noAvailable": "Keine weiteren Kategorien verfügbar.",
+            "noAssigned": "Diesem Tourtyp sind noch keine Kategorien zugeordnet.",
+            "position": "Position"
+        }
+    },
+    "categories": {
+        "title": "Kategorien",
+        "description": "Verwalte die verfügbaren Kategorien.",
+        "actions": {
+            "create": "Kategorie erstellen"
+        },
+        "table": {
+            "name": "Name",
+            "description": "Beschreibung",
+            "sortOrder": "Reihenfolge"
+        },
+        "dialog": {
+            "createTitle": "Kategorie erstellen",
+            "editTitle": "Kategorie bearbeiten",
+            "deleteTitle": "Kategorie löschen",
+            "deleteMessage": "Möchtest du die Kategorie „{{name}}“ wirklich löschen?"
+        },
+        "form": {
+            "name": "Name",
+            "description": "Beschreibung",
+            "sortOrder": "Reihenfolge"
+        },
+        "messages": {
+            "created": "Kategorie wurde erfolgreich erstellt.",
+            "updated": "Kategorie wurde erfolgreich aktualisiert.",
+            "deleted": "Kategorie wurde erfolgreich gelöscht.",
+            "saveError": "Die Kategorie konnte nicht gespeichert werden.",
+            "deleteError": "Die Kategorie konnte nicht gelöscht werden."
+        }
+    }
 }

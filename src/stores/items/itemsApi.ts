@@ -12,14 +12,14 @@ export interface Item {
 }
 
 interface cat {
-    id: number,
+    id: number
     name: string
 }
 
 export interface CreateItemRequest {
     name: string
     description?: string | null
-    category: cat,
+    category: cat
     amount: string
     checked?: boolean
 }
@@ -38,7 +38,7 @@ export const itemsApi = createApi({
     endpoints: (builder) => ({
         getItems: builder.query<Item[], void>({
             query: () => '/items',
-            providesTags: ['Item']
+            providesTags: ['Item'],
         }),
 
         createItem: builder.mutation<Item, CreateItemRequest>({
@@ -47,12 +47,9 @@ export const itemsApi = createApi({
                 method: 'POST',
                 body: item,
             }),
-            invalidatesTags: ['Item']
+            invalidatesTags: ['Item'],
         }),
     }),
 })
 
-export const {
-    useGetItemsQuery,
-    useCreateItemMutation,
-} = itemsApi
+export const { useGetItemsQuery, useCreateItemMutation } = itemsApi
