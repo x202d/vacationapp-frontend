@@ -1,3 +1,5 @@
+import { TemplateItem } from './ItemTypes.ts'
+
 export interface Category {
     id: string
     name: string
@@ -5,6 +7,8 @@ export interface Category {
     sortOrder: number
     createdAt: string
     updatedAt: string | null
+    itemsCount: number
+    items: TemplateItem[] | null
 }
 
 export interface CreateCategoryRequest {
@@ -17,4 +21,8 @@ export interface UpdateCategoryRequest {
     name: string
     description: string | null
     sortOrder: number
+}
+
+export interface UpdateCategoryItemsRequest {
+    itemIds: string[]
 }

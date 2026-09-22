@@ -1,4 +1,12 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Add, Cable } from '@mui/icons-material'
+import PageHeader from '../../components/common/PageHeader.tsx'
+import ConfirmDialog from '../../components/common/ConfirmDialog.tsx'
+import CategoryForm from '../../components/templates/CategoryForm.tsx'
+import DataTable, { type DataTableColumn } from '../../components/common/DataTable.tsx'
+import type { Category, CreateCategoryRequest } from '../../types/templates/CategoryTypes.ts'
+import ItemAssignmentDialog from '../../components/templates/dialogs/ItemAssignmentDialog.tsx'
 import {
     Alert,
     Button,
@@ -8,16 +16,6 @@ import {
     DialogTitle,
     Snackbar,
 } from '@mui/material'
-import { Add } from '@mui/icons-material'
-import { useTranslation } from 'react-i18next'
-
-import PageHeader from '../../components/common/PageHeader.tsx'
-import DataTable, { type DataTableColumn } from '../../components/common/DataTable.tsx'
-import ConfirmDialog from '../../components/common/ConfirmDialog.tsx'
-import CategoryForm from '../../components/templates/CategoryForm.tsx'
-
-import type { Category, CreateCategoryRequest } from '../../types/templates/CategoryTypes.ts'
-
 import {
     useCreateItemMutation,
     useDeleteItemMutation,
@@ -36,8 +34,22 @@ export default function CategoriesPage() {
 
     const [deleteItem, { isLoading: isDeleting }] = useDeleteItemMutation()
 
+    const [category, setCategory] = useState<Category | null>(null)
+
+    const handleManageItems = (item: Category) => {
+        setCategory(item)
+        setItemDialogOpen(true)
+    }
+
+    const handleCloseItemDialog = () => {
+        setItemDialogOpen(false)
+        setCategory(null)
+    }
+
     const [formOpen, setFormOpen] = useState(false)
     const [deleteOpen, setDeleteOpen] = useState(false)
+
+    const [itemDialogOpen, setItemDialogOpen] = useState(false)
 
     const [selectedItem, setSelectedItem] = useState<Category | null>(null)
 
@@ -147,6 +159,13 @@ export default function CategoriesPage() {
                 loading={isLoading || isFetching}
                 onEdit={handleEdit}
                 onDelete={handleDelete}
+                actions={[
+                    {
+                        label: t('categories.actions.linkitem'),
+                        icon: <Cable />,
+                        onClick: handleManageItems,
+                    },
+                ]}
             />
 
             <Dialog open={formOpen} onClose={handleCloseForm} fullWidth maxWidth="sm">
@@ -202,6 +221,11 @@ export default function CategoriesPage() {
                     {error}
                 </Alert>
             </Snackbar>
+            <ItemAssignmentDialog
+                open={itemDialogOpen}
+                templateCategory={category}
+                onClose={handleCloseItemDialog}
+            />
         </>
     )
 }

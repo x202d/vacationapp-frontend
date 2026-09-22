@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Add, Category } from '@mui/icons-material'
 import {
     Alert,
     Button,
@@ -8,15 +10,13 @@ import {
     DialogTitle,
     Snackbar,
 } from '@mui/material'
-import { Add, Category } from '@mui/icons-material'
-import { useTranslation } from 'react-i18next'
 
 import PageHeader from '../../components/common/PageHeader.tsx'
-import DataTable, { type DataTableColumn } from '../../components/common/DataTable.tsx'
 import ConfirmDialog from '../../components/common/ConfirmDialog.tsx'
 import TourTypeForm from '../../components/templates/TourTypeForm.tsx'
+import DataTable, { type DataTableColumn } from '../../components/common/DataTable.tsx'
 
-import CategoryAssignmentDialog from '../../components/templates/CategoryAssignmentDialog.tsx'
+import CategoryAssignmentDialog from '../../components/templates/dialogs/CategoryAssignmentDialog.tsx'
 
 import type { CreateTourTypeRequest, TourType } from '../../types/templates/TourTypeTypes.ts'
 

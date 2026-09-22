@@ -2,9 +2,11 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 import { API_URL } from '../../config/api'
 
+import { TourType } from '../../types/templates/TourTypeTypes.ts'
 import type {
     Category,
     CreateCategoryRequest,
+    UpdateCategoryItemsRequest,
     UpdateCategoryRequest,
 } from '../../types/templates/CategoryTypes'
 
@@ -111,6 +113,31 @@ export const categoryApi = createApi({
                 },
             ],
         }),
+
+        updateItems: builder.mutation<
+            TourType,
+            {
+                id: string
+                data: UpdateCategoryItemsRequest
+            }
+        >({
+            query: ({ id, data }) => ({
+                url: `/template-categories/${id}/items`,
+                method: 'PUT',
+                body: data,
+            }),
+
+            invalidatesTags: (_, __, { id }) => [
+                {
+                    type: 'Category',
+                    id,
+                },
+                {
+                    type: 'Category',
+                    id: 'LIST',
+                },
+            ],
+        }),
     }),
 })
 
@@ -120,4 +147,5 @@ export const {
     useCreateItemMutation,
     useUpdateItemMutation,
     useDeleteItemMutation,
+    useUpdateItemsMutation,
 } = categoryApi

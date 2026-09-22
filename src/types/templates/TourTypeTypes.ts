@@ -1,3 +1,5 @@
+import { TemplateItem } from './ItemTypes.ts'
+
 export interface TourType {
     id: string
     name: string
@@ -27,6 +29,7 @@ export interface TemplateCategory {
     sortOrder: number
     createdAt: string
     updatedAt: string | null
+    items: TemplateItem[] | null
 }
 
 export interface TourTypeCategory {

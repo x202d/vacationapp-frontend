@@ -1,4 +1,6 @@
+import { useTranslation } from 'react-i18next'
 import { useEffect, useMemo, useState } from 'react'
+import { Add, DragIndicator, Remove } from '@mui/icons-material'
 import {
     Box,
     Button,
@@ -17,14 +19,12 @@ import {
     Stack,
     Typography,
 } from '@mui/material'
-import { Add, DragIndicator, Remove } from '@mui/icons-material'
-import { useTranslation } from 'react-i18next'
 
-import type { TourType } from '../../types/templates/TourTypeTypes'
+import type { TourType } from '../../../types/templates/TourTypeTypes.ts'
 
-import { useGetItemsQuery as useGetCategoriesQuery } from '../../stores/templates/CategoryApi'
+import { useGetItemsQuery as useGetCategoriesQuery } from '../../../stores/templates/CategoryApi.ts'
 
-import { useUpdateCategoriesMutation } from '../../stores/templates/TourTypeApi'
+import { useUpdateCategoriesMutation } from '../../../stores/templates/TourTypeApi.ts'
 
 interface CategoryAssignmentDialogProps {
     open: boolean
