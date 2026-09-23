@@ -1,13 +1,13 @@
-import React, { useEffect, useMemo } from 'react'
 import ReactDOM from 'react-dom/client'
+import React, { useEffect, useMemo } from 'react'
 import { CssBaseline, ThemeProvider } from '@mui/material'
 
 import { Provider } from 'react-redux'
 
 import App from './App'
-import { store } from './app/store'
-import { useAppSelector } from './stores/hooks'
+import { store } from './stores/store.ts'
 import { createAppTheme } from './theme/theme'
+import { useAppSelector } from './stores/hooks'
 
 import i18n from './i18n/i18n'
 

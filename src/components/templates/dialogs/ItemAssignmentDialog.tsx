@@ -1,4 +1,6 @@
+import { useTranslation } from 'react-i18next'
 import { useEffect, useMemo, useState } from 'react'
+import { Add, DragIndicator, Remove } from '@mui/icons-material'
 import {
     Box,
     Button,
@@ -17,67 +19,63 @@ import {
     Stack,
     Typography,
 } from '@mui/material'
-import { Add, DragIndicator, Remove } from '@mui/icons-material'
-import { useTranslation } from 'react-i18next'
 
-import type { TourType } from '../../types/templates/TourTypeTypes'
+import { TemplateCategory } from '../../../types/templates/CategoryTypes.ts'
+import { useGetTemplateItemsQuery } from '../../../stores/templates/ItemsApi.ts'
+import { useUpdateCategoryItemsMutation } from '../../../stores/templates/CategoryApi.ts'
 
-import { useGetItemsQuery as useGetCategoriesQuery } from '../../stores/templates/CategoryApi'
-
-import { useUpdateCategoriesMutation } from '../../stores/templates/TourTypeApi'
-
-interface CategoryAssignmentDialogProps {
+interface ItemAssignmentDialogProps {
     open: boolean
-    tourType: TourType | null
+    templateCategory: TemplateCategory | null
     onClose: () => void
 }
 
-interface AssignmentCategory {
+interface AssignmentItem {
     id: string
-    name: string
-    description: string | null
+    title: string
+    details: string | null
 }
 
-export default function CategoryAssignmentDialog({
+export default function ItemAssignmentDialog({
     open,
-    tourType,
+    templateCategory,
     onClose,
-}: CategoryAssignmentDialogProps) {
+}: ItemAssignmentDialogProps) {
     const { t } = useTranslation()
 
-    const { data: categories = [], isLoading: categoriesLoading } = useGetCategoriesQuery()
+    const { data: items = [], isLoading: itemsLoading } = useGetTemplateItemsQuery()
 
-    const [updateCategories, { isLoading: isSaving }] = useUpdateCategoriesMutation()
+    const [updateCategories, { isLoading: isSaving }] = useUpdateCategoryItemsMutation()
 
-    const [selectedCategories, setSelectedCategories] = useState<AssignmentCategory[]>([])
+    const [selectedCategories, setSelectedCategories] = useState<AssignmentItem[]>([])
 
     const [draggedId, setDraggedId] = useState<string | null>(null)
 
     useEffect(() => {
-        if (!tourType) {
+        if (!templateCategory) {
             setSelectedCategories([])
             return
         }
 
-        const assigned = [...(tourType.templateCategories ?? [])]
+        const assigned = [...(templateCategory.items ?? [])]
             .sort((a, b) => a.sortOrder - b.sortOrder)
             .map((category) => ({
                 id: category.id,
-                name: category.name,
-                description: category.description ?? null,
+                title: category.title,
+                details: category.details ?? null,
             }))
 
         setSelectedCategories(assigned)
-    }, [tourType])
+    }, [templateCategory])
 
     const selectedIds = useMemo(
         () => new Set(selectedCategories.map((category) => category.id)),
         [selectedCategories],
     )
 
-    const availableCategories = categories.filter((category) => !selectedIds.has(category.id))
+    const availableCategories = items.filter((category) => !selectedIds.has(category.id))
 
-    const addCategory = (category: AssignmentCategory) => {
+    const addCategory = (category: AssignmentItem) => {
         setSelectedCategories((current) => [...current, category])
     }
 
@@ -119,14 +117,14 @@ export default function CategoryAssignmentDialog({
     }
 
     const handleSave = async () => {
-        if (!tourType) {
+        if (!templateCategory) {
             return
         }
 
         await updateCategories({
-            id: tourType.id,
+            id: templateCategory.id,
             data: {
-                categoryIds: selectedCategories.map((category) => category.id),
+                itemIds: selectedCategories.map((category) => category.id),
             },
         }).unwrap()
 
@@ -136,17 +134,17 @@ export default function CategoryAssignmentDialog({
     return (
         <Dialog open={open} onClose={isSaving ? undefined : onClose} fullWidth maxWidth="md">
             <DialogTitle>
-                {t('tourTypes.categories.title')}
+                {t('categories.items.title')}
 
-                {tourType && (
+                {templateCategory && (
                     <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
-                        {tourType.name}
+                        {templateCategory.name}
                     </Typography>
                 )}
             </DialogTitle>
 
             <DialogContent dividers>
-                {categoriesLoading ? (
+                {itemsLoading ? (
                     <Box
                         sx={{
                             minHeight: 250,
@@ -167,14 +165,14 @@ export default function CategoryAssignmentDialog({
                     >
                         <Box sx={{ flex: 1 }}>
                             <Typography variant="subtitle1" fontWeight={600} sx={{ mb: 1 }}>
-                                {t('tourTypes.categories.available')}
+                                {t('categories.items.available')}
                             </Typography>
 
                             <Paper variant="outlined">
                                 {availableCategories.length === 0 ? (
                                     <Box sx={{ p: 2 }}>
                                         <Typography variant="body2" color="text.secondary">
-                                            {t('tourTypes.categories.noAvailable')}
+                                            {t('categories.items.noAvailable')}
                                         </Typography>
                                     </Box>
                                 ) : (
@@ -194,8 +192,8 @@ export default function CategoryAssignmentDialog({
                                                     }
                                                 >
                                                     <ListItemText
-                                                        primary={category.name}
-                                                        secondary={category.description}
+                                                        primary={category.title}
+                                                        secondary={category.details}
                                                     />
                                                 </ListItem>
                                             </Box>
@@ -207,14 +205,14 @@ export default function CategoryAssignmentDialog({
 
                         <Box sx={{ flex: 1 }}>
                             <Typography variant="subtitle1" fontWeight={600} sx={{ mb: 1 }}>
-                                {t('tourTypes.categories.assigned')}
+                                {t('categories.items.assigned')}
                             </Typography>
 
                             <Paper variant="outlined">
                                 {selectedCategories.length === 0 ? (
                                     <Box sx={{ p: 2 }}>
                                         <Typography variant="body2" color="text.secondary">
-                                            {t('tourTypes.categories.noAssigned')}
+                                            {t('categories.items.noAssigned')}
                                         </Typography>
                                     </Box>
                                 ) : (
@@ -255,9 +253,9 @@ export default function CategoryAssignmentDialog({
                                                     </ListItemIcon>
 
                                                     <ListItemText
-                                                        primary={category.name}
+                                                        primary={category.title}
                                                         secondary={`${t(
-                                                            'tourTypes.categories.position',
+                                                            'categories.items.position',
                                                         )}: ${index + 1}`}
                                                     />
                                                 </ListItem>
@@ -276,7 +274,11 @@ export default function CategoryAssignmentDialog({
                     {t('common.cancel')}
                 </Button>
 
-                <Button variant="contained" onClick={handleSave} disabled={isSaving || !tourType}>
+                <Button
+                    variant="contained"
+                    onClick={handleSave}
+                    disabled={isSaving || !templateCategory}
+                >
                     {isSaving ? t('common.saving') : t('common.save')}
                 </Button>
             </DialogActions>

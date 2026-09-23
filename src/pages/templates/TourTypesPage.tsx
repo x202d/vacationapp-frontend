@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Add, Category } from '@mui/icons-material'
 import {
     Alert,
     Button,
@@ -8,35 +10,33 @@ import {
     DialogTitle,
     Snackbar,
 } from '@mui/material'
-import { Add, Category } from '@mui/icons-material'
-import { useTranslation } from 'react-i18next'
 
 import PageHeader from '../../components/common/PageHeader.tsx'
-import DataTable, { type DataTableColumn } from '../../components/common/DataTable.tsx'
 import ConfirmDialog from '../../components/common/ConfirmDialog.tsx'
 import TourTypeForm from '../../components/templates/TourTypeForm.tsx'
+import DataTable, { type DataTableColumn } from '../../components/common/DataTable.tsx'
 
-import CategoryAssignmentDialog from '../../components/templates/CategoryAssignmentDialog.tsx'
+import CategoryAssignmentDialog from '../../components/templates/dialogs/CategoryAssignmentDialog.tsx'
 
 import type { CreateTourTypeRequest, TourType } from '../../types/templates/TourTypeTypes.ts'
 
 import {
-    useCreateItemMutation,
-    useDeleteItemMutation,
-    useGetItemsQuery,
-    useUpdateItemMutation,
+    useCreateTourTypeMutation,
+    useDeleteTourTypeMutation,
+    useGetTourTypesQuery,
+    useUpdateTourTypeMutation,
 } from '../../stores/templates/TourTypeApi.ts'
 
 export default function TourTypesPage() {
     const { t } = useTranslation()
 
-    const { data: items = [], isLoading, isFetching } = useGetItemsQuery()
+    const { data: items = [], isLoading, isFetching } = useGetTourTypesQuery()
 
-    const [createItem, { isLoading: isCreating }] = useCreateItemMutation()
+    const [createItem, { isLoading: isCreating }] = useCreateTourTypeMutation()
 
-    const [updateItem, { isLoading: isUpdating }] = useUpdateItemMutation()
+    const [updateItem, { isLoading: isUpdating }] = useUpdateTourTypeMutation()
 
-    const [deleteItem, { isLoading: isDeleting }] = useDeleteItemMutation()
+    const [deleteItem, { isLoading: isDeleting }] = useDeleteTourTypeMutation()
     const [categoryDialogOpen, setCategoryDialogOpen] = useState(false)
 
     const [categoryTourType, setCategoryTourType] = useState<TourType | null>(null)

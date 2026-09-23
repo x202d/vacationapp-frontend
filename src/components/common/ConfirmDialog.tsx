@@ -1,5 +1,7 @@
+import { useTranslation } from 'react-i18next'
 import {
     Button,
+    CircularProgress,
     Dialog,
     DialogActions,
     DialogContent,
@@ -7,14 +9,12 @@ import {
     DialogTitle,
 } from '@mui/material'
 
-import { useTranslation } from 'react-i18next'
-
 interface ConfirmDialogProps {
     open: boolean
     title: string
     message: string
     loading?: boolean
-    onConfirm: () => void
+    onConfirm: () => Promise<void>
     onCancel: () => void
 }
 
@@ -41,7 +41,13 @@ export default function ConfirmDialog({
                     {t('common.actions.cancel')}
                 </Button>
 
-                <Button color="error" variant="contained" onClick={onConfirm} disabled={loading}>
+                <Button
+                    color="error"
+                    variant="contained"
+                    onClick={onConfirm}
+                    disabled={loading}
+                    startIcon={loading ? <CircularProgress size={18} color="inherit" /> : undefined}
+                >
                     {t('common.actions.delete')}
                 </Button>
             </DialogActions>

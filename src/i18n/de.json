@@ -13,23 +13,27 @@
         "actions": {
             "title": "Aktionen",
             "edit": "Bearbeiten",
-            "delete": "Löschen"
+            "delete": "Löschen",
+            "cancel": "Abbrechen"
         }
     },
 
     "navigation": {
         "dashboard": "Dashboard",
-        "tourTypes": "Tourtypen",
+        "templates": "Vorlagen",
+        "tourTypes": "Ausflüge",
         "categories": "Kategorien",
-        "settings": "Einstellungen",
-        "items": "ToDo's"
+        "items": "Items",
+        "plannedTrips": "Geplante Ausflüge",
+        "trips": "Ausflüge",
+        "settings": "Einstellungen"
     },
 
     "tourTypes": {
-        "title": "Tourtypen",
-        "description": "Verwalte die verfügbaren Tourtypen und deren grundlegende Einstellungen.",
+        "title": "Ausflüge",
+        "description": "Verwalte die verfügbaren Ausflüge und deren grundlegende Einstellungen.",
         "actions": {
-            "create": "Tourtyp erstellen"
+            "create": "Ausflug erstellen"
         },
         "table": {
             "name": "Name",
@@ -37,10 +41,10 @@
             "status": "Status"
         },
         "dialog": {
-            "createTitle": "Tourtyp erstellen",
-            "editTitle": "Tourtyp bearbeiten",
-            "deleteTitle": "Tourtyp löschen",
-            "deleteMessage": "Möchtest du den Tourtyp „{{name}}“ wirklich löschen?"
+            "createTitle": "Ausflug erstellen",
+            "editTitle": "Ausflug bearbeiten",
+            "deleteTitle": "Ausflug löschen",
+            "deleteMessage": "Möchtest du den Ausflug „{{name}}“ wirklich löschen?"
         },
         "form": {
             "name": "Name",
@@ -48,11 +52,11 @@
             "active": "Aktiv"
         },
         "messages": {
-            "created": "Tourtyp wurde erfolgreich erstellt.",
-            "updated": "Tourtyp wurde erfolgreich aktualisiert.",
-            "deleted": "Tourtyp wurde erfolgreich gelöscht.",
-            "saveError": "Der Tourtyp konnte nicht gespeichert werden.",
-            "deleteError": "Der Tourtyp konnte nicht gelöscht werden."
+            "created": "Ausflug wurde erfolgreich erstellt.",
+            "updated": "Ausflug wurde erfolgreich aktualisiert.",
+            "deleted": "Ausflug wurde erfolgreich gelöscht.",
+            "saveError": "Der Ausflug konnte nicht gespeichert werden.",
+            "deleteError": "Der Ausflug konnte nicht gelöscht werden."
         },
         "categories": {
             "title": "Kategorien verwalten",
@@ -60,7 +64,7 @@
             "available": "Verfügbare Kategorien",
             "assigned": "Zugeordnete Kategorien",
             "noAvailable": "Keine weiteren Kategorien verfügbar.",
-            "noAssigned": "Diesem Tourtyp sind noch keine Kategorien zugeordnet.",
+            "noAssigned": "Diesem Ausflug sind noch keine Kategorien zugeordnet.",
             "position": "Position"
         }
     },
@@ -92,6 +96,14 @@
             "deleted": "Kategorie wurde erfolgreich gelöscht.",
             "saveError": "Die Kategorie konnte nicht gespeichert werden.",
             "deleteError": "Die Kategorie konnte nicht gelöscht werden."
+        },
+        "items": {
+            "available": "Verfügbare ToDo's",
+            "noAvailable": "Keine weiteren ToDo's verfügbar.",
+            "title": "ToDo's verknüpfen",
+            "assigned": "Zugeordnete ToDo's",
+            "noAssigned": "Dieser Kategorie sind noch keine ToDo's zugeordnet.",
+            "position": "Position"
         }
     },
     "items": {
@@ -122,6 +134,86 @@
             "deleted": "ToDo wurde erfolgreich gelöscht.",
             "saveError": "Die ToDo konnte nicht gespeichert werden.",
             "deleteError": "Die ToDo konnte nicht gelöscht werden."
+        }
+    },
+    "events": {
+        "title": "Ausflüge",
+        "create": "Ausflug erstellen",
+        "details": "Ausflugdetails",
+        "wizard": {
+            "steps": {
+                "tourType": "Tourtyp",
+                "categories": "Kategorien",
+                "items": "Items",
+                "summary": "Zusammenfassung"
+            },
+            "next": "Weiter",
+            "tourType": {
+                "title": "Tourtyp auswählen",
+                "description": "Wähle eine Vorlage aus, aus der der neue Ausflug erstellt werden soll.",
+                "empty": "Keine Tourtypen vorhanden."
+            },
+            "categories": {
+                "all": "Alle Kategorien",
+                "selected": "{{selected}} von {{count}} ausgewählt",
+                "empty": "Für diesen Tourtyp sind keine Kategorien vorhanden."
+            },
+            "summary": {
+                "tourType": "Tourtyp",
+                "noItems": "Keine Items ausgewählt"
+            }
+        },
+        "fields": {
+            "name": "Name",
+            "location": "Ort",
+            "startDate": "Startdatum",
+            "endDate": "Enddatum",
+            "notes": "Notizen",
+            "description": "Beschreibung",
+            "sortOrder": "Sortierung",
+            "itemType": "Typ",
+            "title": "Titel",
+            "details": "Details",
+            "required": "Pflicht"
+        },
+
+        "categories": {
+            "title": "Kategorien",
+            "count_one": "{{count}} Kategorie",
+            "count_other": "{{count}} Kategorien",
+            "add": "Kategorie hinzufügen",
+            "edit": "Kategorie bearbeiten",
+            "delete": "Kategorie löschen",
+            "deleteConfirm": "Möchtest du die Kategorie „{{name}}“ wirklich löschen?",
+            "itemCount_one": "{{count}} Item",
+            "itemCount_other": "{{count}} Items",
+            "empty": "Keine Kategorien vorhanden"
+        },
+
+        "items": {
+            "title": "Items",
+            "count_one": "{{count}} Item",
+            "count_other": "{{count}} Items",
+            "add": "Item hinzufügen",
+            "edit": "Item bearbeiten",
+            "delete": "Item löschen",
+            "deleteConfirm": "Möchtest du das Item „{{name}}“ wirklich löschen?",
+            "required": "Pflicht",
+            "empty": "Keine Items vorhanden"
+        },
+
+        "actions": {
+            "add": "Hinzufügen",
+            "save": "Speichern",
+            "cancel": "Abbrechen",
+            "delete": "Löschen",
+            "edit": "Bearbeiten",
+            "back": "Zurück"
+        },
+
+        "messages": {
+            "error": "Es ist ein Fehler aufgetreten.",
+            "loadError": "Die Daten konnten nicht geladen werden."
         }
     }
 }

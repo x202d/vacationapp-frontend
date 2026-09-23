@@ -17,22 +17,22 @@ import {
 import ItemForm from '../../components/templates/ItemForm.tsx'
 import { CreateTemplateItemRequest, TemplateItem } from '../../types/templates/ItemTypes.ts'
 import {
-    useCreateItemMutation,
-    useDeleteItemMutation,
-    useGetItemsQuery,
-    useUpdateItemMutation,
-} from '../../stores/templates/ItemsApi'
+    useCreateTemplateItemMutation,
+    useDeleteTemplateItemMutation,
+    useGetTemplateItemsQuery,
+    useUpdateTemplateItemMutation,
+} from '../../stores/templates/ItemsApi.ts'
 
 export default function ItemsPage() {
     const { t } = useTranslation()
 
-    const { data: items = [], isLoading, isFetching } = useGetItemsQuery()
+    const { data: items = [], isLoading, isFetching } = useGetTemplateItemsQuery()
 
-    const [createItem, { isLoading: isCreating }] = useCreateItemMutation()
+    const [createItem, { isLoading: isCreating }] = useCreateTemplateItemMutation()
 
-    const [updateItem, { isLoading: isUpdating }] = useUpdateItemMutation()
+    const [updateItem, { isLoading: isUpdating }] = useUpdateTemplateItemMutation()
 
-    const [deleteItem, { isLoading: isDeleting }] = useDeleteItemMutation()
+    const [deleteItem, { isLoading: isDeleting }] = useDeleteTemplateItemMutation()
 
     const [formOpen, setFormOpen] = useState(false)
     const [deleteOpen, setDeleteOpen] = useState(false)
