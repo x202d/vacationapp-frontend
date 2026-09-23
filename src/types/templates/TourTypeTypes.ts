@@ -1,4 +1,4 @@
-import { TemplateItem } from './ItemTypes.ts'
+import type { TemplateCategory } from './CategoryTypes'
 
 export interface TourType {
     id: string
@@ -8,6 +8,7 @@ export interface TourType {
     createdAt: string
     updatedAt: string | null
     templateCategories: TemplateCategory[]
+    categoriesCount: number
 }
 
 export interface CreateTourTypeRequest {
@@ -20,23 +21,6 @@ export interface UpdateTourTypeRequest {
     name: string
     description: string | null
     isActive: boolean
-}
-
-export interface TemplateCategory {
-    id: string
-    name: string
-    description: string
-    sortOrder: number
-    createdAt: string
-    updatedAt: string | null
-    items: TemplateItem[] | null
-}
-
-export interface TourTypeCategory {
-    id: string
-    name: string
-    description: string | null
-    sortOrder: number
 }
 
 export interface UpdateTourTypeCategoriesRequest {

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { ExpandLess, ExpandMore } from '@mui/icons-material'
 import {
     Checkbox,
@@ -12,11 +13,9 @@ import {
     Typography,
 } from '@mui/material'
 
-import type {
-    SelectedItems,
-    TemplateCategory,
-    TemplateItem,
-} from '../../../types/events/EventTypes'
+import type { SelectedItems } from '../../../types/events/EventTypes'
+import type { TemplateItem } from '../../../types/templates/ItemTypes.ts'
+import type { TemplateCategory } from '../../../types/templates/CategoryTypes.ts'
 
 interface ItemStepProps {
     categories: TemplateCategory[]
@@ -31,6 +30,8 @@ export default function ItemStep({
     onToggleItem,
     onToggleCategoryItems,
 }: ItemStepProps) {
+    const { t } = useTranslation()
+
     const [expandedCategories, setExpandedCategories] = useState<string[]>(() =>
         categories.map((category) => category.id),
     )
@@ -70,6 +71,7 @@ export default function ItemStep({
                                 checked={allSelected}
                                 indeterminate={someSelected}
                                 onChange={() => onToggleCategoryItems(category)}
+                                disabled={items.length === 0}
                             />
 
                             <Stack
@@ -132,7 +134,11 @@ export default function ItemStep({
                                             />
 
                                             {item.isRequired && (
-                                                <Chip size="small" label="Pflicht" sx={{ ml: 1 }} />
+                                                <Chip
+                                                    size="small"
+                                                    label={t('events.items.required')}
+                                                    sx={{ ml: 1 }}
+                                                />
                                             )}
                                         </ListItem>
                                     )

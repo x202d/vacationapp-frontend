@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
 import {
     Box,
@@ -12,19 +13,19 @@ import {
     Typography,
 } from '@mui/material'
 
-import type {
-    SelectedItems,
-    TemplateCategory,
-    TemplateTourType,
-} from '../../../types/events/EventTypes'
+import type { SelectedItems } from '../../../types/events/EventTypes'
+import type { TourType } from '../../../types/templates/TourTypeTypes.ts'
+import type { TemplateCategory } from '../../../types/templates/CategoryTypes.ts'
 
 interface SummaryStepProps {
-    tourType: TemplateTourType
+    tourType: TourType
     categories: TemplateCategory[]
     selectedItems: SelectedItems
 }
 
 export default function SummaryStep({ tourType, categories, selectedItems }: SummaryStepProps) {
+    const { t } = useTranslation()
+
     const selectedItemCount = categories.reduce(
         (total, category) => total + (selectedItems[category.id]?.length ?? 0),
         0,
@@ -32,7 +33,6 @@ export default function SummaryStep({ tourType, categories, selectedItems }: Sum
 
     return (
         <Stack spacing={3}>
-            {/* Tourtyp */}
             <Paper
                 variant="outlined"
                 sx={{
@@ -42,7 +42,7 @@ export default function SummaryStep({ tourType, categories, selectedItems }: Sum
             >
                 <Stack spacing={0.5}>
                     <Typography variant="overline" color="text.secondary" fontWeight={600}>
-                        Tourtyp
+                        {t('events.wizard.summary.tourType')}
                     </Typography>
 
                     <Typography variant="h6">{tourType.name}</Typography>
@@ -55,7 +55,6 @@ export default function SummaryStep({ tourType, categories, selectedItems }: Sum
                 </Stack>
             </Paper>
 
-            {/* Kategorien */}
             <Paper
                 variant="outlined"
                 sx={{
@@ -65,9 +64,14 @@ export default function SummaryStep({ tourType, categories, selectedItems }: Sum
             >
                 <Stack spacing={2}>
                     <Stack direction="row" alignItems="center" justifyContent="space-between">
-                        <Typography variant="h6">Kategorien</Typography>
+                        <Typography variant="h6">{t('events.categories.title')}</Typography>
 
-                        <Chip size="small" label={`${categories.length} ausgewählt`} />
+                        <Chip
+                            size="small"
+                            label={t('events.categories.count', {
+                                count: categories.length,
+                            })}
+                        />
                     </Stack>
 
                     <Stack direction="row" flexWrap="wrap" gap={1}>
@@ -78,12 +82,16 @@ export default function SummaryStep({ tourType, categories, selectedItems }: Sum
                 </Stack>
             </Paper>
 
-            {/* Items */}
             <Stack spacing={1.5}>
                 <Stack direction="row" alignItems="center" justifyContent="space-between">
-                    <Typography variant="h6">Items</Typography>
+                    <Typography variant="h6">{t('events.items.title')}</Typography>
 
-                    <Chip size="small" label={`${selectedItemCount} ausgewählt`} />
+                    <Chip
+                        size="small"
+                        label={t('events.items.count', {
+                            count: selectedItemCount,
+                        })}
+                    />
                 </Stack>
 
                 {categories.map((category) => {
@@ -102,7 +110,6 @@ export default function SummaryStep({ tourType, categories, selectedItems }: Sum
                                 borderRadius: 2,
                             }}
                         >
-                            {/* Kategorie Header */}
                             <Box
                                 sx={{
                                     px: 2,
@@ -119,9 +126,9 @@ export default function SummaryStep({ tourType, categories, selectedItems }: Sum
 
                                     <Chip
                                         size="small"
-                                        label={`${items.length} ${
-                                            items.length === 1 ? 'Item' : 'Items'
-                                        }`}
+                                        label={t('events.items.count', {
+                                            count: items.length,
+                                        })}
                                     />
                                 </Stack>
                             </Box>
@@ -139,11 +146,7 @@ export default function SummaryStep({ tourType, categories, selectedItems }: Sum
                                                 py: 1,
                                             }}
                                         >
-                                            <ListItemIcon
-                                                sx={{
-                                                    minWidth: 36,
-                                                }}
-                                            >
+                                            <ListItemIcon sx={{ minWidth: 36 }}>
                                                 <CheckCircleOutlineIcon
                                                     fontSize="small"
                                                     color="success"
@@ -169,7 +172,7 @@ export default function SummaryStep({ tourType, categories, selectedItems }: Sum
                                             {item.isRequired && (
                                                 <Chip
                                                     size="small"
-                                                    label="Pflicht"
+                                                    label={t('events.items.required')}
                                                     variant="outlined"
                                                 />
                                             )}
@@ -177,14 +180,9 @@ export default function SummaryStep({ tourType, categories, selectedItems }: Sum
                                     ))}
                                 </List>
                             ) : (
-                                <Box
-                                    sx={{
-                                        px: 2,
-                                        py: 2,
-                                    }}
-                                >
+                                <Box sx={{ px: 2, py: 2 }}>
                                     <Typography variant="body2" color="text.secondary">
-                                        Keine Items ausgewählt
+                                        {t('events.wizard.summary.noItems')}
                                     </Typography>
                                 </Box>
                             )}

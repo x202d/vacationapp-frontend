@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
-import { Stack, TextField } from '@mui/material'
 import { useTranslation } from 'react-i18next'
+import { Stack, TextField } from '@mui/material'
 
-import type { Category, CreateCategoryRequest } from '../../types/templates/CategoryTypes'
+import type { CreateCategoryRequest, TemplateCategory } from '../../types/templates/CategoryTypes'
 
 interface CategoryFormProps {
-    item?: Category | null
+    item?: TemplateCategory | null
     formId: string
     onSubmit: (data: CreateCategoryRequest) => void
 }

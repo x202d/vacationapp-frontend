@@ -140,7 +140,29 @@
         "title": "Ausflüge",
         "create": "Ausflug erstellen",
         "details": "Ausflugdetails",
-
+        "wizard": {
+            "steps": {
+                "tourType": "Tourtyp",
+                "categories": "Kategorien",
+                "items": "Items",
+                "summary": "Zusammenfassung"
+            },
+            "next": "Weiter",
+            "tourType": {
+                "title": "Tourtyp auswählen",
+                "description": "Wähle eine Vorlage aus, aus der der neue Ausflug erstellt werden soll.",
+                "empty": "Keine Tourtypen vorhanden."
+            },
+            "categories": {
+                "all": "Alle Kategorien",
+                "selected": "{{selected}} von {{count}} ausgewählt",
+                "empty": "Für diesen Tourtyp sind keine Kategorien vorhanden."
+            },
+            "summary": {
+                "tourType": "Tourtyp",
+                "noItems": "Keine Items ausgewählt"
+            }
+        },
         "fields": {
             "name": "Name",
             "location": "Ort",
@@ -157,7 +179,7 @@
 
         "categories": {
             "title": "Kategorien",
-            "count": "{{count}} Kategorie",
+            "count_one": "{{count}} Kategorie",
             "count_other": "{{count}} Kategorien",
             "add": "Kategorie hinzufügen",
             "edit": "Kategorie bearbeiten",
@@ -170,7 +192,7 @@
 
         "items": {
             "title": "Items",
-            "count": "{{count}} Item",
+            "count_one": "{{count}} Item",
             "count_other": "{{count}} Items",
             "add": "Item hinzufügen",
             "edit": "Item bearbeiten",

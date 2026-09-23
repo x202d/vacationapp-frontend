@@ -5,8 +5,11 @@ import PageHeader from '../../components/common/PageHeader.tsx'
 import ConfirmDialog from '../../components/common/ConfirmDialog.tsx'
 import CategoryForm from '../../components/templates/CategoryForm.tsx'
 import DataTable, { type DataTableColumn } from '../../components/common/DataTable.tsx'
-import type { Category, CreateCategoryRequest } from '../../types/templates/CategoryTypes.ts'
 import ItemAssignmentDialog from '../../components/templates/dialogs/ItemAssignmentDialog.tsx'
+import type {
+    CreateCategoryRequest,
+    TemplateCategory,
+} from '../../types/templates/CategoryTypes.ts'
 import {
     Alert,
     Button,
@@ -17,26 +20,26 @@ import {
     Snackbar,
 } from '@mui/material'
 import {
-    useCreateItemMutation,
-    useDeleteItemMutation,
-    useGetItemsQuery,
-    useUpdateItemMutation,
+    useCreateCategoryMutation,
+    useDeleteCategoryMutation,
+    useGetCategoriesQuery,
+    useUpdateCategoryMutation,
 } from '../../stores/templates/CategoryApi.ts'
 
 export default function CategoriesPage() {
     const { t } = useTranslation()
 
-    const { data: items = [], isLoading, isFetching } = useGetItemsQuery()
+    const { data: items = [], isLoading, isFetching } = useGetCategoriesQuery()
 
-    const [createItem, { isLoading: isCreating }] = useCreateItemMutation()
+    const [createItem, { isLoading: isCreating }] = useCreateCategoryMutation()
 
-    const [updateItem, { isLoading: isUpdating }] = useUpdateItemMutation()
+    const [updateItem, { isLoading: isUpdating }] = useUpdateCategoryMutation()
 
-    const [deleteItem, { isLoading: isDeleting }] = useDeleteItemMutation()
+    const [deleteItem, { isLoading: isDeleting }] = useDeleteCategoryMutation()
 
-    const [category, setCategory] = useState<Category | null>(null)
+    const [category, setCategory] = useState<TemplateCategory | null>(null)
 
-    const handleManageItems = (item: Category) => {
+    const handleManageItems = (item: TemplateCategory) => {
         setCategory(item)
         setItemDialogOpen(true)
     }
@@ -51,7 +54,7 @@ export default function CategoriesPage() {
 
     const [itemDialogOpen, setItemDialogOpen] = useState(false)
 
-    const [selectedItem, setSelectedItem] = useState<Category | null>(null)
+    const [selectedItem, setSelectedItem] = useState<TemplateCategory | null>(null)
 
     const [error, setError] = useState<string | null>(null)
     const [success, setSuccess] = useState<string | null>(null)
@@ -65,12 +68,12 @@ export default function CategoriesPage() {
         setFormOpen(true)
     }
 
-    const handleEdit = (item: Category) => {
+    const handleEdit = (item: TemplateCategory) => {
         setSelectedItem(item)
         setFormOpen(true)
     }
 
-    const handleDelete = (item: Category) => {
+    const handleDelete = (item: TemplateCategory) => {
         setSelectedItem(item)
         setDeleteOpen(true)
     }
@@ -122,7 +125,7 @@ export default function CategoriesPage() {
         }
     }
 
-    const columns: DataTableColumn<Category>[] = [
+    const columns: DataTableColumn<TemplateCategory>[] = [
         {
             key: 'name',
             label: t('categories.table.name'),

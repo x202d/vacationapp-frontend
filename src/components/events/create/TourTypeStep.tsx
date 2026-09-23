@@ -1,11 +1,11 @@
+import { useTranslation } from 'react-i18next'
+import { TourType } from '../../../types/templates/TourTypeTypes.ts'
 import { Box, Card, CardActionArea, CardContent, Chip, Stack, Typography } from '@mui/material'
 
-import type { TemplateTourType } from '../../../types/events/EventTypes'
-
 interface TourTypeStepProps {
-    tourTypes: TemplateTourType[]
+    tourTypes: TourType[]
     selectedTourTypeId: string | null
-    onSelect: (tourType: TemplateTourType) => void
+    onSelect: (tourType: TourType) => void
 }
 
 export default function TourTypeStep({
@@ -13,20 +13,22 @@ export default function TourTypeStep({
     selectedTourTypeId,
     onSelect,
 }: TourTypeStepProps) {
+    const { t } = useTranslation()
+
     return (
         <Box>
             <Typography variant="h5" gutterBottom>
-                Tourtyp auswählen
+                {t('events.wizard.tourType.title')}
             </Typography>
 
             <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-                Wähle eine Vorlage aus, aus der der neue Ausflug erstellt werden soll.
+                {t('events.wizard.tourType.description')}
             </Typography>
 
             <Stack spacing={2}>
                 {tourTypes.map((tourType) => {
                     const selected = selectedTourTypeId === tourType.id
-                    console.log(tourType)
+
                     const itemCount = tourType.templateCategories.reduce(
                         (count, category) => count + category.items.length,
                         0,
@@ -43,40 +45,44 @@ export default function TourTypeStep({
                         >
                             <CardActionArea onClick={() => onSelect(tourType)}>
                                 <CardContent>
-                                    <Stack
-                                        direction="row"
-                                        justifyContent="space-between"
-                                        alignItems="flex-start"
-                                        spacing={2}
-                                    >
-                                        <Box>
-                                            <Typography variant="h6">{tourType.name}</Typography>
+                                    <Typography variant="h6">{tourType.name}</Typography>
 
-                                            {tourType.description && (
-                                                <Typography
-                                                    variant="body2"
-                                                    color="text.secondary"
-                                                    sx={{ mt: 0.5 }}
-                                                >
-                                                    {tourType.description}
-                                                </Typography>
-                                            )}
+                                    {tourType.description && (
+                                        <Typography
+                                            variant="body2"
+                                            color="text.secondary"
+                                            sx={{ mt: 0.5 }}
+                                        >
+                                            {tourType.description}
+                                        </Typography>
+                                    )}
 
-                                            <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
-                                                <Chip
-                                                    size="small"
-                                                    label={`${tourType.templateCategories.length} Kategorien`}
-                                                />
+                                    <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
+                                        <Chip
+                                            size="small"
+                                            label={t('events.categories.count', {
+                                                count: tourType.templateCategories.length,
+                                            })}
+                                        />
 
-                                                <Chip size="small" label={`${itemCount} Items`} />
-                                            </Stack>
-                                        </Box>
+                                        <Chip
+                                            size="small"
+                                            label={t('events.items.count', {
+                                                count: itemCount,
+                                            })}
+                                        />
                                     </Stack>
                                 </CardContent>
                             </CardActionArea>
                         </Card>
                     )
                 })}
+
+                {tourTypes.length === 0 && (
+                    <Typography color="text.secondary">
+                        {t('events.wizard.tourType.empty')}
+                    </Typography>
+                )}
             </Stack>
         </Box>
     )

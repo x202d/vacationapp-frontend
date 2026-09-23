@@ -1,14 +1,15 @@
-import { TemplateItem } from './ItemTypes.ts'
+import type { TemplateItem } from './ItemTypes'
 
-export interface Category {
+export interface TemplateCategory {
     id: string
     name: string
     description: string | null
     sortOrder: number
     createdAt: string
     updatedAt: string | null
+    items: TemplateItem[]
     itemsCount: number
-    items: TemplateItem[] | null
+    toursCount: number
 }
 
 export interface CreateCategoryRequest {

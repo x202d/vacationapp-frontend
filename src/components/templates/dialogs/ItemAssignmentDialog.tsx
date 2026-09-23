@@ -1,7 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { useEffect, useMemo, useState } from 'react'
 import { Add, DragIndicator, Remove } from '@mui/icons-material'
-import { useGetItemsQuery } from '../../../stores/templates/ItemsApi'
 import {
     Box,
     Button,
@@ -21,12 +20,13 @@ import {
     Typography,
 } from '@mui/material'
 
-import { Category } from '../../../types/templates/CategoryTypes.ts'
-import { useUpdateItemsMutation } from '../../../stores/templates/CategoryApi.ts'
+import { TemplateCategory } from '../../../types/templates/CategoryTypes.ts'
+import { useGetTemplateItemsQuery } from '../../../stores/templates/ItemsApi.ts'
+import { useUpdateCategoryItemsMutation } from '../../../stores/templates/CategoryApi.ts'
 
 interface ItemAssignmentDialogProps {
     open: boolean
-    templateCategory: Category | null
+    templateCategory: TemplateCategory | null
     onClose: () => void
 }
 
@@ -43,9 +43,9 @@ export default function ItemAssignmentDialog({
 }: ItemAssignmentDialogProps) {
     const { t } = useTranslation()
 
-    const { data: items = [], isLoading: itemsLoading } = useGetItemsQuery()
+    const { data: items = [], isLoading: itemsLoading } = useGetTemplateItemsQuery()
 
-    const [updateCategories, { isLoading: isSaving }] = useUpdateItemsMutation()
+    const [updateCategories, { isLoading: isSaving }] = useUpdateCategoryItemsMutation()
 
     const [selectedCategories, setSelectedCategories] = useState<AssignmentItem[]>([])
 

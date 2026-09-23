@@ -1,7 +1,5 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-
 import { API_URL } from '../../config/api'
-
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import type {
     CreateTemplateItemRequest,
     TemplateItem,
@@ -20,33 +18,26 @@ export const templateItemApi = createApi({
     tagTypes,
 
     endpoints: (builder) => ({
-        getItems: builder.query<TemplateItem[], void>({
+        getTemplateItems: builder.query<TemplateItem[], void>({
             query: () => '/template-items',
 
-            providesTags: (result) =>
-                result
-                    ? [
-                          ...result.map(({ id }) => ({
-                              type: 'TemplateItem' as const,
-                              id,
-                          })),
-                          {
-                              type: 'TemplateItem' as const,
-                              id: 'LIST',
-                          },
-                      ]
-                    : [
-                          {
-                              type: 'TemplateItem' as const,
-                              id: 'LIST',
-                          },
-                      ],
+            providesTags: (result) => [
+                {
+                    type: 'TemplateItem',
+                    id: 'LIST',
+                },
+
+                ...(result ?? []).map(({ id }) => ({
+                    type: 'TemplateItem' as const,
+                    id,
+                })),
+            ],
         }),
 
-        getItem: builder.query<TemplateItem, string>({
+        getTemplateItem: builder.query<TemplateItem, string>({
             query: (id) => `/template-items/${id}`,
 
-            providesTags: (_, __, id) => [
+            providesTags: (_result, _error, id) => [
                 {
                     type: 'TemplateItem',
                     id,
@@ -54,11 +45,11 @@ export const templateItemApi = createApi({
             ],
         }),
 
-        createItem: builder.mutation<TemplateItem, CreateTemplateItemRequest>({
-            query: (item) => ({
+        createTemplateItem: builder.mutation<TemplateItem, CreateTemplateItemRequest>({
+            query: (data) => ({
                 url: '/template-items',
                 method: 'POST',
-                body: item,
+                body: data,
             }),
 
             invalidatesTags: [
@@ -69,7 +60,7 @@ export const templateItemApi = createApi({
             ],
         }),
 
-        updateItem: builder.mutation<
+        updateTemplateItem: builder.mutation<
             TemplateItem,
             {
                 id: string
@@ -82,7 +73,7 @@ export const templateItemApi = createApi({
                 body: data,
             }),
 
-            invalidatesTags: (_, __, { id }) => [
+            invalidatesTags: (_result, _error, { id }) => [
                 {
                     type: 'TemplateItem',
                     id,
@@ -94,13 +85,13 @@ export const templateItemApi = createApi({
             ],
         }),
 
-        deleteItem: builder.mutation<void, string>({
+        deleteTemplateItem: builder.mutation<void, string>({
             query: (id) => ({
                 url: `/template-items/${id}`,
                 method: 'DELETE',
             }),
 
-            invalidatesTags: (_, __, id) => [
+            invalidatesTags: (_result, _error, id) => [
                 {
                     type: 'TemplateItem',
                     id,
@@ -115,9 +106,9 @@ export const templateItemApi = createApi({
 })
 
 export const {
-    useGetItemsQuery,
-    useGetItemQuery,
-    useCreateItemMutation,
-    useUpdateItemMutation,
-    useDeleteItemMutation,
+    useGetTemplateItemsQuery,
+    useGetTemplateItemQuery,
+    useCreateTemplateItemMutation,
+    useUpdateTemplateItemMutation,
+    useDeleteTemplateItemMutation,
 } = templateItemApi

@@ -1,19 +1,23 @@
 import { useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Button, Paper, Stack, Step, StepLabel, Stepper, Typography } from '@mui/material'
+
+import type { TourType } from '../../../types/templates/TourTypeTypes'
+import type { CreateEventRequest, SelectedItems } from '../../../types/events/EventTypes'
 
 import ItemStep from './ItemStep'
 import SummaryStep from './SummaryStep'
 import CategoryStep from './CategoryStep'
 import TourTypeStep from './TourTypeStep'
+import { TemplateCategory } from '../../../types/templates/CategoryTypes.ts'
 
-import type {
-    CreateEventWizardProps,
-    SelectedItems,
-    TemplateCategory,
-    TemplateTourType,
-} from '../../../types/events/EventTypes'
-
-const steps = ['Tourtyp', 'Kategorien', 'Items', 'Zusammenfassung']
+interface CreateEventWizardProps {
+    tourTypes: TourType[]
+    onSubmit: (data: CreateEventRequest) => void | Promise<void>
+    onCancel?: () => void
+    loading?: boolean
+    isCreating?: boolean
+}
 
 export default function CreateEventWizard({
     tourTypes,
@@ -22,6 +26,15 @@ export default function CreateEventWizard({
     loading = false,
     isCreating = false,
 }: CreateEventWizardProps) {
+    const { t } = useTranslation()
+
+    const steps = [
+        t('events.wizard.steps.tourType'),
+        t('events.wizard.steps.categories'),
+        t('events.wizard.steps.items'),
+        t('events.wizard.steps.summary'),
+    ]
+
     const [activeStep, setActiveStep] = useState(0)
     const [selectedTourTypeId, setSelectedTourTypeId] = useState<string | null>(null)
     const [selectedCategoryIds, setSelectedCategoryIds] = useState<string[]>([])
@@ -42,7 +55,7 @@ export default function CreateEventWizard({
             .sort((a, b) => a.sortOrder - b.sortOrder)
     }, [selectedTourType, selectedCategoryIds])
 
-    const handleTourTypeSelect = (tourType: TemplateTourType) => {
+    const handleTourTypeSelect = (tourType: TourType) => {
         setSelectedTourTypeId(tourType.id)
 
         const categories = [...tourType.templateCategories].sort(
@@ -65,7 +78,9 @@ export default function CreateEventWizard({
             return
         }
 
-        const category = selectedTourType.templateCategories.find((item) => item.id === categoryId)
+        const category = selectedTourType.templateCategories.find(
+            (category) => category.id === categoryId,
+        )
 
         if (!category) {
             return
@@ -88,8 +103,6 @@ export default function CreateEventWizard({
 
         setSelectedCategoryIds((current) => [...current, categoryId])
 
-        // Beim Reaktivieren werden ALLE Items der Kategorie
-        // wieder ausgewählt.
         setSelectedItems((current) => ({
             ...current,
             [categoryId]: category.items.map((item) => item.id),
@@ -101,9 +114,13 @@ export default function CreateEventWizard({
             return
         }
 
-        const categories = selectedTourType.templateCategories
+        const categories = [...selectedTourType.templateCategories].sort(
+            (a, b) => a.sortOrder - b.sortOrder,
+        )
 
-        const allSelected = selectedCategoryIds.length === categories.length
+        const allSelected =
+            categories.length > 0 &&
+            categories.every((category) => selectedCategoryIds.includes(category.id))
 
         if (allSelected) {
             setSelectedCategoryIds([])
@@ -151,7 +168,6 @@ export default function CreateEventWizard({
                 category.items.every((item) => selectedCategoryItems.includes(item.id))
 
             if (allSelected) {
-                // Pflicht-Items bleiben ausgewählt.
                 return {
                     ...current,
                     [category.id]: category.items
@@ -160,7 +176,6 @@ export default function CreateEventWizard({
                 }
             }
 
-            // Beim Aktivieren werden ALLE Items ausgewählt.
             return {
                 ...current,
                 [category.id]: category.items.map((item) => item.id),
@@ -207,17 +222,13 @@ export default function CreateEventWizard({
     }
 
     const handleBack = () => {
-        setActiveStep((current) => current - 1)
-    }
-
-    if (!selectedTourType && activeStep > 0) {
-        setActiveStep(0)
+        setActiveStep((current) => Math.max(0, current - 1))
     }
 
     return (
         <Paper sx={{ p: 3 }}>
             <Stack spacing={3}>
-                <Typography variant="h5">Ausflug erstellen</Typography>
+                <Typography variant="h5">{t('events.create')}</Typography>
 
                 <Stepper activeStep={activeStep}>
                     {steps.map((label) => (
@@ -262,14 +273,21 @@ export default function CreateEventWizard({
                 )}
 
                 <Stack direction="row" justifyContent="space-between">
-                    <Button onClick={handleBack} disabled={activeStep === 0 || loading}>
-                        Zurück
+                    <Button
+                        onClick={handleBack}
+                        disabled={activeStep === 0 || loading || isCreating}
+                    >
+                        {t('events.actions.back')}
                     </Button>
 
                     <Stack direction="row" spacing={1}>
                         {onCancel && (
-                            <Button variant="outlined" onClick={onCancel} disabled={loading}>
-                                Abbrechen
+                            <Button
+                                variant="outlined"
+                                onClick={onCancel}
+                                disabled={loading || isCreating}
+                            >
+                                {t('events.actions.cancel')}
                             </Button>
                         )}
 
@@ -278,7 +296,9 @@ export default function CreateEventWizard({
                             onClick={handleNext}
                             disabled={!canContinue() || loading || isCreating}
                         >
-                            {activeStep === steps.length - 1 ? 'Erstellen' : 'Weiter'}
+                            {activeStep === steps.length - 1
+                                ? t('events.create')
+                                : t('events.wizard.next')}
                         </Button>
                     </Stack>
                 </Stack>

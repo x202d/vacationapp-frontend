@@ -88,7 +88,29 @@
         "title": "Trips",
         "create": "Create trip",
         "details": "Trip details",
-
+        "wizard": {
+            "steps": {
+                "tourType": "Tour type",
+                "categories": "Categories",
+                "items": "Items",
+                "summary": "Summary"
+            },
+            "next": "Next",
+            "tourType": {
+                "title": "Select tour type",
+                "description": "Choose a template from which the new trip should be created.",
+                "empty": "No tour types available."
+            },
+            "categories": {
+                "all": "All categories",
+                "selected": "{{selected}} of {{count}} selected",
+                "empty": "No categories are available for this tour type."
+            },
+            "summary": {
+                "tourType": "Tour type",
+                "noItems": "No items selected"
+            }
+        },
         "fields": {
             "name": "Name",
             "location": "Location",
@@ -105,7 +127,7 @@
 
         "categories": {
             "title": "Categories",
-            "count": "{{count}} category",
+            "count_one": "{{count}} category",
             "count_other": "{{count}} categories",
             "add": "Add category",
             "edit": "Edit category",
@@ -118,7 +140,7 @@
 
         "items": {
             "title": "Items",
-            "count": "{{count}} item",
+            "count_one": "{{count}} item",
             "count_other": "{{count}} items",
             "add": "Add item",
             "edit": "Edit item",

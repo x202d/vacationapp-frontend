@@ -1,9 +1,6 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-
 import { API_URL } from '../../config/api'
-
-import { TemplateTourType } from '../../types/events/EventTypes.ts'
-import {
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import type {
     CreateTourTypeRequest,
     TourType,
     UpdateTourTypeCategoriesRequest,
@@ -22,57 +19,26 @@ export const tourTypeApi = createApi({
     tagTypes,
 
     endpoints: (builder) => ({
-        getItems: builder.query<TourType[], void>({
+        getTourTypes: builder.query<TourType[], void>({
             query: () => '/template-tours',
 
-            providesTags: (result) =>
-                result
-                    ? [
-                          ...result.map(({ id }) => ({
-                              type: 'TourType' as const,
-                              id,
-                          })),
-                          {
-                              type: 'TourType' as const,
-                              id: 'LIST',
-                          },
-                      ]
-                    : [
-                          {
-                              type: 'TourType' as const,
-                              id: 'LIST',
-                          },
-                      ],
-        }),
-        updateCategories: builder.mutation<
-            TourType,
-            {
-                id: string
-                data: UpdateTourTypeCategoriesRequest
-            }
-        >({
-            query: ({ id, data }) => ({
-                url: `/template-tours/${id}/categories`,
-                method: 'PUT',
-                body: data,
-            }),
-
-            invalidatesTags: (_, __, { id }) => [
-                {
-                    type: 'TourType',
-                    id,
-                },
+            providesTags: (result) => [
                 {
                     type: 'TourType',
                     id: 'LIST',
                 },
+
+                ...(result ?? []).map(({ id }) => ({
+                    type: 'TourType' as const,
+                    id,
+                })),
             ],
         }),
 
-        getItem: builder.query<TemplateTourType, string>({
+        getTourType: builder.query<TourType, string>({
             query: (id) => `/template-tours/${id}`,
 
-            providesTags: (_, __, id) => [
+            providesTags: (_result, _error, id) => [
                 {
                     type: 'TourType',
                     id,
@@ -80,11 +46,11 @@ export const tourTypeApi = createApi({
             ],
         }),
 
-        createItem: builder.mutation<TourType, CreateTourTypeRequest>({
-            query: (item) => ({
+        createTourType: builder.mutation<TourType, CreateTourTypeRequest>({
+            query: (data) => ({
                 url: '/template-tours',
                 method: 'POST',
-                body: item,
+                body: data,
             }),
 
             invalidatesTags: [
@@ -95,7 +61,7 @@ export const tourTypeApi = createApi({
             ],
         }),
 
-        updateItem: builder.mutation<
+        updateTourType: builder.mutation<
             TourType,
             {
                 id: string
@@ -108,7 +74,7 @@ export const tourTypeApi = createApi({
                 body: data,
             }),
 
-            invalidatesTags: (_, __, { id }) => [
+            invalidatesTags: (_result, _error, { id }) => [
                 {
                     type: 'TourType',
                     id,
@@ -120,13 +86,38 @@ export const tourTypeApi = createApi({
             ],
         }),
 
-        deleteItem: builder.mutation<void, string>({
+        deleteTourType: builder.mutation<void, string>({
             query: (id) => ({
                 url: `/template-tours/${id}`,
                 method: 'DELETE',
             }),
 
-            invalidatesTags: (_, __, id) => [
+            invalidatesTags: (_result, _error, id) => [
+                {
+                    type: 'TourType',
+                    id,
+                },
+                {
+                    type: 'TourType',
+                    id: 'LIST',
+                },
+            ],
+        }),
+
+        updateTourTypeCategories: builder.mutation<
+            TourType,
+            {
+                id: string
+                data: UpdateTourTypeCategoriesRequest
+            }
+        >({
+            query: ({ id, data }) => ({
+                url: `/template-tours/${id}/categories`,
+                method: 'PUT',
+                body: data,
+            }),
+
+            invalidatesTags: (_result, _error, { id }) => [
                 {
                     type: 'TourType',
                     id,
@@ -141,10 +132,10 @@ export const tourTypeApi = createApi({
 })
 
 export const {
-    useGetItemsQuery,
-    useGetItemQuery,
-    useCreateItemMutation,
-    useUpdateItemMutation,
-    useDeleteItemMutation,
-    useUpdateCategoriesMutation,
+    useGetTourTypesQuery,
+    useGetTourTypeQuery,
+    useCreateTourTypeMutation,
+    useUpdateTourTypeMutation,
+    useDeleteTourTypeMutation,
+    useUpdateTourTypeCategoriesMutation,
 } = tourTypeApi

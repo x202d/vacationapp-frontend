@@ -22,9 +22,9 @@ import {
 
 import type { TourType } from '../../../types/templates/TourTypeTypes.ts'
 
-import { useGetItemsQuery as useGetCategoriesQuery } from '../../../stores/templates/CategoryApi.ts'
+import { useGetCategoriesQuery } from '../../../stores/templates/CategoryApi.ts'
 
-import { useUpdateCategoriesMutation } from '../../../stores/templates/TourTypeApi.ts'
+import { useUpdateTourTypeCategoriesMutation } from '../../../stores/templates/TourTypeApi.ts'
 
 interface CategoryAssignmentDialogProps {
     open: boolean
@@ -47,7 +47,7 @@ export default function CategoryAssignmentDialog({
 
     const { data: categories = [], isLoading: categoriesLoading } = useGetCategoriesQuery()
 
-    const [updateCategories, { isLoading: isSaving }] = useUpdateCategoriesMutation()
+    const [updateCategories, { isLoading: isSaving }] = useUpdateTourTypeCategoriesMutation()
 
     const [selectedCategories, setSelectedCategories] = useState<AssignmentCategory[]>([])
 

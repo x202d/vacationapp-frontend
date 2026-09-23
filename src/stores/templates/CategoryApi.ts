@@ -1,11 +1,8 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-
 import { API_URL } from '../../config/api'
-
-import { TourType } from '../../types/templates/TourTypeTypes.ts'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import type {
-    Category,
     CreateCategoryRequest,
+    TemplateCategory,
     UpdateCategoryItemsRequest,
     UpdateCategoryRequest,
 } from '../../types/templates/CategoryTypes'
@@ -22,33 +19,26 @@ export const categoryApi = createApi({
     tagTypes,
 
     endpoints: (builder) => ({
-        getItems: builder.query<Category[], void>({
+        getCategories: builder.query<TemplateCategory[], void>({
             query: () => '/template-categories',
 
-            providesTags: (result) =>
-                result
-                    ? [
-                          ...result.map(({ id }) => ({
-                              type: 'Category' as const,
-                              id,
-                          })),
-                          {
-                              type: 'Category' as const,
-                              id: 'LIST',
-                          },
-                      ]
-                    : [
-                          {
-                              type: 'Category' as const,
-                              id: 'LIST',
-                          },
-                      ],
+            providesTags: (result) => [
+                {
+                    type: 'Category',
+                    id: 'LIST',
+                },
+
+                ...(result ?? []).map(({ id }) => ({
+                    type: 'Category' as const,
+                    id,
+                })),
+            ],
         }),
 
-        getItem: builder.query<Category, string>({
+        getCategory: builder.query<TemplateCategory, string>({
             query: (id) => `/template-categories/${id}`,
 
-            providesTags: (_, __, id) => [
+            providesTags: (_result, _error, id) => [
                 {
                     type: 'Category',
                     id,
@@ -56,11 +46,11 @@ export const categoryApi = createApi({
             ],
         }),
 
-        createItem: builder.mutation<Category, CreateCategoryRequest>({
-            query: (item) => ({
+        createCategory: builder.mutation<TemplateCategory, CreateCategoryRequest>({
+            query: (data) => ({
                 url: '/template-categories',
                 method: 'POST',
-                body: item,
+                body: data,
             }),
 
             invalidatesTags: [
@@ -71,8 +61,8 @@ export const categoryApi = createApi({
             ],
         }),
 
-        updateItem: builder.mutation<
-            Category,
+        updateCategory: builder.mutation<
+            TemplateCategory,
             {
                 id: string
                 data: UpdateCategoryRequest
@@ -84,7 +74,7 @@ export const categoryApi = createApi({
                 body: data,
             }),
 
-            invalidatesTags: (_, __, { id }) => [
+            invalidatesTags: (_result, _error, { id }) => [
                 {
                     type: 'Category',
                     id,
@@ -96,13 +86,13 @@ export const categoryApi = createApi({
             ],
         }),
 
-        deleteItem: builder.mutation<void, string>({
+        deleteCategory: builder.mutation<void, string>({
             query: (id) => ({
                 url: `/template-categories/${id}`,
                 method: 'DELETE',
             }),
 
-            invalidatesTags: (_, __, id) => [
+            invalidatesTags: (_result, _error, id) => [
                 {
                     type: 'Category',
                     id,
@@ -114,8 +104,8 @@ export const categoryApi = createApi({
             ],
         }),
 
-        updateItems: builder.mutation<
-            TourType,
+        updateCategoryItems: builder.mutation<
+            TemplateCategory,
             {
                 id: string
                 data: UpdateCategoryItemsRequest
@@ -127,7 +117,7 @@ export const categoryApi = createApi({
                 body: data,
             }),
 
-            invalidatesTags: (_, __, { id }) => [
+            invalidatesTags: (_result, _error, { id }) => [
                 {
                     type: 'Category',
                     id,
@@ -142,10 +132,10 @@ export const categoryApi = createApi({
 })
 
 export const {
-    useGetItemsQuery,
-    useGetItemQuery,
-    useCreateItemMutation,
-    useUpdateItemMutation,
-    useDeleteItemMutation,
-    useUpdateItemsMutation,
+    useGetCategoriesQuery,
+    useGetCategoryQuery,
+    useCreateCategoryMutation,
+    useUpdateCategoryMutation,
+    useDeleteCategoryMutation,
+    useUpdateCategoryItemsMutation,
 } = categoryApi

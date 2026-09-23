@@ -1,6 +1,5 @@
 export interface TemplateItem {
     id: string
-    category: string
     itemType: string
     title: string
     details: string | null
@@ -11,8 +10,6 @@ export interface TemplateItem {
 }
 
 export interface CreateTemplateItemRequest {
-    //category: string
-    //itemType: string
     title: string
     details?: string | null
     sortOrder?: number
@@ -20,8 +17,6 @@ export interface CreateTemplateItemRequest {
 }
 
 export interface UpdateTemplateItemRequest {
-    //category?: string
-    //itemType?: string
     title?: string
     details?: string | null
     sortOrder?: number
