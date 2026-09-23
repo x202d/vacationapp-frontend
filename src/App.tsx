@@ -6,6 +6,7 @@ import DashboardPage from './pages/DashboardPage'
 import ItemsPage from './pages/templates/ItemsPage.tsx'
 import TourTypesPage from './pages/templates/TourTypesPage.tsx'
 import CategoriesPage from './pages/templates/CategoriesPage.tsx'
+import CreateEventPage from './pages/events/CreateEventWizard.tsx'
 
 function App() {
     return (
@@ -19,6 +20,7 @@ function App() {
                     <Route path="/templates/categories" element={<CategoriesPage />} />
 
                     <Route path="/templates/items" element={<ItemsPage />} />
+                    <Route path="/events/wizard" element={<CreateEventPage />} />
 
                     <Route path="*" element={<Navigate to="/" replace />} />
                 </Route>

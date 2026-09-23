@@ -150,8 +150,8 @@ export default function Sidebar({
                     <List component="div" disablePadding>
                         <ListItemButton
                             sx={{ pl: 4 }}
-                            selected={location.pathname.startsWith('/trips')}
-                            onClick={() => navigateTo('/trips')}
+                            selected={location.pathname.startsWith('/events/wizard')}
+                            onClick={() => navigateTo('/events/wizard')}
                         >
                             <ListItemIcon>
                                 <Event />

@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 import { API_URL } from '../../config/api'
 
+import { TemplateTourType } from '../../types/events/EventTypes.ts'
 import {
     CreateTourTypeRequest,
     TourType,
@@ -68,7 +69,7 @@ export const tourTypeApi = createApi({
             ],
         }),
 
-        getItem: builder.query<TourType, string>({
+        getItem: builder.query<TemplateTourType, string>({
             query: (id) => `/template-tours/${id}`,
 
             providesTags: (_, __, id) => [
