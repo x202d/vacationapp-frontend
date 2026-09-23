@@ -12,18 +12,30 @@ const tagTypes = ['Event'] as const
 
 export const eventApi = createApi({
     reducerPath: 'eventApi',
+
     baseQuery: fetchBaseQuery({
         baseUrl: API_URL,
     }),
+
     tagTypes,
+
     endpoints: (builder) => ({
         getEvents: builder.query<Event[], void>({
             query: () => '/events',
-            providesTags: ['Event'],
+
+            providesTags: (result) => [
+                { type: 'Event', id: 'LIST' },
+
+                ...(result ?? []).map((event) => ({
+                    type: 'Event' as const,
+                    id: event.id,
+                })),
+            ],
         }),
 
         getEvent: builder.query<Event, string>({
             query: (id) => `/events/${id}`,
+
             providesTags: (_result, _error, id) => [{ type: 'Event', id }],
         }),
 
@@ -39,10 +51,8 @@ export const eventApi = createApi({
                 method: 'POST',
                 body: data,
             }),
-            invalidatesTags: (_result, _error, { eventId }) => [
-                { type: 'Event', id: eventId },
-                'Event',
-            ],
+
+            invalidatesTags: (_result, _error, { eventId }) => [{ type: 'Event', id: eventId }],
         }),
 
         updateCategory: builder.mutation<
@@ -58,10 +68,8 @@ export const eventApi = createApi({
                 method: 'PUT',
                 body: data,
             }),
-            invalidatesTags: (_result, _error, { eventId }) => [
-                { type: 'Event', id: eventId },
-                'Event',
-            ],
+
+            invalidatesTags: (_result, _error, { eventId }) => [{ type: 'Event', id: eventId }],
         }),
 
         deleteCategory: builder.mutation<
@@ -75,10 +83,8 @@ export const eventApi = createApi({
                 url: `/events/${eventId}/categories/${categoryId}`,
                 method: 'DELETE',
             }),
-            invalidatesTags: (_result, _error, { eventId }) => [
-                { type: 'Event', id: eventId },
-                'Event',
-            ],
+
+            invalidatesTags: (_result, _error, { eventId }) => [{ type: 'Event', id: eventId }],
         }),
 
         createItem: builder.mutation<
@@ -94,10 +100,8 @@ export const eventApi = createApi({
                 method: 'POST',
                 body: data,
             }),
-            invalidatesTags: (_result, _error, { eventId }) => [
-                { type: 'Event', id: eventId },
-                'Event',
-            ],
+
+            invalidatesTags: (_result, _error, { eventId }) => [{ type: 'Event', id: eventId }],
         }),
 
         updateItem: builder.mutation<
@@ -114,10 +118,8 @@ export const eventApi = createApi({
                 method: 'PUT',
                 body: data,
             }),
-            invalidatesTags: (_result, _error, { eventId }) => [
-                { type: 'Event', id: eventId },
-                'Event',
-            ],
+
+            invalidatesTags: (_result, _error, { eventId }) => [{ type: 'Event', id: eventId }],
         }),
 
         deleteItem: builder.mutation<
@@ -132,10 +134,8 @@ export const eventApi = createApi({
                 url: `/events/${eventId}/categories/${categoryId}/items/${itemId}`,
                 method: 'DELETE',
             }),
-            invalidatesTags: (_result, _error, { eventId }) => [
-                { type: 'Event', id: eventId },
-                'Event',
-            ],
+
+            invalidatesTags: (_result, _error, { eventId }) => [{ type: 'Event', id: eventId }],
         }),
     }),
 })
