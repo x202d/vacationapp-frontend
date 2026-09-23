@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import AddIcon from '@mui/icons-material/Add'
 import EditIcon from '@mui/icons-material/Edit'
 import ConfirmDialog from '../common/ConfirmDialog'
@@ -25,9 +26,9 @@ import {
 
 interface EventItemListProps {
     items: EventItem[]
-    onCreate: (data: CreateEventItemRequest) => void
-    onUpdate: (itemId: string, data: UpdateEventItemRequest) => void
-    onDelete: (itemId: string) => void
+    onCreate: (data: CreateEventItemRequest) => Promise<void>
+    onUpdate: (itemId: string, data: UpdateEventItemRequest) => Promise<void>
+    onDelete: (itemId: string) => Promise<void>
     mutationLoading?: boolean
 }
 
@@ -38,9 +39,10 @@ const EventItemList = ({
     onDelete,
     mutationLoading = false,
 }: EventItemListProps) => {
+    const { t } = useTranslation()
+
     const [dialogOpen, setDialogOpen] = useState(false)
     const [editingItem, setEditingItem] = useState<EventItem>()
-
     const [deletingItem, setDeletingItem] = useState<EventItem>()
 
     const handleCreate = () => {
@@ -73,12 +75,12 @@ const EventItemList = ({
         await onCreate(data)
     }
 
-    const handleDeleteConfirm = () => {
+    const handleDeleteConfirm = async (): Promise<void> => {
         if (!deletingItem) {
             return
         }
 
-        onDelete(deletingItem.id)
+        await onDelete(deletingItem.id)
         setDeletingItem(undefined)
     }
 
@@ -87,7 +89,7 @@ const EventItemList = ({
             <Stack spacing={1}>
                 {items.length === 0 ? (
                     <Typography variant="body2" color="text.secondary">
-                        Keine Items vorhanden.
+                        {t('events.items.empty')}
                     </Typography>
                 ) : (
                     <List disablePadding>
@@ -97,7 +99,7 @@ const EventItemList = ({
                                 disableGutters
                                 secondaryAction={
                                     <Stack direction="row" spacing={0.5}>
-                                        <Tooltip title="Bearbeiten">
+                                        <Tooltip title={t('events.actions.edit')}>
                                             <IconButton
                                                 size="small"
                                                 onClick={() => handleEdit(item)}
@@ -107,7 +109,7 @@ const EventItemList = ({
                                             </IconButton>
                                         </Tooltip>
 
-                                        <Tooltip title="Löschen">
+                                        <Tooltip title={t('events.actions.delete')}>
                                             <IconButton
                                                 size="small"
                                                 color="error"
@@ -130,7 +132,10 @@ const EventItemList = ({
                                             <Typography>{item.title}</Typography>
 
                                             {item.isRequired && (
-                                                <Chip label="Pflicht" size="small" />
+                                                <Chip
+                                                    label={t('events.items.required')}
+                                                    size="small"
+                                                />
                                             )}
                                         </Stack>
                                     }
@@ -149,7 +154,7 @@ const EventItemList = ({
                     disabled={mutationLoading}
                     sx={{ alignSelf: 'flex-start' }}
                 >
-                    Item
+                    {t('events.items.add')}
                 </Button>
             </Stack>
 
@@ -163,12 +168,15 @@ const EventItemList = ({
 
             <ConfirmDialog
                 open={Boolean(deletingItem)}
-                title="Item löschen"
+                title={t('events.items.delete')}
                 message={
                     deletingItem
-                        ? `Möchtest du das Item „${deletingItem.title}“ wirklich löschen?`
+                        ? t('events.items.deleteConfirm', {
+                              name: deletingItem.title,
+                          })
                         : ''
                 }
+                loading={mutationLoading}
                 onCancel={() => setDeletingItem(undefined)}
                 onConfirm={handleDeleteConfirm}
             />

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import EventIcon from '@mui/icons-material/Event'
 import NotesIcon from '@mui/icons-material/Notes'
 import EventCategoryList from './EventCategoryList'
@@ -15,12 +16,16 @@ import type {
 interface EventDetailProps {
     event: Event
     onBack: () => void
-    onCreateCategory: (data: CreateEventCategoryRequest) => void
-    onUpdateCategory: (categoryId: string, data: UpdateEventCategoryRequest) => void
-    onDeleteCategory: (categoryId: string) => void
-    onCreateItem: (categoryId: string, data: CreateEventItemRequest) => void
-    onUpdateItem: (categoryId: string, itemId: string, data: UpdateEventItemRequest) => void
-    onDeleteItem: (categoryId: string, itemId: string) => void
+    onCreateCategory: (data: CreateEventCategoryRequest) => Promise<void>
+    onUpdateCategory: (categoryId: string, data: UpdateEventCategoryRequest) => Promise<void>
+    onDeleteCategory: (categoryId: string) => Promise<void>
+    onCreateItem: (categoryId: string, data: CreateEventItemRequest) => Promise<void>
+    onUpdateItem: (
+        categoryId: string,
+        itemId: string,
+        data: UpdateEventItemRequest,
+    ) => Promise<void>
+    onDeleteItem: (categoryId: string, itemId: string) => Promise<void>
     mutationLoading?: boolean
 }
 
@@ -35,12 +40,14 @@ const EventDetail = ({
     onDeleteItem,
     mutationLoading = false,
 }: EventDetailProps) => {
+    const { t } = useTranslation()
+
     const itemCount = event.categories.reduce((count, category) => count + category.items.length, 0)
 
     return (
         <Stack spacing={3}>
             <Button startIcon={<ArrowBackIcon />} onClick={onBack} sx={{ alignSelf: 'flex-start' }}>
-                Zurück zu den Ausflügen
+                {t('events.actions.back')}
             </Button>
 
             <Card>
@@ -53,14 +60,22 @@ const EventDetail = ({
                         <Stack
                             direction={{ xs: 'column', sm: 'row' }}
                             spacing={3}
-                            divider={<Divider orientation="vertical" flexItem />}
+                            divider={
+                                <Divider
+                                    orientation="vertical"
+                                    flexItem
+                                    sx={{
+                                        display: { xs: 'none', sm: 'block' },
+                                    }}
+                                />
+                            }
                         >
                             <Stack direction="row" spacing={1} alignItems="center">
                                 <EventIcon color="action" />
 
                                 <Box>
                                     <Typography variant="body2" color="text.secondary">
-                                        Kategorien
+                                        {t('events.categories.title')}
                                     </Typography>
 
                                     <Typography variant="body1">
@@ -74,7 +89,7 @@ const EventDetail = ({
 
                                 <Box>
                                     <Typography variant="body2" color="text.secondary">
-                                        Items
+                                        {t('events.items.title')}
                                     </Typography>
 
                                     <Typography variant="body1">{itemCount}</Typography>
@@ -87,7 +102,7 @@ const EventDetail = ({
 
                                     <Box>
                                         <Typography variant="body2" color="text.secondary">
-                                            Ort
+                                            {t('events.fields.location')}
                                         </Typography>
 
                                         <Typography variant="body1">{event.location}</Typography>
@@ -106,7 +121,7 @@ const EventDetail = ({
                                         color="text.secondary"
                                         gutterBottom
                                     >
-                                        Notizen
+                                        {t('events.fields.notes')}
                                     </Typography>
 
                                     <Typography>{event.notes}</Typography>
@@ -116,6 +131,7 @@ const EventDetail = ({
                     </Stack>
                 </CardContent>
             </Card>
+
             <EventCategoryList
                 eventId={event.id}
                 categories={event.categories}

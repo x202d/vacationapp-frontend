@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
     Button,
     Dialog,
@@ -29,6 +30,8 @@ const EventCategoryDialog = ({
     onClose,
     onSubmit,
 }: EventCategoryDialogProps) => {
+    const { t } = useTranslation()
+
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const [sortOrder, setSortOrder] = useState(0)
@@ -57,12 +60,14 @@ const EventCategoryDialog = ({
 
     return (
         <Dialog open={open} onClose={loading ? undefined : onClose} fullWidth maxWidth="sm">
-            <DialogTitle>{isEdit ? 'Kategorie bearbeiten' : 'Kategorie hinzufügen'}</DialogTitle>
+            <DialogTitle>
+                {t(isEdit ? 'events.categories.edit' : 'events.categories.add')}
+            </DialogTitle>
 
             <DialogContent>
                 <Stack spacing={2} mt={1}>
                     <TextField
-                        label="Name"
+                        label={t('events.fields.name')}
                         value={name}
                         onChange={(event) => setName(event.target.value)}
                         fullWidth
@@ -71,7 +76,7 @@ const EventCategoryDialog = ({
                     />
 
                     <TextField
-                        label="Beschreibung"
+                        label={t('events.fields.description')}
                         value={description}
                         onChange={(event) => setDescription(event.target.value)}
                         fullWidth
@@ -80,7 +85,7 @@ const EventCategoryDialog = ({
                     />
 
                     <TextField
-                        label="Sortierung"
+                        label={t('events.fields.sortOrder')}
                         type="number"
                         value={sortOrder}
                         onChange={(event) => setSortOrder(Number(event.target.value))}
@@ -96,7 +101,7 @@ const EventCategoryDialog = ({
 
             <DialogActions>
                 <Button onClick={onClose} disabled={loading}>
-                    Abbrechen
+                    {t('events.actions.cancel')}
                 </Button>
 
                 <Button
@@ -104,7 +109,7 @@ const EventCategoryDialog = ({
                     onClick={handleSubmit}
                     disabled={loading || !name.trim()}
                 >
-                    {isEdit ? 'Speichern' : 'Hinzufügen'}
+                    {t(isEdit ? 'events.actions.save' : 'events.actions.add')}
                 </Button>
             </DialogActions>
         </Dialog>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import type {
     CreateEventItemRequest,
     EventItem,
@@ -21,7 +22,7 @@ interface EventItemDialogProps {
     item?: EventItem
     loading?: boolean
     onClose: () => void
-    onSubmit: (data: CreateEventItemRequest | UpdateEventItemRequest) => void
+    onSubmit: (data: CreateEventItemRequest | UpdateEventItemRequest) => Promise<void>
 }
 
 const EventItemDialog = ({
@@ -31,6 +32,8 @@ const EventItemDialog = ({
     onClose,
     onSubmit,
 }: EventItemDialogProps) => {
+    const { t } = useTranslation()
+
     const [itemType, setItemType] = useState('todo')
     const [title, setTitle] = useState('')
     const [details, setDetails] = useState('')
@@ -65,12 +68,20 @@ const EventItemDialog = ({
 
     return (
         <Dialog open={open} onClose={loading ? undefined : onClose} fullWidth maxWidth="sm">
-            <DialogTitle>{isEdit ? 'Item bearbeiten' : 'Item hinzufügen'}</DialogTitle>
+            <DialogTitle>{t(isEdit ? 'events.items.edit' : 'events.items.add')}</DialogTitle>
 
             <DialogContent>
                 <Stack spacing={2} mt={1}>
                     <TextField
-                        label="Titel"
+                        label={t('events.fields.itemType')}
+                        value={itemType}
+                        onChange={(event) => setItemType(event.target.value)}
+                        fullWidth
+                        required
+                    />
+
+                    <TextField
+                        label={t('events.fields.title')}
                         value={title}
                         onChange={(event) => setTitle(event.target.value)}
                         fullWidth
@@ -79,15 +90,7 @@ const EventItemDialog = ({
                     />
 
                     <TextField
-                        label="Typ"
-                        value={itemType}
-                        onChange={(event) => setItemType(event.target.value)}
-                        fullWidth
-                        helperText="Zum Beispiel: todo"
-                    />
-
-                    <TextField
-                        label="Details"
+                        label={t('events.fields.details')}
                         value={details}
                         onChange={(event) => setDetails(event.target.value)}
                         fullWidth
@@ -96,7 +99,7 @@ const EventItemDialog = ({
                     />
 
                     <TextField
-                        label="Sortierung"
+                        label={t('events.fields.sortOrder')}
                         type="number"
                         value={sortOrder}
                         onChange={(event) => setSortOrder(Number(event.target.value))}
@@ -115,14 +118,14 @@ const EventItemDialog = ({
                                 onChange={(event) => setIsRequired(event.target.checked)}
                             />
                         }
-                        label="Pflichtfeld"
+                        label={t('events.fields.required')}
                     />
                 </Stack>
             </DialogContent>
 
             <DialogActions>
                 <Button onClick={onClose} disabled={loading}>
-                    Abbrechen
+                    {t('events.actions.cancel')}
                 </Button>
 
                 <Button
@@ -130,7 +133,7 @@ const EventItemDialog = ({
                     onClick={handleSubmit}
                     disabled={loading || !title.trim()}
                 >
-                    {isEdit ? 'Speichern' : 'Hinzufügen'}
+                    {t(isEdit ? 'events.actions.save' : 'events.actions.add')}
                 </Button>
             </DialogActions>
         </Dialog>

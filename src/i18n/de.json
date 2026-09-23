@@ -13,7 +13,8 @@
         "actions": {
             "title": "Aktionen",
             "edit": "Bearbeiten",
-            "delete": "Löschen"
+            "delete": "Löschen",
+            "cancel": "Abbrechen"
         }
     },
 
@@ -133,6 +134,64 @@
             "deleted": "ToDo wurde erfolgreich gelöscht.",
             "saveError": "Die ToDo konnte nicht gespeichert werden.",
             "deleteError": "Die ToDo konnte nicht gelöscht werden."
+        }
+    },
+    "events": {
+        "title": "Ausflüge",
+        "create": "Ausflug erstellen",
+        "details": "Ausflugdetails",
+
+        "fields": {
+            "name": "Name",
+            "location": "Ort",
+            "startDate": "Startdatum",
+            "endDate": "Enddatum",
+            "notes": "Notizen",
+            "description": "Beschreibung",
+            "sortOrder": "Sortierung",
+            "itemType": "Typ",
+            "title": "Titel",
+            "details": "Details",
+            "required": "Pflicht"
+        },
+
+        "categories": {
+            "title": "Kategorien",
+            "count": "{{count}} Kategorie",
+            "count_other": "{{count}} Kategorien",
+            "add": "Kategorie hinzufügen",
+            "edit": "Kategorie bearbeiten",
+            "delete": "Kategorie löschen",
+            "deleteConfirm": "Möchtest du die Kategorie „{{name}}“ wirklich löschen?",
+            "itemCount_one": "{{count}} Item",
+            "itemCount_other": "{{count}} Items",
+            "empty": "Keine Kategorien vorhanden"
+        },
+
+        "items": {
+            "title": "Items",
+            "count": "{{count}} Item",
+            "count_other": "{{count}} Items",
+            "add": "Item hinzufügen",
+            "edit": "Item bearbeiten",
+            "delete": "Item löschen",
+            "deleteConfirm": "Möchtest du das Item „{{name}}“ wirklich löschen?",
+            "required": "Pflicht",
+            "empty": "Keine Items vorhanden"
+        },
+
+        "actions": {
+            "add": "Hinzufügen",
+            "save": "Speichern",
+            "cancel": "Abbrechen",
+            "delete": "Löschen",
+            "edit": "Bearbeiten",
+            "back": "Zurück"
+        },
+
+        "messages": {
+            "error": "Es ist ein Fehler aufgetreten.",
+            "loadError": "Die Daten konnten nicht geladen werden."
         }
     }
 }

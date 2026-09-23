@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import EventIcon from '@mui/icons-material/Event'
 import CategoryIcon from '@mui/icons-material/Category'
@@ -12,9 +13,10 @@ interface EventListProps {
 
 const EventList = ({ events }: EventListProps) => {
     const navigate = useNavigate()
+    const { t, i18n } = useTranslation()
 
     if (events.length === 0) {
-        return <Typography color="text.secondary">Keine Ausflüge vorhanden.</Typography>
+        return <Typography color="text.secondary">{t('events.empty')}</Typography>
     }
 
     return (
@@ -50,24 +52,24 @@ const EventList = ({ events }: EventListProps) => {
                                         >
                                             <Chip
                                                 icon={<CategoryIcon />}
-                                                label={`${categoryCount} ${
-                                                    categoryCount === 1 ? 'Kategorie' : 'Kategorien'
-                                                }`}
+                                                label={t('events.categories.count', {
+                                                    count: categoryCount,
+                                                })}
                                                 size="small"
                                             />
 
                                             <Chip
                                                 icon={<ChecklistIcon />}
-                                                label={`${itemCount} ${
-                                                    itemCount === 1 ? 'Item' : 'Items'
-                                                }`}
+                                                label={t('events.items.count', {
+                                                    count: itemCount,
+                                                })}
                                                 size="small"
                                             />
 
                                             <Chip
                                                 icon={<EventIcon />}
                                                 label={new Date(event.createdAt).toLocaleDateString(
-                                                    'de-DE',
+                                                    i18n.language,
                                                 )}
                                                 size="small"
                                                 variant="outlined"
