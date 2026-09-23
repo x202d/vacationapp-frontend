@@ -1,3 +1,4 @@
+import { eventApi } from './events/EventApi.ts'
 import { configureStore } from '@reduxjs/toolkit'
 import { wizardApi } from './events/WizardApi.ts'
 import { categoryApi } from './templates/CategoryApi.ts'
@@ -11,6 +12,7 @@ export const store = configureStore({
         [tourTypeApi.reducerPath]: tourTypeApi.reducer,
         [categoryApi.reducerPath]: categoryApi.reducer,
         [wizardApi.reducerPath]: wizardApi.reducer,
+        [eventApi.reducerPath]: eventApi.reducer,
 
         settings: settingsReducer,
     },
@@ -20,7 +22,8 @@ export const store = configureStore({
             .concat(templateItemApi.middleware)
             .concat(tourTypeApi.middleware)
             .concat(categoryApi.middleware)
-            .concat(wizardApi.middleware),
+            .concat(wizardApi.middleware)
+            .concat(eventApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>
