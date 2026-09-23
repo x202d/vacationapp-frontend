@@ -37,24 +37,27 @@ const EventDetailPage = () => {
         skip: !id,
     })
 
-    const handleCreateCategory = async (data: CreateEventCategoryRequest) => {
-        if (!id) {
+    const handleCreateCategory = async (data: CreateEventCategoryRequest): Promise<void> => {
+        if (!event) {
             return
         }
 
         await createCategory({
-            eventId: id,
+            eventId: event.id,
             data,
         }).unwrap()
     }
 
-    const handleUpdateCategory = async (categoryId: string, data: UpdateEventCategoryRequest) => {
-        if (!id) {
+    const handleUpdateCategory = async (
+        categoryId: string,
+        data: UpdateEventCategoryRequest,
+    ): Promise<void> => {
+        if (!event) {
             return
         }
 
         await updateCategory({
-            eventId: id,
+            eventId: event.id,
             categoryId,
             data,
         }).unwrap()

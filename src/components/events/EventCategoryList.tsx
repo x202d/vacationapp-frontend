@@ -72,12 +72,15 @@ const EventCategoryList = ({
         setEditingCategory(undefined)
     }
 
-    const handleDialogSubmit = (data: CreateEventCategoryRequest | UpdateEventCategoryRequest) => {
+    const handleDialogSubmit = async (
+        data: CreateEventCategoryRequest | UpdateEventCategoryRequest,
+    ): Promise<void> => {
         if (editingCategory) {
-            onUpdate(editingCategory.id, data)
-        } else {
-            onCreate(data)
+            await onUpdate(editingCategory.id, data)
+            return
         }
+
+        await onCreate(data)
     }
 
     const handleDeleteConfirm = () => {

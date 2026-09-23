@@ -51,18 +51,16 @@ const EventItemDialog = ({
         setIsRequired(item?.isRequired ?? false)
     }, [open, item])
 
-    const handleSubmit = () => {
-        if (!title.trim()) {
-            return
-        }
-
-        onSubmit({
-            itemType: itemType.trim() || 'todo',
-            title: title.trim(),
-            details: details.trim() || null,
+    const handleSubmit = async () => {
+        await onSubmit({
+            itemType,
+            title,
+            details: details || null,
             sortOrder,
             isRequired,
         })
+
+        onClose()
     }
 
     return (

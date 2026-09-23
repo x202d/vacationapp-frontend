@@ -62,12 +62,15 @@ const EventItemList = ({
         setEditingItem(undefined)
     }
 
-    const handleDialogSubmit = (data: CreateEventItemRequest | UpdateEventItemRequest) => {
+    const handleDialogSubmit = async (
+        data: CreateEventItemRequest | UpdateEventItemRequest,
+    ): Promise<void> => {
         if (editingItem) {
-            onUpdate(editingItem.id, data)
-        } else {
-            onCreate(data)
+            await onUpdate(editingItem.id, data)
+            return
         }
+
+        await onCreate(data)
     }
 
     const handleDeleteConfirm = () => {

@@ -19,7 +19,7 @@ interface EventCategoryDialogProps {
     category?: EventCategory
     loading?: boolean
     onClose: () => void
-    onSubmit: (data: CreateEventCategoryRequest | UpdateEventCategoryRequest) => void
+    onSubmit: (data: CreateEventCategoryRequest | UpdateEventCategoryRequest) => Promise<void>
 }
 
 const EventCategoryDialog = ({
@@ -45,16 +45,14 @@ const EventCategoryDialog = ({
         setSortOrder(category?.sortOrder ?? 0)
     }, [open, category])
 
-    const handleSubmit = () => {
-        if (!name.trim()) {
-            return
-        }
-
-        onSubmit({
-            name: name.trim(),
-            description: description.trim() || null,
+    const handleSubmit = async () => {
+        await onSubmit({
+            name,
+            description: description || null,
             sortOrder,
         })
+
+        onClose()
     }
 
     return (
