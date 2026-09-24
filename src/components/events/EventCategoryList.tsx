@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import EventItemList from './EventItemList'
-import { useTranslation } from 'react-i18next'
 import AddIcon from '@mui/icons-material/Add'
+import { useTranslation } from 'react-i18next'
 import EditIcon from '@mui/icons-material/Edit'
 import ConfirmDialog from '../common/ConfirmDialog'
 import DeleteIcon from '@mui/icons-material/Delete'

@@ -1,7 +1,7 @@
 import { Box, Button, Typography } from '@mui/material'
 
-import { Add } from '@mui/icons-material'
 import type { ReactNode } from 'react'
+import { Add } from '@mui/icons-material'
 
 interface PageHeaderProps {
     title: string

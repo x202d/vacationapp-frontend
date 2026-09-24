@@ -1,3 +1,6 @@
+import type { ReactNode } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Delete, Edit } from '@mui/icons-material'
 import {
     Box,
     CircularProgress,
@@ -12,9 +15,6 @@ import {
     Tooltip,
     Typography,
 } from '@mui/material'
-import { Delete, Edit } from '@mui/icons-material'
-import type { ReactNode } from 'react'
-import { useTranslation } from 'react-i18next'
 
 export interface DataTableColumn<T> {
     key: keyof T

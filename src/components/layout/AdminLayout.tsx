@@ -1,6 +1,6 @@
-import { Box, useMediaQuery, useTheme } from '@mui/material'
-import { Outlet } from 'react-router-dom'
 import { useState } from 'react'
+import { Outlet } from 'react-router-dom'
+import { Box, useMediaQuery, useTheme } from '@mui/material'
 
 import Header from './Header.tsx'
 import Sidebar from './Sidebar.tsx'
