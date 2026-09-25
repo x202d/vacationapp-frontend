@@ -1,78 +1,78 @@
 stages:
-  - test
-  - build
+    - test
+    - build
 
 default:
-  interruptible: true
+    interruptible: true
 
 variables:
-  npm_config_cache: '$CI_PROJECT_DIR/.npm'
+    npm_config_cache: '$CI_PROJECT_DIR/.npm'
 
 cache:
-  key:
-    files:
-      - package-lock.json
-  paths:
-    - .npm/
+    key:
+        files:
+            - package-lock.json
+    paths:
+        - .npm/
 
 test:
-  stage: test
-  image: node:22-alpine
+    stage: test
+    image: node:22-alpine
 
-  before_script:
-    - npm ci
+    before_script:
+        - npm ci
 
-  script:
-    - npm run lint
-    - npm run format:check
-    - npm run build
-    -
+    script:
+        - npm run lint
+        - npm run format:check
+        - npm run build
+
 docker-build:
-  stage: build
-  image: docker:27-cli
+    stage: build
+    image: docker:27-cli
 
-  services:
-    - name: docker:27-dind
-      alias: docker
-      command:
-        - '--tls=false'
+    services:
+        - name: docker:27-dind
+          alias: docker
+          command:
+              - '--tls=false'
 
-  variables:
-    DOCKER_HOST: tcp://docker:2375
-    DOCKER_TLS_CERTDIR: ''
+    variables:
+        DOCKER_HOST: tcp://docker:2375
+        DOCKER_TLS_CERTDIR: ''
 
-  needs:
-    - job: test
-      artifacts: false
+    needs:
+        - job: test
+          artifacts: false
 
-  before_script:
-    - until docker info; do echo "Waiting for Docker daemon..."; sleep 2; done
-    - docker login
-      --username "$CI_REGISTRY_USER"
-      --password "$CI_REGISTRY_PASSWORD"
-      "$CI_REGISTRY"
+    before_script:
+        - until docker info; do echo "Waiting for Docker daemon..."; sleep 2; done
+        - docker login
+          --username "$CI_REGISTRY_USER"
+          --password "$CI_REGISTRY_PASSWORD"
+          "$CI_REGISTRY"
 
-  script:
-    - |
-      if [ -n "$CI_COMMIT_TAG" ]; then
-          echo "Building Docker image with tag: $CI_COMMIT_TAG"
-      
-          docker build --pull \
-            --tag "$CI_REGISTRY_IMAGE:$CI_COMMIT_TAG" \
-            .
-      
-          docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_TAG"
-      
-      elif [ "$CI_COMMIT_BRANCH" = "dev" ]; then
-          echo "Building Docker image with tag: latest"
-      
-          docker build --pull \
-            --tag "$CI_REGISTRY_IMAGE:latest" \
-            .
-      
-          docker push "$CI_REGISTRY_IMAGE:latest"
-      fi
+    script:
+        - |
+            if [ -n "$CI_COMMIT_TAG" ]; then
+                echo "Building Docker image with tag: $CI_COMMIT_TAG"
 
-  rules:
-    - if: '$CI_COMMIT_TAG'
-    - if: '$CI_COMMIT_BRANCH == "dev"'
+                docker build --pull \
+                  --tag "$CI_REGISTRY_IMAGE:$CI_COMMIT_TAG" \
+                  .
+
+                docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_TAG"
+
+            elif [ "$CI_COMMIT_BRANCH" = "dev" ]; then
+                echo "Building Docker image with tag: latest"
+
+                docker build --pull \
+                  --tag "$CI_REGISTRY_IMAGE:latest" \
+                  .
+
+                docker push "$CI_REGISTRY_IMAGE:latest"
+            fi
+
+    rules:
+        - if: '$CI_COMMIT_TAG'
+        - if: '$CI_COMMIT_BRANCH == "dev"'
