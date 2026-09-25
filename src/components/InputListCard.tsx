@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import AddIcon from '@mui/icons-material/Add'
+import { TourType } from '../types/templates/TourTypeTypes.ts'
 import {
     Box,
     Button,
@@ -12,8 +14,6 @@ import {
     TextField,
     Typography,
 } from '@mui/material'
-import AddIcon from '@mui/icons-material/Add'
-import { TourType } from '../types/templates/TourTypeTypes.ts'
 
 interface InputListCardProps {
     title: string

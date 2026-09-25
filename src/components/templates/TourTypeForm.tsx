@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { FormControlLabel, Stack, Switch, TextField } from '@mui/material'
 import { useTranslation } from 'react-i18next'
+import { FormControlLabel, Stack, Switch, TextField } from '@mui/material'
 
 import type { CreateTourTypeRequest, TourType } from '../../types/templates/TourTypeTypes.ts'
 
