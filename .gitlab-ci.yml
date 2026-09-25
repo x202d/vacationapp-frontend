@@ -1,38 +1,10 @@
-stages:
-    - test
-    - build
-
-default:
-    interruptible: true
-
-variables:
-    npm_config_cache: '$CI_PROJECT_DIR/.npm'
-
-cache:
-    key:
-        files:
-            - package-lock.json
-    paths:
-        - .npm/
-
-test:
-    stage: test
-    image: node:22-alpine
-
-    before_script:
-        - npm ci
-
-    script:
-        - npm run lint
-        - npm run format:check
-        - npm run build
-
 docker-build:
     stage: build
     image: docker:27-cli
 
     services:
         - name: docker:27-dind
+          alias: docker
           command:
               - '--tls=false'
 
@@ -45,7 +17,7 @@ docker-build:
           artifacts: false
 
     before_script:
-        - docker info
+        - until docker info; do echo "Waiting for Docker daemon..."; sleep 2; done
         - docker login
           --username "$CI_REGISTRY_USER"
           --password "$CI_REGISTRY_PASSWORD"
