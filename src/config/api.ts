@@ -1,1 +1,17 @@
-export const API_URL = import.meta.env.VITE_API_URL
+export interface AppConfig {
+    apiUrl: string
+}
+
+declare global {
+    interface Window {
+        __APP_CONFIG__?: AppConfig
+    }
+}
+
+const appConfig = window.__APP_CONFIG__
+
+if (!appConfig?.apiUrl) {
+    throw new Error('API URL is not configured')
+}
+
+export const API_URL = appConfig.apiUrl
