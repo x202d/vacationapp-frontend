@@ -1,5 +1,5 @@
-import { API_URL } from '../../config/api'
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { baseQuery } from '../../api/baseQuery.ts'
+import { createApi } from '@reduxjs/toolkit/query/react'
 import type {
     CreateTemplateItemRequest,
     TemplateItem,
@@ -11,9 +11,7 @@ const tagTypes = ['TemplateItem'] as const
 export const templateItemApi = createApi({
     reducerPath: 'templateItemApi',
 
-    baseQuery: fetchBaseQuery({
-        baseUrl: API_URL,
-    }),
+    baseQuery,
 
     tagTypes,
 
