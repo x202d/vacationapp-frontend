@@ -92,7 +92,7 @@ deploy:
     script:
         - |
             ssh "$DEPLOY_USER@$DEPLOY_HOST" '
-                cd $DEPLOY_COMPOSE_FOLDER &&
+                cd '$DEPLOY_COMPOSE_FOLDER' &&
                 docker compose pull frontend &&
                 docker compose up -d --no-deps frontend
             '
