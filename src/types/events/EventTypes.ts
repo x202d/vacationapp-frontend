@@ -72,7 +72,7 @@ export interface UpdateEventCategoryRequest {
 export interface CreateEventItemRequest {
     itemType?: string
     title?: string
-    details?: string
+    details?: string | null
     sortOrder?: number
     isRequired?: boolean
     isCompleted?: boolean
