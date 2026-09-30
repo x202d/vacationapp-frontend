@@ -1,6 +1,5 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-
-import { API_URL } from '../../config/api'
+import { baseQuery } from '../../api/baseQuery.ts'
+import { createApi } from '@reduxjs/toolkit/query/react'
 import { CreateEventRequest } from '../../types/events/EventTypes.ts'
 
 const tagTypes = ['Event'] as const
@@ -8,9 +7,7 @@ const tagTypes = ['Event'] as const
 export const wizardApi = createApi({
     reducerPath: 'wizardApi',
 
-    baseQuery: fetchBaseQuery({
-        baseUrl: API_URL,
-    }),
+    baseQuery,
 
     tagTypes,
 

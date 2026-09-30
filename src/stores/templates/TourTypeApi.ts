@@ -1,5 +1,5 @@
-import { API_URL } from '../../config/api'
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { baseQuery } from '../../api/baseQuery.ts'
+import { createApi } from '@reduxjs/toolkit/query/react'
 import type {
     CreateTourTypeRequest,
     TourType,
@@ -12,9 +12,7 @@ const tagTypes = ['TourType'] as const
 export const tourTypeApi = createApi({
     reducerPath: 'tourTypeApi',
 
-    baseQuery: fetchBaseQuery({
-        baseUrl: API_URL,
-    }),
+    baseQuery,
 
     tagTypes,
 

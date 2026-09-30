@@ -1,10 +1,12 @@
-import { eventApi } from './events/EventApi.ts'
+import authReducer from './auth/authSlice'
+import { authApi } from './auth/AuthApi.ts'
+import { eventApi } from './events/EventApi'
+import { wizardApi } from './events/WizardApi'
 import { configureStore } from '@reduxjs/toolkit'
-import { wizardApi } from './events/WizardApi.ts'
-import { categoryApi } from './templates/CategoryApi.ts'
-import { tourTypeApi } from './templates/TourTypeApi.ts'
-import { templateItemApi } from './templates/ItemsApi.ts'
-import settingsReducer from './settings/settingsSlice.ts'
+import { categoryApi } from './templates/CategoryApi'
+import { tourTypeApi } from './templates/TourTypeApi'
+import { templateItemApi } from './templates/ItemsApi'
+import settingsReducer from './settings/settingsSlice'
 
 export const store = configureStore({
     reducer: {
@@ -13,7 +15,9 @@ export const store = configureStore({
         [categoryApi.reducerPath]: categoryApi.reducer,
         [wizardApi.reducerPath]: wizardApi.reducer,
         [eventApi.reducerPath]: eventApi.reducer,
+        [authApi.reducerPath]: authApi.reducer,
 
+        auth: authReducer,
         settings: settingsReducer,
     },
 
@@ -23,7 +27,8 @@ export const store = configureStore({
             .concat(tourTypeApi.middleware)
             .concat(categoryApi.middleware)
             .concat(wizardApi.middleware)
-            .concat(eventApi.middleware),
+            .concat(eventApi.middleware)
+            .concat(authApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>

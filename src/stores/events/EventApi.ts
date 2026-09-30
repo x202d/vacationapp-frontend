@@ -1,5 +1,5 @@
-import { API_URL } from '../../config/api'
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { baseQuery } from '../../api/baseQuery.ts'
+import { createApi } from '@reduxjs/toolkit/query/react'
 import type {
     CreateEventCategoryRequest,
     CreateEventItemRequest,
@@ -13,9 +13,7 @@ const tagTypes = ['Event'] as const
 export const eventApi = createApi({
     reducerPath: 'eventApi',
 
-    baseQuery: fetchBaseQuery({
-        baseUrl: API_URL,
-    }),
+    baseQuery,
 
     tagTypes,
 
