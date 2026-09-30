@@ -70,11 +70,12 @@ export interface UpdateEventCategoryRequest {
 }
 
 export interface CreateEventItemRequest {
-    itemType: string
-    title: string
-    details: string | null
-    sortOrder: number
-    isRequired: boolean
+    itemType?: string
+    title?: string
+    details?: string
+    sortOrder?: number
+    isRequired?: boolean
+    isCompleted?: boolean
 }
 
 export interface UpdateEventItemRequest {

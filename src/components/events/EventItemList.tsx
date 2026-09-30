@@ -27,7 +27,10 @@ import {
 interface EventItemListProps {
     items: EventItem[]
     onCreate: (data: CreateEventItemRequest) => Promise<void>
-    onUpdate: (itemId: string, data: UpdateEventItemRequest) => Promise<void>
+    onUpdate: (
+        itemId: string,
+        data: CreateEventItemRequest | UpdateEventItemRequest,
+    ) => Promise<void>
     onDelete: (itemId: string) => Promise<void>
     mutationLoading?: boolean
 }
