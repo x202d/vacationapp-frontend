@@ -119,7 +119,12 @@ export const eventApi = createApi({
 
             invalidatesTags: (_result, _error, { eventId }) => [{ type: 'Event', id: eventId }],
         }),
-
+        getEventChecklistPdf: builder.query<Blob, string>({
+            query: (eventId) => ({
+                url: `/${eventId}/checklist/pdf`,
+                responseHandler: async (response) => response.blob(),
+            }),
+        }),
         deleteItem: builder.mutation<
             void,
             {
@@ -141,6 +146,7 @@ export const eventApi = createApi({
 export const {
     useGetEventsQuery,
     useGetEventQuery,
+    useLazyGetEventChecklistPdfQuery,
     useCreateCategoryMutation,
     useUpdateCategoryMutation,
     useDeleteCategoryMutation,

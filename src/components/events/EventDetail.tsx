@@ -1,11 +1,15 @@
 import { useTranslation } from 'react-i18next'
+
+import { useState } from 'react'
 import EventIcon from '@mui/icons-material/Event'
 import NotesIcon from '@mui/icons-material/Notes'
+import { PictureAsPdf } from '@mui/icons-material'
 import EventCategoryList from './EventCategoryList'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import ChecklistIcon from '@mui/icons-material/Checklist'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
-import { Box, Button, Card, CardContent, Divider, Stack, Typography } from '@mui/material'
+import { useLazyGetEventChecklistPdfQuery } from '../../stores/events/EventApi.ts'
+import { Box, Button, Card, CardContent, Divider, Snackbar, Stack, Typography } from '@mui/material'
 import type {
     CreateEventCategoryRequest,
     CreateEventItemRequest,
@@ -44,8 +48,27 @@ const EventDetail = ({
     mutationLoading = false,
 }: EventDetailProps) => {
     const { t } = useTranslation()
-
+    const [errorMessage, setErrorMessage] = useState<string | null>(null)
     const itemCount = event.categories.reduce((count, category) => count + category.items.length, 0)
+    const [getEventChecklistPdf, { isFetching: isGeneratingPdf }] =
+        useLazyGetEventChecklistPdfQuery()
+    const handleExportPdf = async (): Promise<void> => {
+        if (!event) {
+            return
+        }
+
+        try {
+            const blob = await getEventChecklistPdf(event.id).unwrap()
+
+            const url = URL.createObjectURL(blob)
+
+            window.open(url, '_blank')
+
+            URL.revokeObjectURL(url)
+        } catch {
+            setErrorMessage(t('events.messages.error'))
+        }
+    }
 
     return (
         <Stack spacing={3}>
@@ -64,6 +87,13 @@ const EventDetail = ({
                                 onClick={onChecklist}
                                 title={t('events.checklist.title')}
                             />
+                            <Button
+                                variant="outlined"
+                                startIcon={<PictureAsPdf />}
+                                onClick={handleExportPdf}
+                                disabled={isGeneratingPdf}
+                                title={t('events.checklist.exportPdf')}
+                            ></Button>
                         </Typography>
 
                         <Stack
@@ -151,6 +181,12 @@ const EventDetail = ({
                 onUpdateItem={onUpdateItem}
                 onDeleteItem={onDeleteItem}
                 mutationLoading={mutationLoading}
+            />
+            <Snackbar
+                open={Boolean(errorMessage)}
+                autoHideDuration={5000}
+                onClose={() => setErrorMessage(null)}
+                message={errorMessage}
             />
         </Stack>
     )
