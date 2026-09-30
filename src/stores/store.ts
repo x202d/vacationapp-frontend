@@ -1,5 +1,5 @@
-import { authApi } from './auth/AuthApi.ts'
 import authReducer from './auth/authSlice'
+import { authApi } from './auth/AuthApi.ts'
 import { eventApi } from './events/EventApi'
 import { wizardApi } from './events/WizardApi'
 import { configureStore } from '@reduxjs/toolkit'
