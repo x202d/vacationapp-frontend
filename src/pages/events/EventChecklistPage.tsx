@@ -1,12 +1,20 @@
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import PrintIcon from '@mui/icons-material/Print'
 import { useNavigate, useParams } from 'react-router-dom'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import PageHeader from '../../components/common/PageHeader'
-import { useGetEventQuery, useUpdateItemMutation } from '../../stores/events/EventApi'
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf'
+import {
+    useGetEventQuery,
+    useLazyGetEventChecklistPdfQuery,
+    useUpdateItemMutation,
+} from '../../stores/events/EventApi'
 
 import {
     Alert,
     Box,
+    Button,
     Card,
     CardContent,
     Checkbox,
@@ -14,6 +22,7 @@ import {
     Divider,
     FormControlLabel,
     IconButton,
+    Snackbar,
     Stack,
     Tooltip,
     Typography,
@@ -23,7 +32,14 @@ const EventChecklistPage = () => {
     const { t } = useTranslation()
     const { id } = useParams<{ id: string }>()
     const navigate = useNavigate()
+
+    const [errorMessage, setErrorMessage] = useState<string | null>(null)
+
     const [updateItem] = useUpdateItemMutation()
+
+    const [getEventChecklistPdf, { isFetching: isGeneratingPdf }] =
+        useLazyGetEventChecklistPdfQuery()
+
     const {
         data: event,
         isLoading,
@@ -51,7 +67,55 @@ const EventChecklistPage = () => {
                 },
             }).unwrap()
         } catch {
-            // Fehlerbehandlung
+            setErrorMessage(t('events.messages.error'))
+        }
+    }
+
+    const handleExportPdf = async (): Promise<void> => {
+        if (!event) {
+            return
+        }
+
+        try {
+            const blob = await getEventChecklistPdf(event.id).unwrap()
+
+            const url = URL.createObjectURL(blob)
+
+            window.open(url, '_blank')
+
+            setTimeout(() => {
+                URL.revokeObjectURL(url)
+            }, 60000)
+        } catch {
+            setErrorMessage(t('events.messages.error'))
+        }
+    }
+
+    const handlePrint = async (): Promise<void> => {
+        if (!event) {
+            return
+        }
+
+        try {
+            const blob = await getEventChecklistPdf(event.id).unwrap()
+
+            const url = URL.createObjectURL(blob)
+            const printWindow = window.open(url, '_blank')
+
+            if (!printWindow) {
+                URL.revokeObjectURL(url)
+                return
+            }
+
+            printWindow.addEventListener('load', () => {
+                printWindow.print()
+            })
+
+            setTimeout(() => {
+                URL.revokeObjectURL(url)
+            }, 60000)
+        } catch {
+            setErrorMessage(t('events.messages.error'))
         }
     }
 
@@ -78,45 +142,63 @@ const EventChecklistPage = () => {
     )
 
     return (
-        <Stack spacing={3}>
-            <Stack direction="row" alignItems="center" spacing={1}>
-                <Tooltip title={t('common.back')}>
-                    <IconButton onClick={() => navigate(`/events/${event.id}`)}>
-                        <ArrowBackIcon />
-                    </IconButton>
-                </Tooltip>
+        <>
+            <Stack spacing={3}>
+                <Stack direction="row" alignItems="center" spacing={1}>
+                    <Tooltip title={t('common.back')}>
+                        <IconButton onClick={() => navigate(`/events/${event.id}`)}>
+                            <ArrowBackIcon />
+                        </IconButton>
+                    </Tooltip>
 
-                <PageHeader title={t('events.checklist.title')} />
-            </Stack>
+                    <PageHeader title={t('events.checklist.title')} />
 
-            <Box>
-                <Typography variant="h5" gutterBottom>
-                    {event.eventName}
-                </Typography>
+                    <Box sx={{ flexGrow: 1 }} />
 
-                <Typography variant="body2" color="text.secondary">
-                    {t('events.checklist.count', {
-                        count: completedItems,
-                        total: totalItems,
-                    })}
-                </Typography>
-            </Box>
+                    <Button
+                        variant="outlined"
+                        startIcon={<PrintIcon />}
+                        onClick={handlePrint}
+                        disabled={isGeneratingPdf}
+                        title={t('events.checklist.print')}
+                    ></Button>
 
-            <Stack spacing={2}>
-                {event.categories
-                    .filter((category) => category.items.length > 0)
-                    .map((category) => (
-                        <Card key={category.id}>
-                            <CardContent>
-                                <Typography variant="h6" gutterBottom>
-                                    {category.name}
-                                </Typography>
+                    <Button
+                        variant="outlined"
+                        startIcon={<PictureAsPdfIcon />}
+                        onClick={handleExportPdf}
+                        disabled={isGeneratingPdf}
+                        title={t('events.checklist.exportPdf')}
+                    ></Button>
+                </Stack>
 
-                                <Divider />
+                <Box>
+                    <Typography variant="h5" gutterBottom>
+                        {event.eventName}
+                    </Typography>
 
-                                <Stack>
-                                    {category.items.map((item) => {
-                                        return (
+                    <Typography variant="body2" color="text.secondary">
+                        {t('events.checklist.count', {
+                            count: completedItems,
+                            total: totalItems,
+                        })}
+                    </Typography>
+                </Box>
+
+                <Stack spacing={2}>
+                    {event.categories
+                        .filter((category) => category.items.length > 0)
+                        .map((category) => (
+                            <Card key={category.id}>
+                                <CardContent>
+                                    <Typography variant="h6" gutterBottom>
+                                        {category.name}
+                                    </Typography>
+
+                                    <Divider />
+
+                                    <Stack>
+                                        {category.items.map((item) => (
                                             <FormControlLabel
                                                 key={item.id}
                                                 control={
@@ -154,14 +236,21 @@ const EventChecklistPage = () => {
                                                     </Box>
                                                 }
                                             />
-                                        )
-                                    })}
-                                </Stack>
-                            </CardContent>
-                        </Card>
-                    ))}
+                                        ))}
+                                    </Stack>
+                                </CardContent>
+                            </Card>
+                        ))}
+                </Stack>
             </Stack>
-        </Stack>
+
+            <Snackbar
+                open={Boolean(errorMessage)}
+                autoHideDuration={5000}
+                onClose={() => setErrorMessage(null)}
+                message={errorMessage}
+            />
+        </>
     )
 }
 
