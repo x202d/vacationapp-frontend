@@ -81,7 +81,7 @@ export interface CreateEventItemRequest {
 export interface UpdateEventItemRequest {
     itemType?: string
     title?: string
-    details?: string
+    details?: string | null
     sortOrder?: number
     isRequired?: boolean
     isCompleted?: boolean
