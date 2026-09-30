@@ -1,6 +1,7 @@
 {
     "common": {
         "language": "Sprache",
+        "back": "Zurück",
         "toggleTheme": "Darstellung wechseln",
         "save": "Speichern",
         "saving": "Speichern...",
@@ -26,6 +27,7 @@
         "items": "Items",
         "plannedTrips": "Geplante Ausflüge",
         "trips": "Ausflüge",
+        "create": "Neuer Ausflug",
         "settings": "Einstellungen"
     },
 
@@ -140,6 +142,11 @@
         "title": "Ausflüge",
         "create": "Ausflug erstellen",
         "details": "Ausflugdetails",
+        "checklist": {
+            "title": "ToDo's",
+            "count_one": "Erledigt {{count}} Punkt von {{total}}",
+            "count_other": "Erledigt {{count}} Punkte von {{total}}"
+        },
         "wizard": {
             "steps": {
                 "tourType": "Tourtyp",

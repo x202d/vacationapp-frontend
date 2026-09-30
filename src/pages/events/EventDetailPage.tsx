@@ -173,6 +173,7 @@ const EventDetailPage = () => {
             <EventDetail
                 event={event}
                 onBack={() => navigate('/events')}
+                onChecklist={() => navigate(`/events/${event.id}/checklist`)}
                 onCreateCategory={handleCreateCategory}
                 onUpdateCategory={handleUpdateCategory}
                 onDeleteCategory={handleDeleteCategory}

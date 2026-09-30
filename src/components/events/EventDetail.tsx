@@ -3,6 +3,7 @@ import EventIcon from '@mui/icons-material/Event'
 import NotesIcon from '@mui/icons-material/Notes'
 import EventCategoryList from './EventCategoryList'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import ChecklistIcon from '@mui/icons-material/Checklist'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
 import { Box, Button, Card, CardContent, Divider, Stack, Typography } from '@mui/material'
 import type {
@@ -16,6 +17,7 @@ import type {
 interface EventDetailProps {
     event: Event
     onBack: () => void
+    onChecklist: () => void
     onCreateCategory: (data: CreateEventCategoryRequest) => Promise<void>
     onUpdateCategory: (categoryId: string, data: UpdateEventCategoryRequest) => Promise<void>
     onDeleteCategory: (categoryId: string) => Promise<void>
@@ -32,6 +34,7 @@ interface EventDetailProps {
 const EventDetail = ({
     event,
     onBack,
+    onChecklist,
     onCreateCategory,
     onUpdateCategory,
     onDeleteCategory,
@@ -54,7 +57,13 @@ const EventDetail = ({
                 <CardContent>
                     <Stack spacing={2}>
                         <Typography variant="h4" component="h1">
-                            {event.eventName}
+                            {event.eventName}{' '}
+                            <Button
+                                variant="outlined"
+                                startIcon={<ChecklistIcon />}
+                                onClick={onChecklist}
+                                title={t('events.checklist.title')}
+                            />
                         </Typography>
 
                         <Stack

@@ -19,6 +19,7 @@ import {
     ExpandLess,
     ExpandMore,
     Map,
+    PlusOne,
     Settings,
 } from '@mui/icons-material'
 
@@ -150,8 +151,19 @@ export default function Sidebar({
                     <List component="div" disablePadding>
                         <ListItemButton
                             sx={{ pl: 4 }}
-                            selected={location.pathname.startsWith('/events/wizard')}
+                            selected={location.pathname.endsWith('wizard')}
                             onClick={() => navigateTo('/events/wizard')}
+                        >
+                            <ListItemIcon>
+                                <PlusOne />
+                            </ListItemIcon>
+
+                            <ListItemText primary={t('navigation.create')} />
+                        </ListItemButton>
+                        <ListItemButton
+                            sx={{ pl: 4 }}
+                            selected={location.pathname.endsWith('/events')}
+                            onClick={() => navigateTo('/events')}
                         >
                             <ListItemIcon>
                                 <Event />

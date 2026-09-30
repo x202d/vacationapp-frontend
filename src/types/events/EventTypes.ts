@@ -31,6 +31,7 @@ export interface EventItem {
     isRequired: boolean
     createdAt: string
     updatedAt: string | null
+    isCompleted: boolean
     status: EventItemStatus[]
 }
 
@@ -77,9 +78,10 @@ export interface CreateEventItemRequest {
 }
 
 export interface UpdateEventItemRequest {
-    itemType: string
-    title: string
-    details: string | null
-    sortOrder: number
-    isRequired: boolean
+    itemType?: string
+    title?: string
+    details?: string
+    sortOrder?: number
+    isRequired?: boolean
+    isCompleted?: boolean
 }

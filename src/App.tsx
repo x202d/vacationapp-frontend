@@ -11,6 +11,7 @@ import TourTypesPage from './pages/templates/TourTypesPage'
 import EventDetailPage from './pages/events/EventDetailPage'
 import CategoriesPage from './pages/templates/CategoriesPage'
 import CreateEventPage from './pages/events/CreateEventWizard.tsx'
+import EventChecklistPage from './pages/events/EventChecklistPage.tsx'
 
 function App() {
     return (
@@ -35,6 +36,8 @@ function App() {
                         <Route path="/events/:id" element={<EventDetailPage />} />
 
                         <Route path="*" element={<Navigate to="/" replace />} />
+
+                        <Route path="/events/:id/checklist" element={<EventChecklistPage />} />
                     </Route>
                 </Route>
             </Routes>
