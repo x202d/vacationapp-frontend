@@ -1,13 +1,15 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
-import EventDetail from '../../components/events/EventDetail'
 import { Alert, CircularProgress, Snackbar, Stack } from '@mui/material'
+
+import EventDetail from '../../components/events/EventDetail'
 import type {
     CreateEventCategoryRequest,
     CreateEventItemRequest,
     UpdateEventCategoryRequest,
     UpdateEventItemRequest,
+    UpdateEventRequest,
 } from '../../types/events/EventTypes'
 import {
     useCreateCategoryMutation,
@@ -16,6 +18,7 @@ import {
     useDeleteItemMutation,
     useGetEventQuery,
     useUpdateCategoryMutation,
+    useUpdateEventMutation,
     useUpdateItemMutation,
 } from '../../stores/events/EventApi'
 
@@ -25,6 +28,8 @@ const EventDetailPage = () => {
     const navigate = useNavigate()
 
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
+
+    const [updateEvent, { isLoading: isUpdatingEvent }] = useUpdateEventMutation()
 
     const [createCategory, { isLoading: isCreatingCategory }] = useCreateCategoryMutation()
 
@@ -49,6 +54,21 @@ const EventDetailPage = () => {
     const handleMutationError = (error: unknown): never => {
         setErrorMessage(t('events.messages.error'))
         throw error
+    }
+
+    const handleUpdateEvent = async (data: UpdateEventRequest): Promise<void> => {
+        if (!event) {
+            return
+        }
+
+        try {
+            await updateEvent({
+                eventId: event.id,
+                data,
+            }).unwrap()
+        } catch (error) {
+            handleMutationError(error)
+        }
     }
 
     const handleCreateCategory = async (data: CreateEventCategoryRequest): Promise<void> => {
@@ -168,27 +188,29 @@ const EventDetailPage = () => {
         return <Alert severity="error">{t('events.messages.loadError')}</Alert>
     }
 
+    const mutationLoading =
+        isUpdatingEvent ||
+        isCreatingCategory ||
+        isUpdatingCategory ||
+        isDeletingCategory ||
+        isCreatingItem ||
+        isUpdatingItem ||
+        isDeletingItem
+
     return (
         <>
             <EventDetail
                 event={event}
                 onBack={() => navigate('/events')}
                 onChecklist={() => navigate(`/events/${event.id}/checklist`)}
-
+                onUpdateEvent={handleUpdateEvent}
                 onCreateCategory={handleCreateCategory}
                 onUpdateCategory={handleUpdateCategory}
                 onDeleteCategory={handleDeleteCategory}
                 onCreateItem={handleCreateItem}
                 onUpdateItem={handleUpdateItem}
                 onDeleteItem={handleDeleteItem}
-                mutationLoading={
-                    isCreatingCategory ||
-                    isUpdatingCategory ||
-                    isDeletingCategory ||
-                    isCreatingItem ||
-                    isUpdatingItem ||
-                    isDeletingItem
-                }
+                mutationLoading={mutationLoading}
             />
 
             <Snackbar

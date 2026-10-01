@@ -5,6 +5,7 @@ import { Button, Paper, Stack, Step, StepLabel, Stepper, Typography } from '@mui
 import type { TourType } from '../../../types/templates/TourTypeTypes'
 import type { CreateEventRequest, SelectedItems } from '../../../types/events/EventTypes'
 
+import DateStep from './DateStep'
 import ItemStep from './ItemStep'
 import SummaryStep from './SummaryStep'
 import CategoryStep from './CategoryStep'
@@ -30,6 +31,7 @@ export default function CreateEventWizard({
 
     const steps = [
         t('events.wizard.steps.tourType'),
+        t('events.wizard.steps.date'),
         t('events.wizard.steps.categories'),
         t('events.wizard.steps.items'),
         t('events.wizard.steps.summary'),
@@ -37,6 +39,12 @@ export default function CreateEventWizard({
 
     const [activeStep, setActiveStep] = useState(0)
     const [selectedTourTypeId, setSelectedTourTypeId] = useState<string | null>(null)
+    const [startDate, setStartDate] = useState(() => {
+        const today = new Date()
+
+        return today.toISOString().slice(0, 10)
+    })
+    const [endDate, setEndDate] = useState('')
     const [selectedCategoryIds, setSelectedCategoryIds] = useState<string[]>([])
     const [selectedItems, setSelectedItems] = useState<SelectedItems>({})
 
@@ -147,7 +155,6 @@ export default function CreateEventWizard({
 
         setSelectedItems((current) => {
             const categoryItems = current[categoryId] ?? []
-
             const isSelected = categoryItems.includes(item.id)
 
             return {
@@ -189,9 +196,16 @@ export default function CreateEventWizard({
                 return selectedTourType !== null
 
             case 1:
-                return selectedCategoryIds.length > 0
+                if (!startDate) {
+                    return false
+                }
+
+                return !(endDate && endDate < startDate)
 
             case 2:
+                return selectedCategoryIds.length > 0
+
+            case 3:
                 return selectedCategories.some(
                     (category) => (selectedItems[category.id] ?? []).length > 0,
                 )
@@ -203,12 +217,14 @@ export default function CreateEventWizard({
 
     const handleNext = () => {
         if (activeStep === steps.length - 1) {
-            if (!selectedTourType) {
+            if (!selectedTourType || !startDate) {
                 return
             }
 
             onSubmit({
                 tourTypeId: selectedTourType.id,
+                startDate,
+                endDate: endDate || null,
                 categories: selectedCategories.map((category) => ({
                     categoryId: category.id,
                     itemIds: selectedItems[category.id] ?? [],
@@ -246,7 +262,16 @@ export default function CreateEventWizard({
                     />
                 )}
 
-                {activeStep === 1 && selectedTourType && (
+                {activeStep === 1 && (
+                    <DateStep
+                        startDate={startDate}
+                        endDate={endDate}
+                        onStartDateChange={setStartDate}
+                        onEndDateChange={setEndDate}
+                    />
+                )}
+
+                {activeStep === 2 && selectedTourType && (
                     <CategoryStep
                         tourType={selectedTourType}
                         selectedCategoryIds={selectedCategoryIds}
@@ -255,7 +280,7 @@ export default function CreateEventWizard({
                     />
                 )}
 
-                {activeStep === 2 && (
+                {activeStep === 3 && (
                     <ItemStep
                         categories={selectedCategories}
                         selectedItems={selectedItems}
@@ -264,7 +289,7 @@ export default function CreateEventWizard({
                     />
                 )}
 
-                {activeStep === 3 && selectedTourType && (
+                {activeStep === 4 && selectedTourType && (
                     <SummaryStep
                         tourType={selectedTourType}
                         categories={selectedCategories}

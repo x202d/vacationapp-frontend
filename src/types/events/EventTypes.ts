@@ -1,7 +1,9 @@
-import type { TourType } from '../templates/TourTypeTypes'
+import { TourType } from '../templates/TourTypeTypes.ts'
 
 export interface CreateEventRequest {
     tourTypeId: string
+    startDate: string
+    endDate: string | null
     categories: {
         categoryId: string
         itemIds: string[]
@@ -48,13 +50,21 @@ export interface EventCategory {
 export interface Event {
     id: string
     eventName: string
-    startDate: string | null
+    startDate: string
     endDate: string | null
     location: string | null
     notes: string | null
     createdAt: string
     updatedAt: string | null
     categories: EventCategory[]
+}
+
+export interface UpdateEventRequest {
+    eventName: string
+    startDate: string
+    endDate?: string | null
+    location?: string | null
+    notes?: string | null
 }
 
 export interface CreateEventCategoryRequest {

@@ -158,7 +158,16 @@
                 "tourType": "Tourtyp",
                 "categories": "Kategorien",
                 "items": "Items",
+                "date": "Datum",
                 "summary": "Zusammenfassung"
+            },
+            "date": {
+                "title": "Datum des Ausflugs",
+                "description": "Lege fest, wann der Ausflug stattfindet.",
+                "startDate": "Startdatum",
+                "endDate": "Enddatum",
+                "endDateOptional": "Optional",
+                "endDateInvalid": "Das Enddatum darf nicht vor dem Startdatum liegen."
             },
             "next": "Weiter",
             "tourType": {
@@ -176,6 +185,7 @@
                 "noItems": "Keine Items ausgewählt"
             }
         },
+
         "fields": {
             "name": "Name",
             "location": "Ort",
@@ -187,7 +197,9 @@
             "itemType": "Typ",
             "title": "Titel",
             "details": "Details",
-            "required": "Pflicht"
+            "required": "Pflicht",
+            "eventName": "Eventname",
+            "singleDay": "Eintägig"
         },
 
         "categories": {
@@ -222,6 +234,15 @@
             "delete": "Löschen",
             "edit": "Bearbeiten",
             "back": "Zurück"
+        },
+        "edit": {
+            "title": "Event bearbeiten"
+        },
+        "status": {
+            "completed": "Erledigt"
+        },
+        "validation": {
+            "endDateBeforeStart": "Das Enddatum darf nicht vor dem Startdatum liegen."
         },
 
         "messages": {

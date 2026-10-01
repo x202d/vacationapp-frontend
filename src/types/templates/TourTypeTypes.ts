@@ -5,6 +5,8 @@ export interface TourType {
     name: string
     description: string | null
     isActive: boolean
+    startDate: Date
+    endDate: Date | null
     createdAt: string
     updatedAt: string | null
     templateCategories: TemplateCategory[]

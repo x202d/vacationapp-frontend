@@ -1,11 +1,13 @@
 import { baseQuery } from '../../api/baseQuery.ts'
 import { createApi } from '@reduxjs/toolkit/query/react'
-import type {
+import {
     CreateEventCategoryRequest,
     CreateEventItemRequest,
+    CreateEventRequest,
     Event,
     UpdateEventCategoryRequest,
     UpdateEventItemRequest,
+    UpdateEventRequest,
 } from '../../types/events/EventTypes'
 
 const tagTypes = ['Event'] as const
@@ -37,6 +39,25 @@ export const eventApi = createApi({
             providesTags: (_result, _error, id) => [{ type: 'Event', id }],
         }),
 
+        updateEvent: builder.mutation<
+            Event,
+            {
+                eventId: string
+                data: UpdateEventRequest
+            }
+        >({
+            query: ({ eventId, data }) => ({
+                url: `/events/${eventId}`,
+                method: 'PUT',
+                body: data,
+            }),
+
+            invalidatesTags: (_result, _error, { eventId }) => [
+                { type: 'Event', id: eventId },
+                { type: 'Event', id: 'LIST' },
+            ],
+        }),
+
         createCategory: builder.mutation<
             Event['categories'][number],
             {
@@ -51,6 +72,16 @@ export const eventApi = createApi({
             }),
 
             invalidatesTags: (_result, _error, { eventId }) => [{ type: 'Event', id: eventId }],
+        }),
+
+        createEvent: builder.mutation<Event, CreateEventRequest>({
+            query: (data) => ({
+                url: '/events/create-from-wizard',
+                method: 'POST',
+                body: data,
+            }),
+
+            invalidatesTags: [{ type: 'Event', id: 'LIST' }],
         }),
 
         updateCategory: builder.mutation<
@@ -119,12 +150,14 @@ export const eventApi = createApi({
 
             invalidatesTags: (_result, _error, { eventId }) => [{ type: 'Event', id: eventId }],
         }),
+
         getEventChecklistPdf: builder.query<Blob, string>({
             query: (eventId) => ({
                 url: `/${eventId}/checklist/pdf`,
                 responseHandler: async (response) => response.blob(),
             }),
         }),
+
         deleteItem: builder.mutation<
             void,
             {
@@ -146,6 +179,8 @@ export const eventApi = createApi({
 export const {
     useGetEventsQuery,
     useGetEventQuery,
+    useCreateEventMutation,
+    useUpdateEventMutation,
     useLazyGetEventChecklistPdfQuery,
     useCreateCategoryMutation,
     useUpdateCategoryMutation,
