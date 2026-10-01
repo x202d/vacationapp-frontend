@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import EventIcon from '@mui/icons-material/Event'
 import type { Event } from '../../types/events/EventTypes'
-import { useGetEventsQuery } from '../../stores/events/EventApi'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
+import { useGetEventsQuery } from '../../stores/events/EventApi'
 import {
     Box,
     Card,
