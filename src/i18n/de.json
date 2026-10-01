@@ -153,6 +153,10 @@
             "exportPdf": "Checkliste als PDF exportieren",
             "print": "Checkliste drucken"
         },
+        "sections": {
+            "open": "Offene Events",
+            "completed": "Erledigte Events"
+        },
         "wizard": {
             "steps": {
                 "tourType": "Tourtyp",
