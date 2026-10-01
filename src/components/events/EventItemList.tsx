@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import AddIcon from '@mui/icons-material/Add'
 import { useTranslation } from 'react-i18next'
+import AddIcon from '@mui/icons-material/Add'
 import EditIcon from '@mui/icons-material/Edit'
 import ConfirmDialog from '../common/ConfirmDialog'
 import DeleteIcon from '@mui/icons-material/Delete'
@@ -78,6 +78,12 @@ const EventItemList = ({
         await onCreate(data)
     }
 
+    const handleIsCompleted = async (item: EventItem): Promise<void> => {
+        await onUpdate(item.id, {
+            isCompleted: !item.isCompleted,
+        })
+    }
+
     const handleDeleteConfirm = async (): Promise<void> => {
         if (!deletingItem) {
             return
@@ -126,13 +132,35 @@ const EventItemList = ({
                                 }
                             >
                                 <ListItemIcon sx={{ minWidth: 40 }}>
-                                    <CheckCircleOutlineIcon color="action" />
+                                    <IconButton
+                                        size="small"
+                                        onClick={() => handleIsCompleted(item)}
+                                        disabled={mutationLoading}
+                                        sx={{
+                                            color: item.isCompleted
+                                                ? 'success.main'
+                                                : 'action.active',
+                                        }}
+                                    >
+                                        <CheckCircleOutlineIcon />
+                                    </IconButton>
                                 </ListItemIcon>
 
                                 <ListItemText
                                     primary={
                                         <Stack direction="row" spacing={1} alignItems="center">
-                                            <Typography>{item.title}</Typography>
+                                            <Typography
+                                                sx={{
+                                                    textDecoration: item.isCompleted
+                                                        ? 'line-through'
+                                                        : 'none',
+                                                    color: item.isCompleted
+                                                        ? 'text.secondary'
+                                                        : 'text.primary',
+                                                }}
+                                            >
+                                                {item.title}
+                                            </Typography>
 
                                             {item.isRequired && (
                                                 <Chip
