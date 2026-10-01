@@ -1,4 +1,10 @@
 {
+    "dashboard": {
+        "title": "Dashboard",
+        "welcome": "Willkommen bei VacationApp",
+        "upcomingEvents": "Anstehende Events",
+        "noUpcomingEvents": "Keine anstehenden Events."
+    },
     "common": {
         "language": "Sprache",
         "back": "Zurück",
