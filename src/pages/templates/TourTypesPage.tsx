@@ -125,10 +125,12 @@ export default function TourTypesPage() {
     const columns: DataTableColumn<TourType>[] = [
         {
             key: 'name',
+            searchable: true,
             label: t('tourTypes.table.name'),
         },
         {
             key: 'description',
+            searchable: true,
             label: t('tourTypes.table.description'),
             render: (item) =>
                 item.description || (
@@ -160,6 +162,7 @@ export default function TourTypesPage() {
                 loading={isLoading || isFetching}
                 onEdit={handleEdit}
                 onDelete={handleDelete}
+                searchable
                 actions={[
                     {
                         label: t('tourTypes.categories.manage'),

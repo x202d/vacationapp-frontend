@@ -1,3 +1,3 @@
 window.__APP_CONFIG__ = {
-    apiUrl: '/api',
+    apiUrl: 'http://localhost:8000/api',
 }

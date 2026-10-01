@@ -14,7 +14,11 @@
             "title": "Actions",
             "edit": "Edit",
             "delete": "Delete"
-        }
+        },
+        "noSearchResults": "No search results availble",
+        "allColumns": "All columns",
+        "searchIn": "Search in",
+        "search": "Search"
     },
 
     "navigation": {

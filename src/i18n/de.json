@@ -16,7 +16,11 @@
             "edit": "Bearbeiten",
             "delete": "Löschen",
             "cancel": "Abbrechen"
-        }
+        },
+        "noSearchResults": "Keine Suchergebnisse",
+        "allColumns": "Alle Spalten",
+        "searchIn": "Suchen in",
+        "search": "Suche"
     },
 
     "navigation": {

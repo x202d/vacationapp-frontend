@@ -128,10 +128,12 @@ export default function CategoriesPage() {
     const columns: DataTableColumn<TemplateCategory>[] = [
         {
             key: 'name',
+            searchable: true,
             label: t('categories.table.name'),
         },
         {
             key: 'description',
+            searchable: true,
             label: t('categories.table.description'),
             render: (item) =>
                 item.description || (
@@ -162,6 +164,7 @@ export default function CategoriesPage() {
                 loading={isLoading || isFetching}
                 onEdit={handleEdit}
                 onDelete={handleDelete}
+                searchable
                 actions={[
                     {
                         label: t('categories.actions.linkitem'),

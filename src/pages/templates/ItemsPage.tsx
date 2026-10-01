@@ -112,10 +112,12 @@ export default function ItemsPage() {
         {
             key: 'title',
             label: t('items.table.name'),
+            searchable: true,
         },
         {
             key: 'details',
             label: t('items.table.description'),
+            searchable: true,
             render: (item) =>
                 item.details || <span style={{ opacity: 0.5 }}>{t('common.notAvailable')}</span>,
         },
@@ -143,6 +145,7 @@ export default function ItemsPage() {
                 loading={isLoading || isFetching}
                 onEdit={handleEdit}
                 onDelete={handleDelete}
+                searchable
             />
 
             <Dialog open={formOpen} onClose={handleCloseForm} fullWidth maxWidth="sm">
