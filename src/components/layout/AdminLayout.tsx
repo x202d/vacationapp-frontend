@@ -2,8 +2,9 @@ import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { Box, useMediaQuery, useTheme } from '@mui/material'
 
-import Header from './Header.tsx'
-import Sidebar from './Sidebar.tsx'
+import Header from './Header'
+import Sidebar from './Sidebar'
+import BuildInfo from '../common/BuildInfo'
 
 const DRAWER_WIDTH = 260
 
@@ -58,6 +59,8 @@ export default function AdminLayout() {
                     <Outlet />
                 </Box>
             </Box>
+
+            <BuildInfo />
         </Box>
     )
 }
