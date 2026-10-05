@@ -1,21 +1,29 @@
 {
+    "dashboard": {
+        "title": "Dashboard",
+        "welcome": "Welcome to VacationApp",
+        "upcomingEvents": "Upcoming Trips",
+        "noUpcomingEvents": "No upcoming trips."
+    },
     "common": {
         "language": "Language",
-        "toggleTheme": "Toggle theme",
+        "back": "Back",
+        "toggleTheme": "Toggle appearance",
         "save": "Save",
         "saving": "Saving...",
         "cancel": "Cancel",
         "delete": "Delete",
         "active": "Active",
         "inactive": "Inactive",
-        "notAvailable": "Not available",
+        "notAvailable": "Not specified",
         "noEntries": "No entries available",
         "actions": {
             "title": "Actions",
             "edit": "Edit",
-            "delete": "Delete"
+            "delete": "Delete",
+            "cancel": "Cancel"
         },
-        "noSearchResults": "No search results availble",
+        "noSearchResults": "No search results",
         "allColumns": "All columns",
         "searchIn": "Search in",
         "search": "Search"
@@ -23,16 +31,21 @@
 
     "navigation": {
         "dashboard": "Dashboard",
-        "tourTypes": "Tour types",
+        "templates": "Templates",
+        "tourTypes": "Trips",
         "categories": "Categories",
+        "items": "To-Dos",
+        "plannedTrips": "Planned Trips",
+        "trips": "Trips",
+        "create": "New Trip",
         "settings": "Settings"
     },
 
     "tourTypes": {
-        "title": "Tour types",
-        "description": "Manage the available tour types and their basic settings.",
+        "title": "Trips",
+        "description": "Manage the available trips and their basic settings.",
         "actions": {
-            "create": "Create tour type"
+            "create": "Create Trip"
         },
         "table": {
             "name": "Name",
@@ -40,10 +53,10 @@
             "status": "Status"
         },
         "dialog": {
-            "createTitle": "Create tour type",
-            "editTitle": "Edit tour type",
-            "deleteTitle": "Delete tour type",
-            "deleteMessage": "Are you sure you want to delete the tour type “{{name}}”?"
+            "createTitle": "Create Trip",
+            "editTitle": "Edit Trip",
+            "deleteTitle": "Delete Trip",
+            "deleteMessage": "Are you sure you want to delete the trip \"{{name}}\"?"
         },
         "form": {
             "name": "Name",
@@ -51,18 +64,28 @@
             "active": "Active"
         },
         "messages": {
-            "created": "Tour type was created successfully.",
-            "updated": "Tour type was updated successfully.",
-            "deleted": "Tour type was deleted successfully.",
-            "saveError": "The tour type could not be saved.",
-            "deleteError": "The tour type could not be deleted."
+            "created": "Trip was created successfully.",
+            "updated": "Trip was updated successfully.",
+            "deleted": "Trip was deleted successfully.",
+            "saveError": "The trip could not be saved.",
+            "deleteError": "The trip could not be deleted."
+        },
+        "categories": {
+            "title": "Manage Categories",
+            "manage": "Manage Categories",
+            "available": "Available Categories",
+            "assigned": "Assigned Categories",
+            "noAvailable": "No additional categories available.",
+            "noAssigned": "No categories have been assigned to this trip yet.",
+            "position": "Position"
         }
     },
+
     "categories": {
         "title": "Categories",
         "description": "Manage the available categories.",
         "actions": {
-            "create": "Create category"
+            "create": "Create Category"
         },
         "table": {
             "name": "Name",
@@ -70,10 +93,10 @@
             "sortOrder": "Order"
         },
         "dialog": {
-            "createTitle": "Create category",
-            "editTitle": "Edit category",
-            "deleteTitle": "Delete category",
-            "deleteMessage": "Are you sure you want to delete the category “{{name}}”?"
+            "createTitle": "Create Category",
+            "editTitle": "Edit Category",
+            "deleteTitle": "Delete Category",
+            "deleteMessage": "Are you sure you want to delete the category \"{{name}}\"?"
         },
         "form": {
             "name": "Name",
@@ -86,59 +109,122 @@
             "deleted": "Category was deleted successfully.",
             "saveError": "The category could not be saved.",
             "deleteError": "The category could not be deleted."
+        },
+        "items": {
+            "available": "Available To-Dos",
+            "noAvailable": "No additional To-Dos available.",
+            "title": "Link To-Dos",
+            "assigned": "Assigned To-Dos",
+            "noAssigned": "No To-Dos have been assigned to this category yet.",
+            "position": "Position"
         }
     },
+
+    "items": {
+        "title": "To-Dos",
+        "description": "Manage the available To-Dos.",
+        "actions": {
+            "create": "Create To-Do"
+        },
+        "table": {
+            "name": "Name",
+            "description": "Description",
+            "sortOrder": "Order"
+        },
+        "dialog": {
+            "createTitle": "Create To-Do",
+            "editTitle": "Edit To-Do",
+            "deleteTitle": "Delete To-Do",
+            "deleteMessage": "Are you sure you want to delete the To-Do \"{{name}}\"?"
+        },
+        "form": {
+            "name": "Name",
+            "description": "Description",
+            "sortOrder": "Order"
+        },
+        "messages": {
+            "created": "To-Do was created successfully.",
+            "updated": "To-Do was updated successfully.",
+            "deleted": "To-Do was deleted successfully.",
+            "saveError": "The To-Do could not be saved.",
+            "deleteError": "The To-Do could not be deleted."
+        }
+    },
+
     "events": {
         "title": "Trips",
-        "create": "Create trip",
-        "details": "Trip details",
+        "create": "Create Trip",
+        "details": "Trip Details",
+        "checklist": {
+            "title": "To-Dos",
+            "count_one": "{{count}} item completed out of {{total}}",
+            "count_other": "{{count}} items completed out of {{total}}",
+            "exportPdf": "Export Checklist as PDF",
+            "print": "Print Checklist"
+        },
+        "sections": {
+            "open": "Open Trips",
+            "completed": "Completed Trips"
+        },
         "wizard": {
             "steps": {
-                "tourType": "Tour type",
+                "tourType": "Trip Type",
                 "categories": "Categories",
                 "items": "Items",
+                "date": "Date",
                 "summary": "Summary"
+            },
+            "date": {
+                "title": "Trip Date",
+                "description": "Set when the trip will take place.",
+                "startDate": "Start Date",
+                "endDate": "End Date",
+                "endDateOptional": "Optional",
+                "endDateInvalid": "The end date cannot be before the start date."
             },
             "next": "Next",
             "tourType": {
-                "title": "Select tour type",
-                "description": "Choose a template from which the new trip should be created.",
-                "empty": "No tour types available."
+                "title": "Select Trip Type",
+                "description": "Choose a template to create the new trip from.",
+                "empty": "No trip types available."
             },
             "categories": {
-                "all": "All categories",
+                "all": "All Categories",
                 "selected": "{{selected}} of {{count}} selected",
-                "empty": "No categories are available for this tour type."
+                "empty": "No categories are available for this trip type."
             },
             "summary": {
-                "tourType": "Tour type",
+                "tourType": "Trip Type",
                 "noItems": "No items selected"
             }
         },
+
         "fields": {
             "name": "Name",
             "location": "Location",
-            "startDate": "Start date",
-            "endDate": "End date",
+            "startDate": "Start Date",
+            "endDate": "End Date",
             "notes": "Notes",
             "description": "Description",
-            "sortOrder": "Sort order",
+            "sortOrder": "Sort Order",
             "itemType": "Type",
             "title": "Title",
             "details": "Details",
-            "required": "Required"
+            "required": "Required",
+            "eventName": "Trip Name",
+            "singleDay": "Single Day"
         },
 
         "categories": {
             "title": "Categories",
             "count_one": "{{count}} category",
             "count_other": "{{count}} categories",
-            "add": "Add category",
-            "edit": "Edit category",
-            "delete": "Delete category",
-            "deleteConfirm": "Do you really want to delete the category “{{name}}”?",
-            "itemCount_one": "{{count}} Item",
-            "itemCount_other": "{{count}} Items",
+            "add": "Add Category",
+            "edit": "Edit Category",
+            "delete": "Delete Category",
+            "deleteConfirm": "Are you sure you want to delete the category \"{{name}}\"?",
+            "itemCount_one": "{{count}} item",
+            "itemCount_other": "{{count}} items",
             "empty": "No categories available"
         },
 
@@ -146,10 +232,10 @@
             "title": "Items",
             "count_one": "{{count}} item",
             "count_other": "{{count}} items",
-            "add": "Add item",
-            "edit": "Edit item",
-            "delete": "Delete item",
-            "deleteConfirm": "Do you really want to delete the item “{{name}}”?",
+            "add": "Add Item",
+            "edit": "Edit Item",
+            "delete": "Delete Item",
+            "deleteConfirm": "Are you sure you want to delete the item \"{{name}}\"?",
             "required": "Required",
             "empty": "No items available"
         },
@@ -161,6 +247,18 @@
             "delete": "Delete",
             "edit": "Edit",
             "back": "Back"
+        },
+
+        "edit": {
+            "title": "Edit Trip"
+        },
+
+        "status": {
+            "completed": "Completed"
+        },
+
+        "validation": {
+            "endDateBeforeStart": "The end date cannot be before the start date."
         },
 
         "messages": {
