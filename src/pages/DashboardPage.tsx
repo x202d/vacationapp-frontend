@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { Stack, Typography } from '@mui/material'
+import { SpotifyCard } from '../components/dashboard/SpotifyCard.tsx'
 import UpcomingEventsCard from '../components/dashboard/UpcomingEventsCard'
 
 export default function DashboardPage() {
@@ -12,6 +13,7 @@ export default function DashboardPage() {
             </Typography>
 
             <UpcomingEventsCard />
+            <SpotifyCard />
         </Stack>
     )
 }
