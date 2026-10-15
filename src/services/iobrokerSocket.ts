@@ -1,6 +1,7 @@
 import io from 'socket.io-client'
-import { store } from '../stores/store'
+import {store} from '../stores/store'
 import {
+    setConnectionError,
     setConnectionStatus,
     SpotifyDevice,
     updateSpotifyState,
@@ -127,24 +128,20 @@ function devicesFromStates(states: Record<string, IoBrokerState>): SpotifyDevice
 // ---------------------------------------------------------------------------
 
 async function loadSpotifyState(): Promise<void> {
-    try {
-        const states = await getStates(subscribedIds)
-        const patch: SpotifyPatch = {}
+    const states = await getStates(subscribedIds)
+    const patch: SpotifyPatch = {}
 
-        for (const [id, handler] of Object.entries(stateHandlers)) {
-            const state = states[id]
+    for (const [id, handler] of Object.entries(stateHandlers)) {
+        const state = states[id]
 
-            if (state) {
-                Object.assign(patch, handler(state.val))
-            }
+        if (state) {
+            Object.assign(patch, handler(state.val))
         }
-
-        patch.deviceList = devicesFromStates(states)
-
-        store.dispatch(updateSpotifyState(patch))
-    } catch (error) {
-        console.error('[ioBroker] Fehler beim Lesen der States:', error)
     }
+
+    patch.deviceList = devicesFromStates(states)
+
+    store.dispatch(updateSpotifyState(patch))
 }
 
 async function reloadDevices(): Promise<void> {
@@ -183,16 +180,31 @@ export function initIoBrokerWebSocket(): void {
     socket.on('connect', async () => {
         console.log('[ioBroker] Socket verbunden:', socket?.id)
 
-        store.dispatch(setConnectionStatus(true))
-
         try {
             await subscribe(subscribedIds)
-
-            // Subscribe liefert nicht den aktuellen Wert, daher einmalig lesen
             await loadSpotifyState()
+
+            // Erst jetzt als "verbunden" markieren, damit die Karte
+            // nicht kurz mit Default-Werten aufblitzt
+            store.dispatch(setConnectionStatus(true))
         } catch (error) {
             console.error('[ioBroker] Subscribe/GetStates Fehler:', error)
+            store.dispatch(setConnectionError(true))
         }
+    })
+
+    socket.on('disconnect', (reason: string) => {
+        console.warn('[ioBroker] Socket getrennt:', reason)
+
+        store.dispatch(setConnectionStatus(false))
+        store.dispatch(setConnectionError(true))
+    })
+
+    socket.on('connect_error', (error: Error) => {
+        console.error('[ioBroker] Socket-Verbindungsfehler:', error)
+
+        store.dispatch(setConnectionStatus(false))
+        store.dispatch(setConnectionError(true))
     })
 
     socket.on('stateChange', (id: string, state: IoBrokerState) => {
@@ -210,18 +222,6 @@ export function initIoBrokerWebSocket(): void {
         if (handler) {
             store.dispatch(updateSpotifyState(handler(state.val)))
         }
-    })
-
-    socket.on('disconnect', (reason: string) => {
-        console.warn('[ioBroker] Socket getrennt:', reason)
-
-        store.dispatch(setConnectionStatus(false))
-    })
-
-    socket.on('connect_error', (error: Error) => {
-        console.error('[ioBroker] Socket-Verbindungsfehler:', error)
-
-        store.dispatch(setConnectionStatus(false))
     })
 }
 

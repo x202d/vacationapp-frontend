@@ -14,6 +14,7 @@ export interface IoBrokerSliceState {
     currentDevice: string
     currentDeviceId: string
     isConnected: boolean
+    connectionError: boolean
     deviceList: SpotifyDevice[]
     volume: number
 }
@@ -27,6 +28,7 @@ const initialState: IoBrokerSliceState = {
     currentDevice: '',
     currentDeviceId: '',
     isConnected: false,
+    connectionError: false,
     deviceList: [],
     volume: 50,
 }
@@ -37,6 +39,14 @@ export const iobrokerSlice = createSlice({
     reducers: {
         setConnectionStatus: (state, action: PayloadAction<boolean>) => {
             state.isConnected = action.payload
+
+            if (action.payload) {
+                state.connectionError = false
+            }
+        },
+
+        setConnectionError: (state, action: PayloadAction<boolean>) => {
+            state.connectionError = action.payload
         },
 
         updateSpotifyState: (state, action: PayloadAction<Partial<IoBrokerSliceState>>) => {
@@ -45,6 +55,6 @@ export const iobrokerSlice = createSlice({
     },
 })
 
-export const { setConnectionStatus, updateSpotifyState } = iobrokerSlice.actions
+export const { setConnectionStatus, setConnectionError, updateSpotifyState } = iobrokerSlice.actions
 
 export default iobrokerSlice.reducer
