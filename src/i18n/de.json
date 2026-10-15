@@ -3,7 +3,13 @@
         "title": "Dashboard",
         "welcome": "Willkommen bei VacationApp",
         "upcomingEvents": "Anstehende Events",
-        "noUpcomingEvents": "Keine anstehenden Events."
+        "noUpcomingEvents": "Keine anstehenden Events.",
+        "spotify": {
+            "noArtist": "Kein Interpret",
+            "noTrackName": "Kein Titel",
+            "playingDevice": "Wiedergabegerät",
+            "choosePlayingDevice": "Wiedergabegerät auswählen"
+        }
     },
     "common": {
         "language": "Sprache",

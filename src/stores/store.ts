@@ -7,6 +7,7 @@ import { categoryApi } from './templates/CategoryApi'
 import { tourTypeApi } from './templates/TourTypeApi'
 import { templateItemApi } from './templates/ItemsApi'
 import settingsReducer from './settings/settingsSlice'
+import iobrokerReducer from './iobroker/iobrokerSlice.ts'
 import { informationApi } from './information/InformationApi'
 
 export const store = configureStore({
@@ -21,6 +22,7 @@ export const store = configureStore({
 
         auth: authReducer,
         settings: settingsReducer,
+        iobroker: iobrokerReducer,
     },
 
     middleware: (getDefaultMiddleware) =>

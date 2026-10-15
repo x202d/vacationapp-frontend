@@ -1,16 +1,22 @@
-import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 import { Box, useMediaQuery, useTheme } from '@mui/material'
 
 import Header from './Header'
 import Sidebar from './Sidebar'
 import BuildInfo from '../common/BuildInfo'
+import { initIoBrokerWebSocket } from '../../services/iobrokerSocket.ts'
 
 const DRAWER_WIDTH = 260
 
 export default function AdminLayout() {
     const theme = useTheme()
     const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+
+    useEffect(() => {
+        // Socket-Verbindung beim Start der Admin-Oberfläche initialisieren
+        initIoBrokerWebSocket()
+    }, [])
 
     const [mobileOpen, setMobileOpen] = useState(false)
 
