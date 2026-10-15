@@ -1,5 +1,5 @@
 import io from 'socket.io-client'
-import {store} from '../stores/store'
+import { store } from '../stores/store'
 import {
     setConnectionError,
     setConnectionStatus,
