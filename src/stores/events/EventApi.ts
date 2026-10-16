@@ -1,10 +1,12 @@
 import { baseQuery } from '../../api/baseQuery.ts'
+import { User } from '../../types/user/UserTypes.ts'
 import { createApi } from '@reduxjs/toolkit/query/react'
 import {
     CreateEventCategoryRequest,
     CreateEventItemRequest,
     CreateEventRequest,
     Event,
+    EventItem,
     UpdateEventCategoryRequest,
     UpdateEventItemRequest,
     UpdateEventRequest,
@@ -173,6 +175,43 @@ export const eventApi = createApi({
 
             invalidatesTags: (_result, _error, { eventId }) => [{ type: 'Event', id: eventId }],
         }),
+        setItemResponsibles: builder.mutation<
+            EventItem,
+            {
+                eventId: string
+                categoryId: string
+                itemId: string
+                users: User[]
+            }
+        >({
+            query: ({ eventId, categoryId, itemId, users }) => ({
+                url: `/events/${eventId}/categories/${categoryId}/items/${itemId}/responsibles`,
+                method: 'PUT',
+                body: { userIds: users.map((user) => user.id) },
+            }),
+
+            // Kein invalidatesTags: Der Cache wird optimistisch gepatcht
+            async onQueryStarted({ eventId, itemId, users }, { dispatch, queryFulfilled }) {
+                const patch = dispatch(
+                    eventApi.util.updateQueryData('getEvent', eventId, (draft) => {
+                        for (const category of draft.categories) {
+                            const item = category.items.find((entry) => entry.id === itemId)
+
+                            if (item) {
+                                item.responsibles = users
+                                return
+                            }
+                        }
+                    }),
+                )
+
+                try {
+                    await queryFulfilled
+                } catch {
+                    patch.undo()
+                }
+            },
+        }),
     }),
 })
 
@@ -188,4 +227,5 @@ export const {
     useCreateItemMutation,
     useUpdateItemMutation,
     useDeleteItemMutation,
+    useSetItemResponsiblesMutation,
 } = eventApi

@@ -1,5 +1,6 @@
 import authReducer from './auth/authSlice'
 import { authApi } from './auth/AuthApi.ts'
+import { userApi } from './user/UserApi.ts'
 import { eventApi } from './events/EventApi'
 import { wizardApi } from './events/WizardApi'
 import { configureStore } from '@reduxjs/toolkit'
@@ -19,6 +20,7 @@ export const store = configureStore({
         [eventApi.reducerPath]: eventApi.reducer,
         [authApi.reducerPath]: authApi.reducer,
         [informationApi.reducerPath]: informationApi.reducer,
+        [userApi.reducerPath]: userApi.reducer,
 
         auth: authReducer,
         settings: settingsReducer,
@@ -33,7 +35,8 @@ export const store = configureStore({
             .concat(wizardApi.middleware)
             .concat(eventApi.middleware)
             .concat(authApi.middleware)
-            .concat(informationApi.middleware),
+            .concat(informationApi.middleware)
+            .concat(userApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>

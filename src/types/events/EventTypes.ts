@@ -1,3 +1,4 @@
+import { User } from '../user/UserTypes.ts'
 import { TourType } from '../templates/TourTypeTypes.ts'
 
 export interface CreateEventRequest {
@@ -35,6 +36,7 @@ export interface EventItem {
     updatedAt: string | null
     isCompleted: boolean
     status: EventItemStatus[]
+    responsibles: User[]
 }
 
 export interface EventCategory {

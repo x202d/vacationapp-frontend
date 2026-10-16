@@ -154,6 +154,7 @@
             "deleteError": "Die ToDo konnte nicht gelöscht werden."
         }
     },
+
     "events": {
         "title": "Ausflüge",
         "create": "Ausflug erstellen",
@@ -240,7 +241,9 @@
             "delete": "Item löschen",
             "deleteConfirm": "Möchtest du das Item „{{name}}“ wirklich löschen?",
             "required": "Pflicht",
-            "empty": "Keine Items vorhanden"
+            "empty": "Keine Items vorhanden",
+            "responsibles": "Verantwortliche",
+            "noUsers": "Keine Benutzer gefunden"
         },
 
         "actions": {
