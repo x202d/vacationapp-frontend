@@ -44,6 +44,7 @@ interface EventCategoryListProps {
 
 const EventCategoryList = ({
     categories,
+    eventId,
     onCreate,
     onUpdate,
     onDelete,
@@ -175,6 +176,8 @@ const EventCategoryList = ({
                                     <Divider />
 
                                     <EventItemList
+                                        eventId={eventId}
+                                        categoryId={category.id}
                                         items={category.items}
                                         onCreate={(data) => onCreateItem(category.id, data)}
                                         onUpdate={(itemId, data) =>

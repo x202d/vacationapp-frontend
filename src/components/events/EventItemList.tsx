@@ -5,6 +5,7 @@ import EditIcon from '@mui/icons-material/Edit'
 import ConfirmDialog from '../common/ConfirmDialog'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EventItemDialog from './dialogs/EventItemDialog'
+import ResponsiblesSelect from './ResponsiblesSelect.tsx'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
 import type {
     CreateEventItemRequest,
@@ -12,6 +13,7 @@ import type {
     UpdateEventItemRequest,
 } from '../../types/events/EventTypes'
 import {
+    Box,
     Button,
     Chip,
     IconButton,
@@ -33,9 +35,13 @@ interface EventItemListProps {
     ) => Promise<void>
     onDelete: (itemId: string) => Promise<void>
     mutationLoading?: boolean
+    eventId: string
+    categoryId: string
 }
 
 const EventItemList = ({
+    eventId,
+    categoryId,
     items,
     onCreate,
     onUpdate,
@@ -103,34 +109,7 @@ const EventItemList = ({
                 ) : (
                     <List disablePadding>
                         {items.map((item) => (
-                            <ListItem
-                                key={item.id}
-                                disableGutters
-                                secondaryAction={
-                                    <Stack direction="row" spacing={0.5}>
-                                        <Tooltip title={t('events.actions.edit')}>
-                                            <IconButton
-                                                size="small"
-                                                onClick={() => handleEdit(item)}
-                                                disabled={mutationLoading}
-                                            >
-                                                <EditIcon fontSize="small" />
-                                            </IconButton>
-                                        </Tooltip>
-
-                                        <Tooltip title={t('events.actions.delete')}>
-                                            <IconButton
-                                                size="small"
-                                                color="error"
-                                                onClick={() => setDeletingItem(item)}
-                                                disabled={mutationLoading}
-                                            >
-                                                <DeleteIcon fontSize="small" />
-                                            </IconButton>
-                                        </Tooltip>
-                                    </Stack>
-                                }
-                            >
+                            <ListItem key={item.id} disableGutters>
                                 <ListItemIcon sx={{ minWidth: 40 }}>
                                     <IconButton
                                         size="small"
@@ -147,6 +126,7 @@ const EventItemList = ({
                                 </ListItemIcon>
 
                                 <ListItemText
+                                    sx={{ flex: '1 1 0', minWidth: 0 }}
                                     primary={
                                         <Stack direction="row" spacing={1} alignItems="center">
                                             <Typography
@@ -172,6 +152,37 @@ const EventItemList = ({
                                     }
                                     secondary={item.details || undefined}
                                 />
+
+                                <Box sx={{ width: { xs: '100%', md: 480 }, flexShrink: 0 }}>
+                                    <ResponsiblesSelect
+                                        eventId={eventId}
+                                        categoryId={categoryId}
+                                        item={item}
+                                    />
+                                </Box>
+
+                                <Stack direction="row" spacing={0.5}>
+                                    <Tooltip title={t('events.actions.edit')}>
+                                        <IconButton
+                                            size="small"
+                                            onClick={() => handleEdit(item)}
+                                            disabled={mutationLoading}
+                                        >
+                                            <EditIcon fontSize="small" />
+                                        </IconButton>
+                                    </Tooltip>
+
+                                    <Tooltip title={t('events.actions.delete')}>
+                                        <IconButton
+                                            size="small"
+                                            color="error"
+                                            onClick={() => setDeletingItem(item)}
+                                            disabled={mutationLoading}
+                                        >
+                                            <DeleteIcon fontSize="small" />
+                                        </IconButton>
+                                    </Tooltip>
+                                </Stack>
                             </ListItem>
                         ))}
                     </List>
