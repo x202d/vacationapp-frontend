@@ -1,5 +1,6 @@
 export interface AppConfig {
     apiUrl: string
+    iobrokerUrl: string
 }
 
 declare global {
@@ -15,3 +16,4 @@ if (!appConfig?.apiUrl) {
 }
 
 export const API_URL = window.__APP_CONFIG__?.apiUrl ?? 'http://localhost:8000/api'
+export const IOBROKER_URL = window.__APP_CONFIG__?.iobrokerUrl ?? ''

@@ -1,5 +1,6 @@
 import io from 'socket.io-client'
 import { store } from '../stores/store'
+import { IOBROKER_URL } from '../config/api.ts'
 import {
     setConnectionError,
     setConnectionStatus,
@@ -7,8 +8,6 @@ import {
     updateSpotifyState,
 } from '../stores/iobroker/iobrokerSlice'
 import Socket = SocketIOClient.Socket
-
-const IOBROKER_SOCKET_URL = 'http://192.168.0.12:8084'
 
 const SPOTIFY = 'spotify-premium.0'
 
@@ -173,7 +172,7 @@ export function initIoBrokerWebSocket(): void {
         return
     }
 
-    socket = io(IOBROKER_SOCKET_URL, {
+    socket = io(IOBROKER_URL, {
         transports: ['websocket'],
     })
 
