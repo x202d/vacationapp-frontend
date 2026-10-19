@@ -1,6 +1,6 @@
 import io from 'socket.io-client'
-import { store } from '../stores/store'
-import { IOBROKER_URL } from '../config/api.ts'
+import {store} from '../stores/store'
+import {IOBROKER_URL, IS_IOBROKER_CONFIGURED} from '../config/api.ts'
 import {
     setConnectionError,
     setConnectionStatus,
@@ -168,6 +168,11 @@ function scheduleDeviceReload(): void {
 
 export function initIoBrokerWebSocket(): void {
     // Auch während des Verbindungsaufbaus keinen zweiten Socket erzeugen
+
+    if (!IS_IOBROKER_CONFIGURED || socket) {
+        return
+    }
+
     if (socket) {
         return
     }

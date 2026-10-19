@@ -27,6 +27,7 @@ import { useSelector } from 'react-redux'
 import type { RootState } from '../../stores/store'
 
 import { useTranslation } from 'react-i18next'
+import { IS_IOBROKER_CONFIGURED } from '../../config/api.ts'
 import {
     sendSpotifyCommand,
     setSpotifyVolume,
@@ -196,6 +197,10 @@ const SpotifyPlayer: React.FC = () => {
 
 export const SpotifyCard: React.FC = () => {
     const { isConnected, connectionError } = useSelector((state: RootState) => state.iobroker)
+
+    if (!IS_IOBROKER_CONFIGURED) {
+        return null
+    }
 
     return (
         <Card sx={{ maxWidth: 600, p: 2 }}>

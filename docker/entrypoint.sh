@@ -5,7 +5,7 @@ set -e
 cat > /usr/share/nginx/html/config.js <<EOF
 window.__APP_CONFIG__ = {
     apiUrl: "${API_URL:-/api}",
-    iobrokerUrl: "${IOBROKER_URL:-/}",
+    iobrokerUrl: "${IOBROKER_URL:-}",
 };
 EOF
 
