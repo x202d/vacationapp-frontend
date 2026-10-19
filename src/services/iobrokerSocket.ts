@@ -1,6 +1,6 @@
 import io from 'socket.io-client'
-import {store} from '../stores/store'
-import {IOBROKER_URL, IS_IOBROKER_CONFIGURED} from '../config/api.ts'
+import { store } from '../stores/store'
+import { IOBROKER_URL, IS_IOBROKER_CONFIGURED } from '../config/api.ts'
 import {
     setConnectionError,
     setConnectionStatus,
