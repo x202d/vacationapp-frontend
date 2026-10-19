@@ -16,7 +16,7 @@ single-page app that talks to a Symfony API. An optional Spotify player can be i
 ## Tech stack
 
 | Area                | Technology                           |
-|---------------------|--------------------------------------|
+| ------------------- | ------------------------------------ |
 | UI                  | React, TypeScript, Material UI (MUI) |
 | State and API       | Redux Toolkit, RTK Query             |
 | Routing             | React Router                         |
@@ -38,7 +38,7 @@ The latest versions of Chrome, Firefox, Edge and Safari are supported. Internet 
 ### Languages
 
 | Code | Language         |
-|------|------------------|
+| ---- | ---------------- |
 | `de` | German (default) |
 | `en` | English          |
 
@@ -51,7 +51,7 @@ additional value in the `choices` of the `language` setting (see [User settings]
 ### Optional integrations
 
 | Integration  | Requirement                                                                 | Behavior when not configured               |
-|--------------|-----------------------------------------------------------------------------|--------------------------------------------|
+| ------------ | --------------------------------------------------------------------------- | ------------------------------------------ |
 | Spotify card | ioBroker with the `spotify-premium` adapter and an active Socket.IO adapter | The card is hidden and no socket is opened |
 
 ## Quick start
@@ -88,7 +88,7 @@ window.__APP_CONFIG__ = {
 ```
 
 | Key           | Required | Description                                                                                                           |
-|---------------|----------|-----------------------------------------------------------------------------------------------------------------------|
+| ------------- | -------- | --------------------------------------------------------------------------------------------------------------------- |
 | `apiUrl`      | yes      | Base URL of the backend API including `/api`. If missing, the app aborts on startup with `API URL is not configured`. |
 | `iobrokerUrl` | no       | URL of the ioBroker Socket.IO adapter. Empty or omitted: the Spotify card is hidden.                                  |
 
@@ -122,7 +122,7 @@ definitions in the backend (label, type, default, options). A new setting theref
 frontend.
 
 | Key              | Type   | Description                       |
-|------------------|--------|-----------------------------------|
+| ---------------- | ------ | --------------------------------- |
 | `language`       | select | UI language (`de`, `en`)          |
 | `layout`         | select | Color scheme (`light`, `dark`)    |
 | `items_per_page` | int    | Entries per page in lists         |
@@ -134,7 +134,7 @@ In code, access them through hooks:
 ```tsx
 const itemsPerPage = useSetting('items_per_page') // number
 
-const {settings} = useSettings()
+const { settings } = useSettings()
 settings.send_mails // boolean
 ```
 
@@ -220,13 +220,13 @@ no container restart is needed.
 
 ```yaml
 services:
-  frontend:
-    build: .
-    ports:
-      - '8080:80'
-    volumes:
-      - ./config.js:/usr/share/nginx/html/config.js:ro
-    restart: unless-stopped
+    frontend:
+        build: .
+        ports:
+            - '8080:80'
+        volumes:
+            - ./config.js:/usr/share/nginx/html/config.js:ro
+        restart: unless-stopped
 ```
 
 ```bash
@@ -245,7 +245,7 @@ docker compose up -d --build
 ## Troubleshooting
 
 | Problem                                               | Cause and solution                                                                                                 |
-|-------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|
+| ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
 | Blank page, console shows `API URL is not configured` | `config.js` is missing, not loaded, or has no `apiUrl`. Check that `/config.js` returns JavaScript in the browser. |
 | `Unexpected token '<'` when loading `config.js`       | The file does not exist and the server returns `index.html` instead. Create the file or check the volume.          |
 | All API calls fail, console reports CORS              | The backend does not allow the frontend's origin. Configure CORS there.                                            |
