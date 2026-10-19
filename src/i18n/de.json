@@ -41,10 +41,15 @@
         "tourTypes": "Ausflüge",
         "categories": "Kategorien",
         "items": "Items",
-        "plannedTrips": "Geplante Ausflüge",
+        "plannedTrips": "Geplant",
         "trips": "Ausflüge",
-        "create": "Neuer Ausflug",
-        "settings": "Einstellungen"
+        "create": "Erstellen",
+        "settings": "Einstellungen",
+        "planning": "Planung",
+        "administration": "Verwaltung",
+        "example": "Beispielpunkt",
+        "collapse": "Menü, einklappen",
+        "expand": "Menü, ausklappen"
     },
 
     "settings": {

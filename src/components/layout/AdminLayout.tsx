@@ -6,12 +6,14 @@ import Header from './Header'
 import Sidebar from './Sidebar'
 import BuildInfo from '../common/BuildInfo'
 import { initIoBrokerWebSocket } from '../../services/iobrokerSocket.ts'
+import { useSidebarCollapsed } from '../../hooks/useSidebarCollapsed.ts'
 
 const DRAWER_WIDTH = 260
 
 export default function AdminLayout() {
     const theme = useTheme()
     const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+    const { collapsed, toggle, width } = useSidebarCollapsed()
 
     useEffect(() => {
         // Socket-Verbindung beim Start der Admin-Oberfläche initialisieren
@@ -39,10 +41,12 @@ export default function AdminLayout() {
             />
 
             <Sidebar
-                drawerWidth={DRAWER_WIDTH}
-                mobileOpen={mobileOpen}
-                onMobileClose={handleDrawerToggle}
+                drawerWidth={width}
+                collapsed={collapsed}
+                onToggleCollapsed={toggle}
                 isMobile={isMobile}
+                mobileOpen={mobileOpen}
+                onMobileClose={() => setMobileOpen(false)}
             />
 
             <Box

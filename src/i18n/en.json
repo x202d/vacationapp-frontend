@@ -38,7 +38,12 @@
         "plannedTrips": "Planned Trips",
         "trips": "Trips",
         "create": "New Trip",
-        "settings": "Settings"
+        "settings": "Settings",
+        "planning": "Planning",
+        "administration": "Administration",
+        "example": "Example item",
+        "collapse": "Collapse menu",
+        "expand": "Expand menu"
     },
 
     "tourTypes": {
