@@ -10,6 +10,7 @@ import ItemsPage from './pages/templates/ItemsPage'
 import TourTypesPage from './pages/templates/TourTypesPage'
 import EventDetailPage from './pages/events/EventDetailPage'
 import CategoriesPage from './pages/templates/CategoriesPage'
+import SettingsPage from './pages/settings/SettingsPage.tsx'
 import CreateEventPage from './pages/events/CreateEventWizard.tsx'
 import EventChecklistPage from './pages/events/EventChecklistPage.tsx'
 
@@ -34,6 +35,8 @@ function App() {
                         <Route path="/events" element={<EventsPage />} />
 
                         <Route path="/events/:id" element={<EventDetailPage />} />
+
+                        <Route path="/settings" element={<SettingsPage />} />
 
                         <Route path="*" element={<Navigate to="/" replace />} />
 

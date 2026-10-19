@@ -180,7 +180,7 @@ export default function Sidebar({
             <Divider />
 
             <List sx={{ px: 1, py: 1 }}>
-                <ListItemButton>
+                <ListItemButton onClick={() => navigate('/settings')}>
                     <ListItemIcon>
                         <Settings />
                     </ListItemIcon>

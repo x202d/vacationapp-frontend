@@ -47,6 +47,13 @@
         "settings": "Einstellungen"
     },
 
+    "settings": {
+        "title": "Einstellungen",
+        "save": "Speichern",
+        "saved": "Einstellungen gespeichert",
+        "error": "Einstellungen konnten nicht geladen oder gespeichert werden"
+    },
+
     "tourTypes": {
         "title": "Ausflüge",
         "description": "Verwalte die verfügbaren Ausflüge und deren grundlegende Einstellungen.",

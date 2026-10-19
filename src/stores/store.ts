@@ -1,12 +1,13 @@
-import authReducer from './auth/authSlice'
 import { authApi } from './auth/AuthApi.ts'
 import { userApi } from './user/UserApi.ts'
+import authReducer from './auth/authSlice'
 import { eventApi } from './events/EventApi'
 import { wizardApi } from './events/WizardApi'
 import { configureStore } from '@reduxjs/toolkit'
 import { categoryApi } from './templates/CategoryApi'
 import { tourTypeApi } from './templates/TourTypeApi'
 import { templateItemApi } from './templates/ItemsApi'
+import { settingsApi } from './settings/SettingsApi.ts'
 import settingsReducer from './settings/settingsSlice'
 import iobrokerReducer from './iobroker/iobrokerSlice.ts'
 import { informationApi } from './information/InformationApi'
@@ -21,6 +22,7 @@ export const store = configureStore({
         [authApi.reducerPath]: authApi.reducer,
         [informationApi.reducerPath]: informationApi.reducer,
         [userApi.reducerPath]: userApi.reducer,
+        [settingsApi.reducerPath]: settingsApi.reducer,
 
         auth: authReducer,
         settings: settingsReducer,
@@ -36,7 +38,8 @@ export const store = configureStore({
             .concat(eventApi.middleware)
             .concat(authApi.middleware)
             .concat(informationApi.middleware)
-            .concat(userApi.middleware),
+            .concat(userApi.middleware)
+            .concat(settingsApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>
