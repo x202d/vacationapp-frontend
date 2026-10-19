@@ -11,15 +11,16 @@ import TourTypesPage from './pages/templates/TourTypesPage'
 import EventDetailPage from './pages/events/EventDetailPage'
 import SettingsPage from './pages/settings/SettingsPage.tsx'
 import CategoriesPage from './pages/templates/CategoriesPage'
+import SettingsSync from './components/settings/SettingsSync.tsx'
 import CreateEventPage from './pages/events/CreateEventWizard.tsx'
 import EventChecklistPage from './pages/events/EventChecklistPage.tsx'
 
 function App() {
     return (
         <BrowserRouter>
+            <SettingsSync />
             <Routes>
                 <Route path="/login" element={<LoginPage />} />
-
                 <Route element={<ProtectedRoute />}>
                     <Route element={<AdminLayout />}>
                         <Route path="/" element={<DashboardPage />} />

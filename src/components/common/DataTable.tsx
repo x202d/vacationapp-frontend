@@ -1,8 +1,11 @@
 import { useTranslation } from 'react-i18next'
+import ListPagination from './ListPagination.tsx'
 import ClearIcon from '@mui/icons-material/Clear'
 import { Delete, Edit } from '@mui/icons-material'
 import SearchIcon from '@mui/icons-material/Search'
 import { ReactNode, useMemo, useState } from 'react'
+import { useSetting } from '../../hooks/useSettings.ts'
+import { usePagination } from '../../hooks/usePagination.ts'
 import {
     Box,
     CircularProgress,
@@ -46,6 +49,7 @@ interface DataTableProps<T extends { id: string }> {
     onDelete?: (item: T) => void
     actions?: DataTableAction<T>[]
     searchable?: boolean
+    pageSize?: number | false
 }
 
 export default function DataTable<T extends { id: string }>({
@@ -56,6 +60,7 @@ export default function DataTable<T extends { id: string }>({
     onDelete,
     actions = [],
     searchable = false,
+    pageSize,
 }: DataTableProps<T>) {
     const { t } = useTranslation()
 
@@ -97,12 +102,19 @@ export default function DataTable<T extends { id: string }>({
         })
     }, [data, searchColumn, searchTerm, searchable, searchableColumns])
 
+    const defaultPageSize = useSetting('items_per_page')
+    const effectivePageSize = pageSize === false ? Infinity : (pageSize ?? defaultPageSize)
+
+    const { page, setPage, pageCount, pageItems } = usePagination(filteredData, effectivePageSize)
+
     const handleSearchColumnChange = (event: SelectChangeEvent) => {
         setSearchColumn(event.target.value)
+        setPage(1)
     }
 
     const clearSearch = () => {
         setSearchTerm('')
+        setPage(1)
     }
 
     if (loading) {
@@ -135,7 +147,10 @@ export default function DataTable<T extends { id: string }>({
                 >
                     <TextField
                         value={searchTerm}
-                        onChange={(event) => setSearchTerm(event.target.value)}
+                        onChange={(event) => {
+                            setSearchTerm(event.target.value)
+                            setPage(1)
+                        }}
                         placeholder={t('common.search')}
                         size="small"
                         sx={{
@@ -213,72 +228,82 @@ export default function DataTable<T extends { id: string }>({
                     <Typography color="text.secondary">{t('common.noSearchResults')}</Typography>
                 </Box>
             ) : (
-                <TableContainer>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                {columns.map((column) => (
-                                    <TableCell key={String(column.key)}>{column.label}</TableCell>
-                                ))}
-
-                                {hasActions && (
-                                    <TableCell align="right">{t('common.actions.title')}</TableCell>
-                                )}
-                            </TableRow>
-                        </TableHead>
-
-                        <TableBody>
-                            {filteredData.map((item) => (
-                                <TableRow key={item.id} hover>
+                <>
+                    <TableContainer>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
                                     {columns.map((column) => (
                                         <TableCell key={String(column.key)}>
-                                            {column.render
-                                                ? column.render(item)
-                                                : String(item[column.key] ?? '')}
+                                            {column.label}
                                         </TableCell>
                                     ))}
 
                                     {hasActions && (
                                         <TableCell align="right">
-                                            {actions.map((action) => (
-                                                <Tooltip key={action.label} title={action.label}>
-                                                    <IconButton
-                                                        size="small"
-                                                        onClick={() => action.onClick(item)}
-                                                    >
-                                                        {action.icon}
-                                                    </IconButton>
-                                                </Tooltip>
-                                            ))}
-
-                                            {onEdit && (
-                                                <Tooltip title={t('common.actions.edit')}>
-                                                    <IconButton
-                                                        size="small"
-                                                        onClick={() => onEdit(item)}
-                                                    >
-                                                        <Edit />
-                                                    </IconButton>
-                                                </Tooltip>
-                                            )}
-
-                                            {onDelete && (
-                                                <Tooltip title={t('common.actions.delete')}>
-                                                    <IconButton
-                                                        size="small"
-                                                        onClick={() => onDelete(item)}
-                                                    >
-                                                        <Delete />
-                                                    </IconButton>
-                                                </Tooltip>
-                                            )}
+                                            {t('common.actions.title')}
                                         </TableCell>
                                     )}
                                 </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                            </TableHead>
+
+                            <TableBody>
+                                {pageItems.map((item) => (
+                                    <TableRow key={item.id} hover>
+                                        {columns.map((column) => (
+                                            <TableCell key={String(column.key)}>
+                                                {column.render
+                                                    ? column.render(item)
+                                                    : String(item[column.key] ?? '')}
+                                            </TableCell>
+                                        ))}
+
+                                        {hasActions && (
+                                            <TableCell align="right">
+                                                {actions.map((action) => (
+                                                    <Tooltip
+                                                        key={action.label}
+                                                        title={action.label}
+                                                    >
+                                                        <IconButton
+                                                            size="small"
+                                                            onClick={() => action.onClick(item)}
+                                                        >
+                                                            {action.icon}
+                                                        </IconButton>
+                                                    </Tooltip>
+                                                ))}
+
+                                                {onEdit && (
+                                                    <Tooltip title={t('common.actions.edit')}>
+                                                        <IconButton
+                                                            size="small"
+                                                            onClick={() => onEdit(item)}
+                                                        >
+                                                            <Edit />
+                                                        </IconButton>
+                                                    </Tooltip>
+                                                )}
+
+                                                {onDelete && (
+                                                    <Tooltip title={t('common.actions.delete')}>
+                                                        <IconButton
+                                                            size="small"
+                                                            onClick={() => onDelete(item)}
+                                                        >
+                                                            <Delete />
+                                                        </IconButton>
+                                                    </Tooltip>
+                                                )}
+                                            </TableCell>
+                                        )}
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <ListPagination page={page} pageCount={pageCount} onChange={setPage} />
+                </>
             )}
         </Paper>
     )

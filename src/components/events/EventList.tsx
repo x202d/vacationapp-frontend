@@ -1,13 +1,13 @@
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import EventIcon from '@mui/icons-material/Event'
+import PaginatedList from '../common/PaginatedList.tsx'
 import CategoryIcon from '@mui/icons-material/Category'
 import ChecklistIcon from '@mui/icons-material/Checklist'
+import type { Event } from '../../types/events/EventTypes'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import { Card, CardActionArea, CardContent, Chip, Stack, Typography } from '@mui/material'
-
-import type { Event } from '../../types/events/EventTypes'
 
 interface EventListProps {
     events: Event[]
@@ -121,8 +121,45 @@ const EventCard = ({
     )
 }
 
-const EventList = ({ events }: EventListProps) => {
+const EventSection = ({
+    title,
+    events,
+    completed,
+    locale,
+}: {
+    title: string
+    events: Event[]
+    completed: boolean
+    locale: string
+}) => {
     const navigate = useNavigate()
+
+    return (
+        <Stack spacing={2}>
+            <Typography variant="h5" component="h2">
+                {title}
+            </Typography>
+
+            <PaginatedList items={events}>
+                {(pageItems) => (
+                    <Stack spacing={2}>
+                        {pageItems.map((event) => (
+                            <EventCard
+                                key={event.id}
+                                event={event}
+                                completed={completed}
+                                locale={locale}
+                                onClick={() => navigate(`/events/${event.id}`)}
+                            />
+                        ))}
+                    </Stack>
+                )}
+            </PaginatedList>
+        </Stack>
+    )
+}
+
+const EventList = ({ events }: EventListProps) => {
     const { t, i18n } = useTranslation()
 
     if (events.length === 0) {
@@ -137,40 +174,24 @@ const EventList = ({ events }: EventListProps) => {
         .filter(isEventCompleted)
         .sort((a, b) => b.startDate.localeCompare(a.startDate))
 
-    const renderEvents = (eventList: Event[], completed: boolean) => (
-        <Stack spacing={2}>
-            {eventList.map((event) => (
-                <EventCard
-                    key={event.id}
-                    event={event}
-                    completed={completed}
-                    locale={i18n.language}
-                    onClick={() => navigate(`/events/${event.id}`)}
-                />
-            ))}
-        </Stack>
-    )
-
     return (
         <Stack spacing={4}>
             {openEvents.length > 0 && (
-                <Stack spacing={2}>
-                    <Typography variant="h5" component="h2">
-                        {t('events.sections.open')}
-                    </Typography>
-
-                    {renderEvents(openEvents, false)}
-                </Stack>
+                <EventSection
+                    title={t('events.sections.open')}
+                    events={openEvents}
+                    completed={false}
+                    locale={i18n.language}
+                />
             )}
 
             {completedEvents.length > 0 && (
-                <Stack spacing={2}>
-                    <Typography variant="h5" component="h2">
-                        {t('events.sections.completed')}
-                    </Typography>
-
-                    {renderEvents(completedEvents, true)}
-                </Stack>
+                <EventSection
+                    title={t('events.sections.completed')}
+                    events={completedEvents}
+                    completed
+                    locale={i18n.language}
+                />
             )}
         </Stack>
     )

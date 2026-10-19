@@ -6,17 +6,18 @@ import { Provider } from 'react-redux'
 
 import App from './App'
 import { store } from './stores/store.ts'
-import { createAppTheme } from './theme/theme'
 import { useAppSelector } from './stores/hooks'
 
 import i18n from './i18n/i18n'
+import { createTheme } from '@mui/material/styles'
+import { useSetting } from './hooks/useSettings.ts'
 
 function AppProviders() {
-    const themeMode = useAppSelector((state) => state.settings.theme)
-
     const language = useAppSelector((state) => state.settings.language)
 
-    const theme = useMemo(() => createAppTheme(themeMode), [themeMode])
+    const layout = useSetting('layout')
+
+    const theme = useMemo(() => createTheme({ palette: { mode: layout } }), [layout])
 
     useEffect(() => {
         i18n.changeLanguage(language)
