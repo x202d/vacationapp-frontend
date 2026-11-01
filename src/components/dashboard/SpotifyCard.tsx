@@ -203,7 +203,7 @@ export const SpotifyCard: React.FC = () => {
     }
 
     return (
-        <Card sx={{ maxWidth: 600, p: 2 }}>
+        <Card>
             {isConnected ? (
                 <SpotifyPlayer />
             ) : (
